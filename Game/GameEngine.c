@@ -16,7 +16,20 @@
 /*******************************************************************************
 * Function Implementation
 *******************************************************************************/
-void GameEngine_Init()
+
+void GameEngine(GamePhase_t * GPhase)
 {
+    printf("Game Engine\n");
+    GEng_t Machine;
+    Machine.CurrS = INIT_e;
+    Machine.PrevS = BOOT_e;
+
+    do
+    {
+        printf("Eng: %d ",Machine.CurrS);
+        Machine.CurrS = GPhase[Machine.CurrS](&Machine.PrevS);
+    }while(Machine.CurrS != END_e);
+
+
 
 }

@@ -10,6 +10,8 @@
 /*******************************************************************************
 * Includes
 *******************************************************************************/
+#include <stdio.h>
+
 
 /*******************************************************************************
 * Macro Definitions
@@ -19,21 +21,26 @@
 * Type definitions
 *******************************************************************************/
 
-/**
- * @name Projectile
- * @brief Represent a Projectile
- */
- #if 0
- typedef struct Projectile
+/*! This is an enum class containing the GAME STATES */
+typedef enum
 {
-    /*@{*/
-    double TotalVel;    /**< Magnitud of Vel Vector */
-    double Angle;       /**< Angle of the Vel Vector */
-    double IPos_x;      /**< Initial Position of Proyectile in Y axis */
-    double IPos_y;      /**< Initial Position of Proyectile in X axis */
-    /*@}*/
-}Proy_t;
- #endif
+/*@{*/
+    ERR_e           = -3,
+    DEFAULT_e       = -2,
+
+    BOOT_e          = -1,
+    INIT_e          =  0,     /*!< This is the Initial State with value of 0     */
+    SELCTING_e          ,     /*!< This is the Selecting State with value of 1   */
+    STARTING_e          ,     /*!< This is the Starting State with value of 2    */
+
+    LEVEL1_e        = 10,     /*!< This is the Level 1 State with value of 2     */
+    LEVELF_e            ,     /*!< This is the Final Level State with value of 2 */
+
+    RETRY_e         = 50,     /*!< This is the Retry State with value of 50      */
+    END_e               ,     /*!< This is the END State with value of 51        */
+    PLAYGND_e       =250,     /*!< This is the Playground State with value of 250*/
+/*@}*/
+}STATES_t;
 
 /*******************************************************************************
 * Function Prototypes

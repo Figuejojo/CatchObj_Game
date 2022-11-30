@@ -7,32 +7,18 @@
 #include "../Game/Game.h"
 
 
-void audio_once_main(void){
-
-    amio_init_audio();
-
-    // load a sample and give it a name.
-
-    amio_load_sample("vocal", "./data/mixkit-magic-astral-sweep-effect-2629.wav");
-    // we can choose to add an instance of the sample. We can either play it once or on a loop. Also we can change the volume (between 0 and 1).
-
-    amio_add_sample_instance("vocal", PLAY_ONCE, 0.3);
-
-    // update audio for changes to take effect.
-
-    amio_update_audio();
-
-    // audio is not affected by pausing the main thread.
-
-    pausefor(5000);
-
-    // Destroy audio when exiting the program.
-
-    amio_destroy_audio();
-}
-
 int main(void)
 {
+    printf("GameInit\n");
+    CatchGame_Init();
+
+    return 0;
+}
+
+
+#if 0
+
+
     /* Declare two variables for the x and y positions */
     int x_position, y_position;
     CatchGame_Init();
@@ -65,6 +51,34 @@ int main(void)
     /* remove the display */
     closegraph();
 
-    return 0;
+
+#endif // 0
+
+
+#if 0
+
+void audio_once_main(void){
+
+    amio_init_audio();
+
+    // load a sample and give it a name.
+
+    amio_load_sample("vocal", "./data/mixkit-magic-astral-sweep-effect-2629.wav");
+    // we can choose to add an instance of the sample. We can either play it once or on a loop. Also we can change the volume (between 0 and 1).
+
+    amio_add_sample_instance("vocal", PLAY_ONCE, 0.3);
+
+    // update audio for changes to take effect.
+
+    amio_update_audio();
+
+    // audio is not affected by pausing the main thread.
+
+    pausefor(5000);
+
+    // Destroy audio when exiting the program.
+
+    amio_destroy_audio();
 }
 
+#endif // 0

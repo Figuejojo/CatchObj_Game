@@ -28,4 +28,14 @@
  */
 void CatchGame_Init(void);
 
+/** @brief Game Initial Window.
+ */
+STATES_t GameInitWindow(STATES_t * PrevState);
+
+
+STATES_t GameSelWindow(STATES_t * PrevState);
+
+STATES_t GameEndWindow(STATES_t * PrevState);
+
+
 #endif // _GAME_H_
