@@ -10,12 +10,17 @@
 /*******************************************************************************
 * Includes
 *******************************************************************************/
+#include <graphics_lib.h>
+#include <amio.h>
 #include <stdio.h>
-
+#include <conio.h>
+#include <math.h>
 
 /*******************************************************************************
 * Macro Definitions
 *******************************************************************************/
+#define WIN_WIDTH (800)
+#define WIN_HIGH  (600)
 
 /*******************************************************************************
 * Type definitions
@@ -33,12 +38,12 @@ typedef enum
     SELCTING_e          ,     /*!< This is the Selecting State with value of 1   */
     STARTING_e          ,     /*!< This is the Starting State with value of 2    */
 
-    LEVEL1_e        = 10,     /*!< This is the Level 1 State with value of 2     */
+    LEVEL1_e            ,     /*!< This is the Level 1 State with value of 2     */
     LEVELF_e            ,     /*!< This is the Final Level State with value of 2 */
 
-    RETRY_e         = 50,     /*!< This is the Retry State with value of 50      */
+    RETRY_= LEVELF_e + 1,     /*!< This is the Retry State with value of 50      */
+    PLAYGND_e           ,     /*!< This is the Playground State with value of 250*/
     END_e               ,     /*!< This is the END State with value of 51        */
-    PLAYGND_e       =250,     /*!< This is the Playground State with value of 250*/
 /*@}*/
 }STATES_t;
 

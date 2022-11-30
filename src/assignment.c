@@ -1,9 +1,3 @@
-#include <graphics_lib.h>
-#include <amio.h>
-#include <stdio.h>
-#include <conio.h>
-#include <math.h>
-
 #include "../Game/Game.h"
 
 
@@ -22,9 +16,7 @@ int main(void)
     /* Declare two variables for the x and y positions */
     int x_position, y_position;
     CatchGame_Init();
-	/* Open a graphics window */
-	/* Make it 640 pixels wide by 480 pixels high */
-	initwindow(640, 480);
+
 
 	/* Set up some coordinates */
 	x_position = 100;
@@ -45,11 +37,9 @@ int main(void)
 	printf("Press a key to continue\n");
     getch();
 
-    printf("\nNow running audio_once_main\n");
-    audio_once_main();
 
-    /* remove the display */
-    closegraph();
+
+
 
 
 #endif // 0
@@ -59,26 +49,17 @@ int main(void)
 
 void audio_once_main(void){
 
-    amio_init_audio();
 
-    // load a sample and give it a name.
 
-    amio_load_sample("vocal", "./data/mixkit-magic-astral-sweep-effect-2629.wav");
-    // we can choose to add an instance of the sample. We can either play it once or on a loop. Also we can change the volume (between 0 and 1).
 
-    amio_add_sample_instance("vocal", PLAY_ONCE, 0.3);
 
-    // update audio for changes to take effect.
 
-    amio_update_audio();
 
     // audio is not affected by pausing the main thread.
 
     pausefor(5000);
 
-    // Destroy audio when exiting the program.
 
-    amio_destroy_audio();
 }
 
 #endif // 0

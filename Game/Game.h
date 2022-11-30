@@ -32,8 +32,17 @@ void CatchGame_Init(void);
  */
 STATES_t GameInitWindow(STATES_t * PrevState);
 
-
 STATES_t GameSelWindow(STATES_t * PrevState);
+
+STATES_t GameSRTWindow(STATES_t * PrevState);
+
+STATES_t GameLV1Window(STATES_t * PrevState);
+
+STATES_t GameLVFWindow(STATES_t * PrevState);
+
+STATES_t GameRETWindow(STATES_t * PrevState);
+
+STATES_t GamePGNWindow(STATES_t * PrevState);
 
 STATES_t GameEndWindow(STATES_t * PrevState);
 

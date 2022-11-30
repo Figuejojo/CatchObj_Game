@@ -30,7 +30,6 @@ typedef struct GameEngine
 {
     GamePhase_t *GamePhase;
     STATES_t CurrS;
-    STATES_t NextS;
     STATES_t PrevS;
 }GEng_t;
 

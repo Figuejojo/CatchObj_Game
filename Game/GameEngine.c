@@ -26,10 +26,7 @@ void GameEngine(GamePhase_t * GPhase)
 
     do
     {
-        printf("Eng: %d ",Machine.CurrS);
+        cleardevice();
         Machine.CurrS = GPhase[Machine.CurrS](&Machine.PrevS);
     }while(Machine.CurrS != END_e);
-
-
-
 }

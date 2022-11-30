@@ -12,7 +12,8 @@
 
    Updates: Bitmap handling added on 29/4/2013
 */
-
+#ifndef _GRAPH_LIN_H_
+#define _GRAPH_LIN_H_
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -180,4 +181,5 @@ void draw_bitmap(BITMAP image, int x, int y);
 
 void destroy_bitmap(BITMAP image);
 
+#endif // _GRAPH_LIN_H_
 
