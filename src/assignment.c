@@ -4,6 +4,9 @@
 #include <conio.h>
 #include <math.h>
 
+#include "../Game/Game.h"
+
+
 void audio_once_main(void){
 
     amio_init_audio();
@@ -32,7 +35,7 @@ int main(void)
 {
     /* Declare two variables for the x and y positions */
     int x_position, y_position;
-
+    CatchGame_Init();
 	/* Open a graphics window */
 	/* Make it 640 pixels wide by 480 pixels high */
 	initwindow(640, 480);
