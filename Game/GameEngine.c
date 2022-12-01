@@ -19,7 +19,7 @@
 
 void GameEngine(GamePhase_t * GPhase)
 {
-    printf("Game Engine\n");
+    dprintf("Game Engine\n");
     GEng_t Machine;
     Machine.CurrS = INIT_e;
     Machine.PrevS = BOOT_e;
@@ -29,4 +29,5 @@ void GameEngine(GamePhase_t * GPhase)
         cleardevice();
         Machine.CurrS = GPhase[Machine.CurrS](&Machine.PrevS);
     }while(Machine.CurrS != END_e);
+    GPhase[END_e](&Machine.PrevS);
 }

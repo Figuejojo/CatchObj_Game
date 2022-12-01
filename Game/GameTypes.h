@@ -19,6 +19,13 @@
 /*******************************************************************************
 * Macro Definitions
 *******************************************************************************/
+#define _DEBUG (1)
+#if _DEBUG == 1
+#define dprintf printf
+#else
+#define dprintf //
+#endif // _DEBUG
+
 #define WIN_WIDTH (800)
 #define WIN_HIGH  (600)
 

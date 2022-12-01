@@ -51,15 +51,16 @@ void CatchGame_Init()
 
 STATES_t GameInitWindow(STATES_t * PrevState)
 {
-
-    if(*PrevState != SELCTING_e)
+    if(*PrevState != BOOT_e)
     {
-        amio_add_sample_instance("init", PLAY_ONCE, 0.3);
-        // update audio for changes to take effect.
         amio_update_audio();
         outtextxy(WIN_HIGH/2,WIN_HIGH/2-100,"Welcome to the catch game!");
         outtextxy(WIN_HIGH/2,WIN_HIGH/2,"Press xxx to start");
         update_display();
+    }
+    else
+    {
+        amio_add_sample_instance("init", PLAY_ONCE, 0.3);
     }
     if(check_if_event())
     {
@@ -138,6 +139,11 @@ STATES_t GamePGNWindow(STATES_t * PrevState)
     if(check_if_event())
     {
         wait_for_event();
+        if(event_close_display())
+        {
+            *PrevState = PLAYGND_e;
+            return END_e;
+        }
         if(event_key_down())
         {
             if(event_key('q'))
@@ -150,12 +156,26 @@ STATES_t GamePGNWindow(STATES_t * PrevState)
 
     update_display();
 
-    PrevState = PLAYGND_e;
+    *PrevState = PLAYGND_e;
     return PLAYGND_e;
 }
 
 STATES_t GameEndWindow(STATES_t * PrevState)
 {
-    printf("Ending\n");
+    switch(*PrevState)
+    {
+        case INIT_e:
+            dprintf("Ending from Init\n");
+            break;
+        case SELCTING_e:
+            dprintf("Ending from Colour Select\n");
+            break;
+        case PLAYGND_e:
+            dprintf("Ending from Playground");
+            break;
+        default:
+            dprintf("Ended from ??");
+            break;
+    }
     return END_e;
 }

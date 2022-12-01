@@ -28,10 +28,21 @@
  */
 void CatchGame_Init(void);
 
-/** @brief Game Initial Window.
+/** @brief Initialization window for displaying the game name and welcome the player.
+ *
+ *  @param PrevState ptr. This is the previous state machine State.
+ *
+ *  @return The next state to be executed in the state machine.
  */
 STATES_t GameInitWindow(STATES_t * PrevState);
 
+/** @brief Colour Selection function. It display the available colors for the player to
+ *          choose.
+ *
+ *  @param PrevState ptr. This is the previous state machine State.
+ *
+ *  @return The next state to be executed in the state machine.
+ */
 STATES_t GameSelWindow(STATES_t * PrevState);
 
 STATES_t GameSRTWindow(STATES_t * PrevState);
@@ -42,8 +53,21 @@ STATES_t GameLVFWindow(STATES_t * PrevState);
 
 STATES_t GameRETWindow(STATES_t * PrevState);
 
+/** @brief Hidden playground level for the developers to test all the game elements.
+ *
+ *  @param PrevState ptr. This is the previous state machine State.
+ *
+ *  @return The next state to be executed in the state machine.
+ */
 STATES_t GamePGNWindow(STATES_t * PrevState);
 
+/** @brief Last element of the State Machine. It handles the exit of the game depending
+ *          of the previous state.
+ *
+ *  @param PrevState ptr. This is the previous state machine State.
+ *
+ *  @return The next state to be executed in the state machine.
+ */
 STATES_t GameEndWindow(STATES_t * PrevState);
 
 

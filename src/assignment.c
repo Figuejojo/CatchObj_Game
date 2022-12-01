@@ -3,7 +3,7 @@
 
 int main(void)
 {
-    printf("GameInit\n");
+    dprintf("GameInit\n");
     CatchGame_Init();
 
     return 0;
