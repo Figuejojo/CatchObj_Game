@@ -51,17 +51,16 @@ void CatchGame_Init()
 
 STATES_t GameInitWindow(GEng_t * Machine)
 {
-    if(Machine->PrevS != BOOT_e)
+
+    Draw_BackGround(&Machine->CurrS);
+    update_display();
+
+    if(Machine->PrevS == BOOT_e)
     {
         amio_update_audio();
-        outtextxy(WIN_HIGH/2,WIN_HIGH/2-100,"Welcome to the catch game!");
-        outtextxy(WIN_HIGH/2,WIN_HIGH/2,"Press xxx to start");
-        update_display();
-    }
-    else
-    {
         amio_add_sample_instance("init", PLAY_ONCE, 0.3);
     }
+
     if(check_if_event())
     {
         wait_for_event();
@@ -83,13 +82,8 @@ STATES_t GameInitWindow(GEng_t * Machine)
 
 STATES_t GameSelWindow(GEng_t * Machine)
 {
-    const char jump = 20;
+    Draw_BackGround(&Machine->CurrS);
 
-    outtextxy(WIN_HIGH/2,WIN_HIGH/2-100,"Choose you character Color");
-    outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump,"r - red");
-    outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump*2,"g - red");
-    outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump*3,"b - blue");
-    outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump*4,"w - white");
     update_display();
 
     if(check_if_event())
@@ -136,7 +130,6 @@ STATES_t GamePGNWindow(GEng_t * Machine)
 {
 
     Draw_BackGround(&Machine->CurrS);
-
     Stickman_draw(Machine->Player);
 
     update_display();

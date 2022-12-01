@@ -54,18 +54,28 @@ void Stickman_draw(StickMan_t * Man)
 
 void Draw_BackGround(STATES_t * ST)
 {
+    char jump = 20;
     switch(*ST)
     {
+        case INIT_e:
+            amio_update_audio();
+            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100,"Welcome to the catch game!");
+            outtextxy(WIN_HIGH/2,WIN_HIGH/2,"Press xxx to start");
+            break;
+        case SELCTING_e:
+            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100,"Choose you character Color");
+            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump,"r - red");
+            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump*2,"g - red");
+            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump*3,"b - blue");
+            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump*4,"w - white");
+            break;
         case PLAYGND_e:
-
             outtextxy(0,0,"PlayGround Testing");
             setcolor(LIGHTGRAY);
             line(0, GND,    WIN_WIDTH,  GND,    3);
             filled_circle(0,        CANY,   CANR,   LIGHTMAGENTA);
             filled_circle(WIN_WIDTH,CANY,   CANR,   LIGHTMAGENTA);
-
             break;
-
         default:
             break;
     }
