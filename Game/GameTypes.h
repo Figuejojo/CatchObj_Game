@@ -20,6 +20,7 @@
 * Macro Definitions
 *******************************************************************************/
 #define _DEBUG (1)
+
 #if _DEBUG == 1
 #define dprintf printf
 #else
@@ -56,7 +57,7 @@
 * Type definitions
 *******************************************************************************/
 
-/*! This is an enum class containing the GAME STATES */
+/*! This enum class named STATES_t containing the GAME STATES */
 typedef enum
 {
 /*@{*/
@@ -77,28 +78,14 @@ typedef enum
 /*@}*/
 }STATES_t;
 
+/*! This struct class named StickMan_t contains the player details */
 typedef struct player
 {
-    int score;
-    int color;
-    int move_t;
+/*@{*/
+    int score;  /*!< This varaible saves the player score                   */
+    int color;  /*!< This variable saves the character colour               */
+    int move_x; /*!< This variable saves the move position of the character */
+/*@}*/
 }StickMan_t;
-/*******************************************************************************
-* Function Prototypes
-*******************************************************************************/
-
-/** @brief Core Game function.
- */
-//void Game_Init(void);
-
-/** @brief Modify the x position of player if the left and right arrow keys or return a
- *          '\r' character if ENTER key was pressed.
- *         @TODO: Apply the keyboard functions in graphics lib.
- *
- *  @param [int Ptr] From Player struct we pass only the move_x.
- *
- *  @return Return '\r' if the ENTER key was pressed.
- */
-//int getCMD(int * move_x);
 
 #endif // _GAMETYPES_H_

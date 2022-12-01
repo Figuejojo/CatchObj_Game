@@ -47,5 +47,11 @@ typedef STATES_t (*GamePhase_t)(GEng_t*);    /**< Typedef of a Function Pointer 
   */
 void GameEngine(GamePhase_t * GPhase);
 
-void StickMan();
+/** @brief Stickman_draw will draw the stickman depending on the movement that is passed through the
+  *         parameter Man.
+  *
+  * @param Pointer to StickMan_t which contains the player characteristics.
+  */
+void Stickman_draw(StickMan_t * Man);
+
 #endif // _GAMEENGINE_H_

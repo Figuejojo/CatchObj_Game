@@ -139,13 +139,7 @@ STATES_t GamePGNWindow(GEng_t * Machine)
     setcolor(LIGHTGRAY);
     line(0,GND,WIN_WIDTH,GND,3);
 
-    setcolor(Machine->Player->color);
-    filled_circle(WIN_WIDTH/2,GND-80,15,Machine->Player->color);
-    line(IPosX,BodyY1,IPosX,BodyY2,2);
-    line(IPosX,ArmY1,Arm1X,ArmY2,2);
-    line(IPosX,ArmY1,Arm2X,ArmY2,2);
-    line(IPosX,LEGY1,LEGX1,LEGY2,2);
-    line(IPosX,LEGY1,LEGX2,LEGY2,2);
+    Stickman_draw(Machine->Player);
 
     update_display();
 
