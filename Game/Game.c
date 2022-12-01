@@ -159,6 +159,14 @@ STATES_t GamePGNWindow(GEng_t * Machine)
                 return END_e;
             }
         }
+        else if (event_key_right_arrow())
+        {
+            Machine->Player->move_x++;
+        }
+        else if(event_key_left_arrow())
+        {
+            Machine->Player->move_x--;
+        }
     }
 
     Machine->PrevS = PLAYGND_e;

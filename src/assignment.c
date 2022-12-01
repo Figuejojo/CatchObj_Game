@@ -1,6 +1,5 @@
 #include "../Game/Game.h"
 
-
 int main(void)
 {
     dprintf("GameInit\n");
