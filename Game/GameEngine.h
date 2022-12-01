@@ -16,6 +16,7 @@
 * Macro Definitions
 *******************************************************************************/
 
+
 /*******************************************************************************
 * Type definitions
 *******************************************************************************/
@@ -29,7 +30,7 @@ typedef struct GameEngine
 /*@{*/
     STATES_t CurrS;         /*!< This is the Current State to be executed       */
     STATES_t PrevS;         /*!< This is the Previous State that was executed   */
-    StickMan_t * Player;
+    StickMan_t * Player;    /*!< Player's Character Game Characteristics        */
 /*@}*/
 }GEng_t;
 
@@ -54,6 +55,10 @@ void GameEngine(GamePhase_t * GPhase);
   */
 void Stickman_draw(StickMan_t * Man);
 
+/** @brief Draw Background will draw the background depending on the STATE characteristics.
+  *
+  * @param STATES_t Is the enum type of the game engine.
+  */
 void Draw_BackGround(STATES_t * ST);
 
 #endif // _GAMEENGINE_H_
