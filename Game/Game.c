@@ -51,39 +51,43 @@ void CatchGame_Init()
 
 STATES_t GameInitWindow(GEng_t * Machine)
 {
-
-    Draw_BackGround(&Machine->CurrS);
-    update_display();
+    STATES_t NextState = INIT_e;
 
     if(Machine->PrevS == BOOT_e)
     {
         amio_update_audio();
         amio_add_sample_instance("init", PLAY_ONCE, 0.3);
+        Machine->PrevS = INIT_e;
     }
+
+    Draw_BackGround(&Machine->CurrS);
+    update_display();
 
     if(check_if_event())
     {
         wait_for_event();
         if(event_close_display())
         {
-            return END_e;
+            NextState = END_e;
         }
 
         if(event_key_down())
         {
             Machine->PrevS = INIT_e;
-            return SELCTING_e;
+            NextState = SELCTING_e;
         }
     }
 
-    Machine->PrevS = INIT_e;
-    return INIT_e;
+
+    return NextState;
 }
 
 STATES_t GameSelWindow(GEng_t * Machine)
 {
-    Draw_BackGround(&Machine->CurrS);
+    Machine->PrevS = SELCTING_e;
+    STATES_t nextstate = SELCTING_e;
 
+    Draw_BackGround(&Machine->CurrS);
     update_display();
 
     if(check_if_event())
@@ -96,22 +100,73 @@ STATES_t GameSelWindow(GEng_t * Machine)
 
         if(event_key_down())
         {
-
             if(event_key('j'))
             {
                 Machine->Player->color = CYAN;
-                Machine->PrevS = SELCTING_e;
-                return PLAYGND_e;
+                nextstate = PLAYGND_e;
+            }
+            else if(event_key('r'))
+            {
+                Machine->Player->color = RED;
+                nextstate = STARTING_e;
+            }
+            else if(event_key('g'))
+            {
+                Machine->Player->color = GREEN;
+                nextstate = STARTING_e;
+            }
+            else if(event_key('b'))
+            {
+                Machine->Player->color = BLUE;
+                nextstate = STARTING_e;
+            }
+            else if(event_key('w'))
+            {
+                Machine->Player->color = WHITE;
+                nextstate = STARTING_e;
             }
         }
     }
-
-    Machine->PrevS = SELCTING_e;
-    return SELCTING_e;
+    return nextstate;
 }
 
 STATES_t GameSRTWindow(GEng_t * Machine)
 {
+    STATES_t NextState = STARTING_e;
+
+    Draw_BackGround(&Machine->CurrS);
+    Stickman_draw(Machine->Player);
+    update_display();
+    if(check_if_event())
+    {
+        wait_for_event();
+        if(event_close_display())
+        {
+            Machine->PrevS = PLAYGND_e;
+            NextState = END_e;
+        }
+        else
+        {
+            if(event_key_down())
+            {
+                if(event_key('q'))
+                {
+                    Machine->PrevS = STARTING_e;
+                    NextState = END_e;
+                }
+            }
+            else if (event_key_right_arrow())
+            {
+                Machine->Player->move_x++;
+            }
+            else if(event_key_left_arrow())
+            {
+                Machine->Player->move_x--;
+            }
+        }
+    }
+
+    return NextState;
 }
 
 STATES_t GameLV1Window(GEng_t * Machine)
@@ -128,7 +183,7 @@ STATES_t GameRETWindow(GEng_t * Machine)
 
 STATES_t GamePGNWindow(GEng_t * Machine)
 {
-
+    STATES_t NextState = PLAYGND_e;
     Draw_BackGround(&Machine->CurrS);
     Stickman_draw(Machine->Player);
 
@@ -140,28 +195,37 @@ STATES_t GamePGNWindow(GEng_t * Machine)
         if(event_close_display())
         {
             Machine->PrevS = PLAYGND_e;
-            return END_e;
+            NextState = END_e;
         }
-        if(event_key_down())
+        else
         {
-            if(event_key('q'))
+            if(event_key_down())
             {
-                Machine->PrevS = PLAYGND_e;
-                return END_e;
+                if(event_key('q'))
+                {
+                    Machine->PrevS = PLAYGND_e;
+                    NextState = END_e;
+                }
+                else if(event_key('r')) //Todo: Only for debug (Delete this transition after)
+                {
+                    Machine->PrevS = INIT_e; //Might produce a bug
+                    NextState = SELCTING_e;
+                }
+            }
+            else if (event_key_right_arrow())
+            {
+                Machine->Player->move_x++;
+            }
+            else if(event_key_left_arrow())
+            {
+                Machine->Player->move_x--;
             }
         }
-        else if (event_key_right_arrow())
-        {
-            Machine->Player->move_x++;
-        }
-        else if(event_key_left_arrow())
-        {
-            Machine->Player->move_x--;
-        }
+
     }
 
     Machine->PrevS = PLAYGND_e;
-    return PLAYGND_e;
+    return NextState;
 }
 
 STATES_t GameEndWindow(GEng_t * Machine)
@@ -174,11 +238,14 @@ STATES_t GameEndWindow(GEng_t * Machine)
         case SELCTING_e:
             dprintf("Ending from Colour Select\n");
             break;
+        case STARTING_e:
+            dprintf("Ending from Starting Window\n");
+            break;
         case PLAYGND_e:
-            dprintf("Ending from Playground");
+            dprintf("Ending from Playground\n");
             break;
         default:
-            dprintf("Ended from ??");
+            dprintf("Ended from ??\n");
             break;
     }
     return END_e;
