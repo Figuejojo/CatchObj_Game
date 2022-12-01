@@ -12,12 +12,13 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=c11" />
 					<Add option="-g" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
-					<Add library="../advanced_example/lib/liballegro_monolith.dll.a" />
-					<Add library="../advanced_example/lib/liballegro_monolith-debug.dll.a" />
+					<Add library="lib/liballegro_monolith.dll.a" />
+					<Add library="lib/liballegro_monolith-debug.dll.a" />
 					<Add directory="lib" />
 				</Linker>
 			</Target>
@@ -25,6 +26,15 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="Game/Game.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Game/Game.h" />
+		<Unit filename="Game/GameEngine.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Game/GameEngine.h" />
+		<Unit filename="Game/GameTypes.h" />
 		<Unit filename="include/amio.h" />
 		<Unit filename="include/amio_functions.c">
 			<Option compilerVar="CC" />
