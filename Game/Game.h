@@ -45,6 +45,13 @@ STATES_t GameInitWindow(GEng_t * Machine);
  */
 STATES_t GameSelWindow(GEng_t * Machine);
 
+/** @brief Starting State previous to the main game levels, where the player can get use to
+ *          the movements.
+ *
+ *  @param GEng_t ptr. This has the game info.
+ *
+ *  @return The next state to be executed in the state machine.
+ */
 STATES_t GameSRTWindow(GEng_t * Machine);
 
 STATES_t GameLV1Window(GEng_t * Machine);
