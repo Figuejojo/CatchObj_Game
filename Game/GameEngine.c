@@ -51,3 +51,23 @@ void Stickman_draw(StickMan_t * Man)
     line(IPosX + Man->move_x,   LEGY1,  LEGX1 + Man->move_x,    LEGY2,  2);
     line(IPosX + Man->move_x,   LEGY1,  LEGX2 + Man->move_x,    LEGY2,  2);
 }
+
+void Draw_BackGround(STATES_t * ST)
+{
+    switch(*ST)
+    {
+        case PLAYGND_e:
+
+            outtextxy(0,0,"PlayGround Testing");
+            setcolor(LIGHTGRAY);
+            line(0, GND,    WIN_WIDTH,  GND,    3);
+            filled_circle(0,        CANY,   CANR,   LIGHTMAGENTA);
+            filled_circle(WIN_WIDTH,CANY,   CANR,   LIGHTMAGENTA);
+
+            break;
+
+        default:
+            break;
+    }
+
+}

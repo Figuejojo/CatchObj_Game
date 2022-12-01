@@ -134,10 +134,8 @@ STATES_t GameRETWindow(GEng_t * Machine)
 
 STATES_t GamePGNWindow(GEng_t * Machine)
 {
-    outtextxy(0,0,"PlayGround Testing");
 
-    setcolor(LIGHTGRAY);
-    line(0,GND,WIN_WIDTH,GND,3);
+    Draw_BackGround(&Machine->CurrS);
 
     Stickman_draw(Machine->Player);
 

@@ -54,4 +54,6 @@ void GameEngine(GamePhase_t * GPhase);
   */
 void Stickman_draw(StickMan_t * Man);
 
+void Draw_BackGround(STATES_t * ST);
+
 #endif // _GAMEENGINE_H_
