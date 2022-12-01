@@ -26,9 +26,31 @@
 #define dprintf //
 #endif // _DEBUG
 
+/*! Game Definitions */
 #define WIN_WIDTH (800)
 #define WIN_HIGH  (600)
 #define GND       (500)
+
+/*! Player Definitions */
+#define IPosX     (WIN_WIDTH/2)
+#define IPosY     (GND)
+#define HeadY     (GND-100)
+#define HeadR     (15)
+#define BodyY1    (HeadY+HeadR)
+#define BodyY2    (BodyY1+60)
+
+#define LEGY1     (BodyY2)
+#define LEGY2     (GND)
+#define LEGX1     (IPosX-15)
+#define LEGX2     (IPosX+15)
+
+#define ArmY1     (BodyY1+50)
+#define ArmY2     (ArmY1-30)
+#define Arm1X     (IPosX-15)
+#define Arm2X     (IPosX+15)
+
+#define HANDRANGE (30)
+
 
 /*******************************************************************************
 * Type definitions
