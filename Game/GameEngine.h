@@ -46,5 +46,5 @@ typedef struct GameEngine
   */
 void GameEngine(GamePhase_t * GPhase);
 
-
+void StickMan();
 #endif // _GAMEENGINE_H_

@@ -28,6 +28,7 @@
 
 #define WIN_WIDTH (800)
 #define WIN_HIGH  (600)
+#define GND       (500)
 
 /*******************************************************************************
 * Type definitions
@@ -54,6 +55,12 @@ typedef enum
 /*@}*/
 }STATES_t;
 
+typedef struct player
+{
+    int score;
+    int color;
+    int move_t;
+}StickMan_t;
 /*******************************************************************************
 * Function Prototypes
 *******************************************************************************/

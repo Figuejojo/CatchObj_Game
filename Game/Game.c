@@ -81,7 +81,6 @@ STATES_t GameInitWindow(STATES_t * PrevState)
     return INIT_e;
 }
 
-
 STATES_t GameSelWindow(STATES_t * PrevState)
 {
     const char jump = 20;
@@ -105,6 +104,9 @@ STATES_t GameSelWindow(STATES_t * PrevState)
         {
             if(event_key('j'))
             {
+                StickMan_t Player;
+                Player.color = CYAN;
+
                 *PrevState = SELCTING_e;
                 return PLAYGND_e;
             }
@@ -114,7 +116,6 @@ STATES_t GameSelWindow(STATES_t * PrevState)
     *PrevState = SELCTING_e;
     return SELCTING_e;
 }
-
 
 STATES_t GameSRTWindow(STATES_t * PrevState)
 {
@@ -134,7 +135,12 @@ STATES_t GameRETWindow(STATES_t * PrevState)
 
 STATES_t GamePGNWindow(STATES_t * PrevState)
 {
-    outtextxy(WIN_HIGH/2,WIN_HIGH/2-50,"PlayGround Testing");
+    outtextxy(0,0,"PlayGround Testing");
+
+    setcolor(LIGHTGRAY);
+    line(0,GND,WIN_WIDTH,GND,3);
+
+    update_display();
 
     if(check_if_event())
     {
@@ -153,8 +159,6 @@ STATES_t GamePGNWindow(STATES_t * PrevState)
             }
         }
     }
-
-    update_display();
 
     *PrevState = PLAYGND_e;
     return PLAYGND_e;
