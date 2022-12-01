@@ -34,7 +34,7 @@ void CatchGame_Init(void);
  *
  *  @return The next state to be executed in the state machine.
  */
-STATES_t GameInitWindow(STATES_t * PrevState);
+STATES_t GameInitWindow(GEng_t * Machine);
 
 /** @brief Colour Selection function. It display the available colors for the player to
  *          choose.
@@ -43,15 +43,15 @@ STATES_t GameInitWindow(STATES_t * PrevState);
  *
  *  @return The next state to be executed in the state machine.
  */
-STATES_t GameSelWindow(STATES_t * PrevState);
+STATES_t GameSelWindow(GEng_t * Machine);
 
-STATES_t GameSRTWindow(STATES_t * PrevState);
+STATES_t GameSRTWindow(GEng_t * Machine);
 
-STATES_t GameLV1Window(STATES_t * PrevState);
+STATES_t GameLV1Window(GEng_t * Machine);
 
-STATES_t GameLVFWindow(STATES_t * PrevState);
+STATES_t GameLVFWindow(GEng_t * Machine);
 
-STATES_t GameRETWindow(STATES_t * PrevState);
+STATES_t GameRETWindow(GEng_t * Machine);
 
 /** @brief Hidden playground level for the developers to test all the game elements.
  *
@@ -59,7 +59,7 @@ STATES_t GameRETWindow(STATES_t * PrevState);
  *
  *  @return The next state to be executed in the state machine.
  */
-STATES_t GamePGNWindow(STATES_t * PrevState);
+STATES_t GamePGNWindow(GEng_t * Machine);
 
 /** @brief Last element of the State Machine. It handles the exit of the game depending
  *          of the previous state.
@@ -68,7 +68,7 @@ STATES_t GamePGNWindow(STATES_t * PrevState);
  *
  *  @return The next state to be executed in the state machine.
  */
-STATES_t GameEndWindow(STATES_t * PrevState);
+STATES_t GameEndWindow(GEng_t * Machine);
 
 
 #endif // _GAME_H_

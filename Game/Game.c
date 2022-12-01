@@ -49,9 +49,9 @@ void CatchGame_Init()
     closegraph();
 }
 
-STATES_t GameInitWindow(STATES_t * PrevState)
+STATES_t GameInitWindow(GEng_t * Machine)
 {
-    if(*PrevState != BOOT_e)
+    if(Machine->PrevS != BOOT_e)
     {
         amio_update_audio();
         outtextxy(WIN_HIGH/2,WIN_HIGH/2-100,"Welcome to the catch game!");
@@ -72,16 +72,16 @@ STATES_t GameInitWindow(STATES_t * PrevState)
 
         if(event_key_down())
         {
-            *PrevState = INIT_e;
+            Machine->PrevS = INIT_e;
             return SELCTING_e;
         }
     }
 
-    *PrevState = INIT_e;
+    Machine->PrevS = INIT_e;
     return INIT_e;
 }
 
-STATES_t GameSelWindow(STATES_t * PrevState)
+STATES_t GameSelWindow(GEng_t * Machine)
 {
     const char jump = 20;
 
@@ -102,43 +102,44 @@ STATES_t GameSelWindow(STATES_t * PrevState)
 
         if(event_key_down())
         {
+
             if(event_key('j'))
             {
-                StickMan_t Player;
-                Player.color = CYAN;
-
-                *PrevState = SELCTING_e;
+                Machine->Player->color = CYAN;
+                Machine->PrevS = SELCTING_e;
                 return PLAYGND_e;
             }
         }
     }
 
-    *PrevState = SELCTING_e;
+    Machine->PrevS = SELCTING_e;
     return SELCTING_e;
 }
 
-STATES_t GameSRTWindow(STATES_t * PrevState)
+STATES_t GameSRTWindow(GEng_t * Machine)
 {
 }
 
-STATES_t GameLV1Window(STATES_t * PrevState)
+STATES_t GameLV1Window(GEng_t * Machine)
 {
 }
 
-STATES_t GameLVFWindow(STATES_t * PrevState)
+STATES_t GameLVFWindow(GEng_t * Machine)
 {
 }
 
-STATES_t GameRETWindow(STATES_t * PrevState)
+STATES_t GameRETWindow(GEng_t * Machine)
 {
 }
 
-STATES_t GamePGNWindow(STATES_t * PrevState)
+STATES_t GamePGNWindow(GEng_t * Machine)
 {
     outtextxy(0,0,"PlayGround Testing");
 
     setcolor(LIGHTGRAY);
     line(0,GND,WIN_WIDTH,GND,3);
+
+    filled_circle(WIN_WIDTH/2,GND-80,10,Machine->Player->color);
 
     update_display();
 
@@ -147,26 +148,26 @@ STATES_t GamePGNWindow(STATES_t * PrevState)
         wait_for_event();
         if(event_close_display())
         {
-            *PrevState = PLAYGND_e;
+            Machine->PrevS = PLAYGND_e;
             return END_e;
         }
         if(event_key_down())
         {
             if(event_key('q'))
             {
-                *PrevState = PLAYGND_e;
+                Machine->PrevS = PLAYGND_e;
                 return END_e;
             }
         }
     }
 
-    *PrevState = PLAYGND_e;
+    Machine->PrevS = PLAYGND_e;
     return PLAYGND_e;
 }
 
-STATES_t GameEndWindow(STATES_t * PrevState)
+STATES_t GameEndWindow(GEng_t * Machine)
 {
-    switch(*PrevState)
+    switch(Machine->PrevS)
     {
         case INIT_e:
             dprintf("Ending from Init\n");

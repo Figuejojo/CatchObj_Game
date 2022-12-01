@@ -21,13 +21,15 @@ void GameEngine(GamePhase_t * GPhase)
 {
     dprintf("Game Engine\n");
     GEng_t Machine;
+    StickMan_t Player1;
     Machine.CurrS = INIT_e;
     Machine.PrevS = BOOT_e;
+    Machine.Player = &Player1;
 
     do
     {
         cleardevice();
-        Machine.CurrS = GPhase[Machine.CurrS](&Machine.PrevS);
+        Machine.CurrS = GPhase[Machine.CurrS](&Machine);
     }while(Machine.CurrS != END_e);
-    GPhase[END_e](&Machine.PrevS);
+    GPhase[END_e](&Machine);
 }

@@ -20,8 +20,6 @@
 * Type definitions
 *******************************************************************************/
 
-typedef STATES_t (*GamePhase_t)(STATES_t*);    /**< Typedef of a Function Pointer to window function */
-
 /**
  * @name StateMachine
  * @brief State Machine for the Game Engine.
@@ -31,8 +29,11 @@ typedef struct GameEngine
 /*@{*/
     STATES_t CurrS;         /*!< This is the Current State to be executed       */
     STATES_t PrevS;         /*!< This is the Previous State that was executed   */
+    StickMan_t * Player;
 /*@}*/
 }GEng_t;
+
+typedef STATES_t (*GamePhase_t)(GEng_t*);    /**< Typedef of a Function Pointer to window function */
 
 /*******************************************************************************
 * Function Prototypes
