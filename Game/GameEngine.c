@@ -85,7 +85,7 @@ void Draw_BackGround(STATES_t * ST)
         case STARTING_e:
             outtextxy(WIN_WIDTH/4,0,"TO START PRESS THE S BUTTON");
             outtextxy(WIN_WIDTH/4,20,"HOW TO PLAY: ");
-            outtextxy(WIN_WIDTH/4,40,"Move around using the <- and -> keys");
+            outtextxy(WIN_WIDTH/4,40,"Move around using mouse");
             setcolor(LIGHTGRAY);
             line(0, GND,    WIN_WIDTH,  GND,    3);
             filled_circle(0,        CANY,   CANR,   LIGHTMAGENTA);
@@ -104,6 +104,69 @@ void Draw_BackGround(STATES_t * ST)
         default:
             break;
     }
-
 }
 
+STATES_t EventHandler(GEng_t * GE)
+{
+    if(check_if_event())
+    {
+        wait_for_event();
+        if(event_close_display())
+        {
+            GE->PrevS = GE->CurrS;
+            return END_e;
+        }
+        else if(event_key_down())
+        {
+            switch(GE->CurrS)
+            {
+                case SELCTING_e:
+                    if(event_key('j'))
+                    {
+                        GE->Player->color = CYAN;
+                        return PLAYGND_e;
+                    }
+                    else if(event_key('r'))
+                    {
+                        GE->Player->color = RED;
+                        return STARTING_e;
+                    }
+                    else if(event_key('g'))
+                    {
+                        GE->Player->color = GREEN;
+                        return STARTING_e;
+                    }
+                    else if(event_key('b'))
+                    {
+                        GE->Player->color = BLUE;
+                        return STARTING_e;
+                    }
+                    else if(event_key('w'))
+                    {
+                        GE->Player->color = WHITE;
+                        return STARTING_e;
+                    }
+                    break;
+                case PLAYGND_e:
+                    if(event_key('q'))
+                    {
+                        GE->PrevS = PLAYGND_e;
+                        return END_e;
+                    }
+                    break;
+                case INIT_e:
+                    GE->PrevS = GE->CurrS;
+                    return SELCTING_e;
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if(event_mouse_position_changed())
+        {
+            get_mouse_coordinates();
+            GE->Player->move_x = XMOUSE;
+        }
+    }
+    return GE->CurrS;
+}

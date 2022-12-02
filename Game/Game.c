@@ -66,20 +66,7 @@ STATES_t GameInitWindow(GEng_t * Machine)
     Draw_BackGround(&Machine->CurrS);
     update_display();
 
-    if(check_if_event())
-    {
-        wait_for_event();
-        if(event_close_display())
-        {
-            NextState = END_e;
-        }
-
-        if(event_key_down())
-        {
-            Machine->PrevS = INIT_e;
-            NextState = SELCTING_e;
-        }
-    }
+    NextState = EventHandler(Machine);
 
     return NextState;
 }
@@ -92,43 +79,8 @@ STATES_t GameSelWindow(GEng_t * Machine)
     Draw_BackGround(&Machine->CurrS);
     update_display();
 
-    if(check_if_event())
-    {
-        wait_for_event();
-        if(event_close_display())
-        {
-            NextState =  END_e;
-        }
+    NextState = EventHandler(Machine);
 
-        if(event_key_down())
-        {
-            if(event_key('j'))
-            {
-                Machine->Player->color = CYAN;
-                NextState = PLAYGND_e;
-            }
-            else if(event_key('r'))
-            {
-                Machine->Player->color = RED;
-                NextState = STARTING_e;
-            }
-            else if(event_key('g'))
-            {
-                Machine->Player->color = GREEN;
-                NextState = STARTING_e;
-            }
-            else if(event_key('b'))
-            {
-                Machine->Player->color = BLUE;
-                NextState = STARTING_e;
-            }
-            else if(event_key('w'))
-            {
-                Machine->Player->color = WHITE;
-                NextState = STARTING_e;
-            }
-        }
-    }
     return NextState;
 }
 
@@ -140,34 +92,7 @@ STATES_t GameSRTWindow(GEng_t * Machine)
     Stickman_draw(Machine->Player);
     update_display();
 
-    if(check_if_event())
-    {
-        wait_for_event();
-        if(event_close_display())
-        {
-            Machine->PrevS = PLAYGND_e;
-            NextState = END_e;
-        }
-        else
-        {
-            if(event_key_down())
-            {
-                if(event_key('q'))
-                {
-                    Machine->PrevS = STARTING_e;
-                    NextState = END_e;
-                }
-            }
-            else if (event_key_right_arrow())
-            {
-                Machine->Player->move_x++;
-            }
-            else if(event_key_left_arrow())
-            {
-                Machine->Player->move_x--;
-            }
-        }
-    }
+    NextState = (EventHandler(Machine) == END_e)? (END_e):(NextState);
 
     return NextState;
 }
@@ -195,36 +120,7 @@ STATES_t GamePGNWindow(GEng_t * Machine)
     update_display();
 
     pausefor(5);
-    if(check_if_event())
-    {
-        wait_for_event();
-        if(event_close_display())
-        {
-            Machine->PrevS = PLAYGND_e;
-            NextState = END_e;
-        }
-        else
-        {
-            if(event_mouse_position_changed())
-            {
-                get_mouse_coordinates();
-                Machine->Player->move_x = XMOUSE;
-            }
-            if(event_key_down())
-            {
-                if(event_key('q'))
-                {
-                    Machine->PrevS = PLAYGND_e;
-                    NextState = END_e;
-                }
-                else if(event_key('r')) //Todo: Only for debug (Delete this transition after)
-                {
-                    Machine->PrevS = INIT_e; //Might produce a bug
-                    NextState = SELCTING_e;
-                }
-            }
-        }
-    }
+    NextState = EventHandler(Machine);
 
     Machine->PrevS = PLAYGND_e;
     return NextState;

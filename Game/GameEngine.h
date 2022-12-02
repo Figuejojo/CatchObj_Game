@@ -61,4 +61,9 @@ void Stickman_draw(StickMan_t * Man);
   */
 void Draw_BackGround(STATES_t * ST);
 
+/** @brief EventHandler function creates a portable method for using the event functions for
+  *         mouse, keyboard and display in a easy way.
+  * @param STATES_t Is the enum type of the game engine.
+  */
+STATES_t EventHandler(GEng_t * GE);
 #endif // _GAMEENGINE_H_
