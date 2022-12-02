@@ -77,7 +77,7 @@ void Draw_BackGround(STATES_t * ST)
         case SELCTING_e:
             outtextxy(WIN_HIGH/2,WIN_HIGH/2-100,"Choose you character Color");
             outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump,"r - red");
-            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump*2,"g - red");
+            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump*2,"g - green");
             outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump*3,"b - blue");
             outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump*4,"w - white");
             break;
