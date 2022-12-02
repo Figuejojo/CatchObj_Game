@@ -23,10 +23,12 @@ void CatchGame_Init()
     initwindow(WIN_WIDTH, WIN_HIGH);
     initfont();
     initkeyboard();
+    initmouse();
 
     create_event_queue();
 
     reg_keyboard_events();
+    reg_mouse_events();
     reg_display_events();
 
     amio_init_audio();
@@ -44,6 +46,7 @@ void CatchGame_Init()
                                };
     GameEngine(GamePhases);
 
+    closemouse();
     closekeyboard();
     amio_destroy_audio();
     closegraph();
@@ -78,14 +81,13 @@ STATES_t GameInitWindow(GEng_t * Machine)
         }
     }
 
-
     return NextState;
 }
 
 STATES_t GameSelWindow(GEng_t * Machine)
 {
     Machine->PrevS = SELCTING_e;
-    STATES_t nextstate = SELCTING_e;
+    STATES_t NextState = SELCTING_e;
 
     Draw_BackGround(&Machine->CurrS);
     update_display();
@@ -95,7 +97,7 @@ STATES_t GameSelWindow(GEng_t * Machine)
         wait_for_event();
         if(event_close_display())
         {
-            return END_e;
+            NextState =  END_e;
         }
 
         if(event_key_down())
@@ -103,31 +105,31 @@ STATES_t GameSelWindow(GEng_t * Machine)
             if(event_key('j'))
             {
                 Machine->Player->color = CYAN;
-                nextstate = PLAYGND_e;
+                NextState = PLAYGND_e;
             }
             else if(event_key('r'))
             {
                 Machine->Player->color = RED;
-                nextstate = STARTING_e;
+                NextState = STARTING_e;
             }
             else if(event_key('g'))
             {
                 Machine->Player->color = GREEN;
-                nextstate = STARTING_e;
+                NextState = STARTING_e;
             }
             else if(event_key('b'))
             {
                 Machine->Player->color = BLUE;
-                nextstate = STARTING_e;
+                NextState = STARTING_e;
             }
             else if(event_key('w'))
             {
                 Machine->Player->color = WHITE;
-                nextstate = STARTING_e;
+                NextState = STARTING_e;
             }
         }
     }
-    return nextstate;
+    return NextState;
 }
 
 STATES_t GameSRTWindow(GEng_t * Machine)
@@ -137,6 +139,7 @@ STATES_t GameSRTWindow(GEng_t * Machine)
     Draw_BackGround(&Machine->CurrS);
     Stickman_draw(Machine->Player);
     update_display();
+
     if(check_if_event())
     {
         wait_for_event();
@@ -171,14 +174,17 @@ STATES_t GameSRTWindow(GEng_t * Machine)
 
 STATES_t GameLV1Window(GEng_t * Machine)
 {
+    return END_e;
 }
 
 STATES_t GameLVFWindow(GEng_t * Machine)
 {
+    return END_e;
 }
 
 STATES_t GameRETWindow(GEng_t * Machine)
 {
+    return END_e;
 }
 
 STATES_t GamePGNWindow(GEng_t * Machine)
@@ -186,9 +192,9 @@ STATES_t GamePGNWindow(GEng_t * Machine)
     STATES_t NextState = PLAYGND_e;
     Draw_BackGround(&Machine->CurrS);
     Stickman_draw(Machine->Player);
-
     update_display();
 
+    pausefor(5);
     if(check_if_event())
     {
         wait_for_event();
@@ -199,6 +205,11 @@ STATES_t GamePGNWindow(GEng_t * Machine)
         }
         else
         {
+            if(event_mouse_position_changed())
+            {
+                get_mouse_coordinates();
+                Machine->Player->move_x = XMOUSE;
+            }
             if(event_key_down())
             {
                 if(event_key('q'))
@@ -212,16 +223,7 @@ STATES_t GamePGNWindow(GEng_t * Machine)
                     NextState = SELCTING_e;
                 }
             }
-            else if (event_key_right_arrow())
-            {
-                Machine->Player->move_x++;
-            }
-            else if(event_key_left_arrow())
-            {
-                Machine->Player->move_x--;
-            }
         }
-
     }
 
     Machine->PrevS = PLAYGND_e;

@@ -22,7 +22,7 @@ void GameEngine(GamePhase_t * GPhase)
 {
     dprintf("Game Engine\n");
     GEng_t Machine;
-    StickMan_t Player1 = {0,0,0};
+    StickMan_t Player1 = {0,0,WIN_WIDTH/2};
     Machine.CurrS = INIT_e;
     Machine.PrevS = BOOT_e;
     Machine.Player = &Player1;
@@ -40,17 +40,26 @@ void Stickman_draw(StickMan_t * Man)
     //Set all lines to be the indicated color.
     setcolor(Man->color);
 
+    if(Man->move_x < 15)
+    {
+        Man->move_x = 15;
+    }
+    else if (Man->move_x > WIN_WIDTH-15)
+    {
+        Man->move_x = WIN_WIDTH-15;
+    }
+
     //Face
-    filled_circle(WIN_WIDTH/2 + Man->move_x,    GND-80, 15, Man->color);
+    filled_circle(Man->move_x,    GND-80, 15, Man->color);
 
     //Body
-    line(IPosX + Man->move_x,  BodyY1,  IPosX + Man->move_x,    BodyY2, 2);
+    line(Man->move_x,  BodyY1,  Man->move_x,    BodyY2, 2);
     //Arms
-    line(IPosX + Man->move_x,   ArmY1,  Arm1X + Man->move_x,    ArmY2,  2);
-    line(IPosX + Man->move_x,   ArmY1,  Arm2X + Man->move_x,    ArmY2,  2);
+    line(Man->move_x,   ArmY1,  Man->move_x + ARM2X,    ArmY2,  2);
+    line(Man->move_x,   ArmY1,  Man->move_x + ARM1X,    ArmY2,  2);
     //Legs
-    line(IPosX + Man->move_x,   LEGY1,  LEGX1 + Man->move_x,    LEGY2,  2);
-    line(IPosX + Man->move_x,   LEGY1,  LEGX2 + Man->move_x,    LEGY2,  2);
+    line(Man->move_x,   LEGY1,  Man->move_x + LEGX2,    LEGY2,  2);
+    line(Man->move_x,   LEGY1,  Man->move_x + LEGX1,    LEGY2,  2);
 }
 
 void Draw_BackGround(STATES_t * ST)

@@ -42,13 +42,13 @@
 
 #define LEGY1     (BodyY2)
 #define LEGY2     (GND)
-#define LEGX1     (IPosX-15)
-#define LEGX2     (IPosX+15)
+#define LEGX1     (-15)
+#define LEGX2     (+15)
 
 #define ArmY1     (BodyY1+50)
 #define ArmY2     (ArmY1-30)
-#define Arm1X     (IPosX-15)
-#define Arm2X     (IPosX+15)
+#define ARM1X     (-15)
+#define ARM2X     (+15)
 
 #define HANDRANGE (30)
 
