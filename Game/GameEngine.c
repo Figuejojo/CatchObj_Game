@@ -20,7 +20,9 @@
 
 void GameEngine(GamePhase_t * GPhase)
 {
-    dprintf("Game Engine\n");
+    ASSERT(GPhase != NULL);
+
+    dprintf("Game Engine - Debug print and ASSERTS ON\n");
     GEng_t Machine;
     StickMan_t Player1 = {0,0,WIN_WIDTH/2};
     Machine.CurrS = INIT_e;
@@ -30,13 +32,21 @@ void GameEngine(GamePhase_t * GPhase)
     do
     {
         cleardevice();
+
+        ASSERT(Machine.CurrS >= BOOT_e && Machine.CurrS < END_e);
+        ASSERT(GPhase[Machine.CurrS] != NULL);
+
         Machine.CurrS = GPhase[Machine.CurrS](&Machine);
+
     }while(Machine.CurrS != END_e);
+
+    ASSERT(GPhase[END_e] != NULL);
     GPhase[END_e](&Machine);
 }
 
 void Stickman_draw(StickMan_t * Man)
 {
+    ASSERT(Man->color == RED || Man->color == CYAN || Man->color == GREEN || Man->color == WHITE || Man->color == BLUE);
     //Set all lines to be the indicated color.
     setcolor(Man->color);
 
@@ -48,6 +58,7 @@ void Stickman_draw(StickMan_t * Man)
     {
         Man->move_x = WIN_WIDTH-15;
     }
+    ASSERT(Man->move_x >= 15 && Man->move_x <= WIN_WIDTH-15);
 
     //Face
     filled_circle(Man->move_x,    GND-80, 15, Man->color);
@@ -62,10 +73,13 @@ void Stickman_draw(StickMan_t * Man)
     line(Man->move_x,   LEGY1,  Man->move_x + LEGX1,    LEGY2,  2);
 }
 
+//!-- @TODO: CHECK THE ASSERTS FOR THIS FUNCTION
 void Draw_BackGround(STATES_t * ST)
 {
     char jump = 20;
     setcolor(LIGHTGRAY);
+    //ASSERT(*ST != NULL);
+    //ASSERT(*ST > INIT_e && *ST < END_e);
     switch(*ST)
     {
         case INIT_e:
@@ -108,6 +122,7 @@ void Draw_BackGround(STATES_t * ST)
 
 STATES_t EventHandler(GEng_t * GE)
 {
+    ASSERT(GE != NULL);
     if(check_if_event())
     {
         wait_for_event();

@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <conio.h>
 #include <math.h>
+#include <assert.h>
 
 /*******************************************************************************
 * Macro Definitions
@@ -22,8 +23,10 @@
 #define _DEBUG (1)
 
 #if _DEBUG == 1
+#define ASSERT assert
 #define dprintf printf
 #else
+#define ASSERT //
 #define dprintf //
 #endif // _DEBUG
 
