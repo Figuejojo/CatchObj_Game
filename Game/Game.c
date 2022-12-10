@@ -123,8 +123,11 @@ STATES_t GamePGNWindow(GEng_t * Machine)
 {
     ASSERT(Machine != NULL);
     STATES_t NextState = PLAYGND_e;
+
     Draw_BackGround(&Machine->CurrS);
+    //Draw_Object(&Machine,number)
     Stickman_draw(Machine->Player);
+
     update_display();
 
     pausefor(5);
