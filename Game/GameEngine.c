@@ -73,13 +73,11 @@ void Stickman_draw(StickMan_t * Man)
     line(Man->move_x,   LEGY1,  Man->move_x + LEGX1,    LEGY2,  2);
 }
 
-//!-- @TODO: CHECK THE ASSERTS FOR THIS FUNCTION
 void Draw_BackGround(STATES_t * ST)
 {
     char jump = 20;
     setcolor(LIGHTGRAY);
     ASSERT(ST != NULL);
-    dprintf("%d",*ST);
     ASSERT(*ST >= INIT_e && *ST < END_e);
     switch(*ST)
     {

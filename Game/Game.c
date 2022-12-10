@@ -19,7 +19,7 @@
 
 void CatchGame_Init()
 {
-
+    ASSERT(WIN_WIDTH > 0 && WIN_HIGH > 0);
     initwindow(WIN_WIDTH, WIN_HIGH);
     initfont();
     initkeyboard();
@@ -52,9 +52,12 @@ void CatchGame_Init()
     closegraph();
 }
 
+//! @TODO: Check if any other assert is needed.
 STATES_t GameInitWindow(GEng_t * Machine)
 {
     STATES_t NextState = INIT_e;
+
+    ASSERT(Machine != NULL);
 
     if(Machine->PrevS == BOOT_e)
     {
@@ -73,6 +76,8 @@ STATES_t GameInitWindow(GEng_t * Machine)
 
 STATES_t GameSelWindow(GEng_t * Machine)
 {
+    ASSERT(Machine != NULL);
+
     Machine->PrevS = SELCTING_e;
     STATES_t NextState = SELCTING_e;
 
@@ -86,6 +91,8 @@ STATES_t GameSelWindow(GEng_t * Machine)
 
 STATES_t GameSRTWindow(GEng_t * Machine)
 {
+    ASSERT(Machine != NULL);
+
     STATES_t NextState = STARTING_e;
 
     Draw_BackGround(&Machine->CurrS);
@@ -114,6 +121,7 @@ STATES_t GameRETWindow(GEng_t * Machine)
 
 STATES_t GamePGNWindow(GEng_t * Machine)
 {
+    ASSERT(Machine != NULL);
     STATES_t NextState = PLAYGND_e;
     Draw_BackGround(&Machine->CurrS);
     Stickman_draw(Machine->Player);
@@ -128,6 +136,7 @@ STATES_t GamePGNWindow(GEng_t * Machine)
 
 STATES_t GameEndWindow(GEng_t * Machine)
 {
+    ASSERT(Machine->PrevS >= INIT_e);
     switch(Machine->PrevS)
     {
         case INIT_e:
