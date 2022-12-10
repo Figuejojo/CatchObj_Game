@@ -78,8 +78,9 @@ void Draw_BackGround(STATES_t * ST)
 {
     char jump = 20;
     setcolor(LIGHTGRAY);
-    //ASSERT(*ST != NULL);
-    //ASSERT(*ST > INIT_e && *ST < END_e);
+    ASSERT(ST != NULL);
+    dprintf("%d",*ST);
+    ASSERT(*ST >= INIT_e && *ST < END_e);
     switch(*ST)
     {
         case INIT_e:

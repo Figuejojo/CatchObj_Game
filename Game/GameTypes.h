@@ -69,17 +69,17 @@ typedef enum
     ERR_e           = -3,
     DEFAULT_e       = -2,
 
-    BOOT_e          = -1,
-    INIT_e          =  0,     /*!< This is the Initial State with value of 0     */
-    SELCTING_e          ,     /*!< This is the Selecting State with value of 1   */
-    STARTING_e          ,     /*!< This is the Starting State with value of 2    */
+    BOOT_e          = -1,     /*!< This is a flag used when the program is starting */
+    INIT_e          =  0,     /*!< This is the Initial State with value of 0        */
+    SELCTING_e          ,     /*!< This is the Selecting State with value of 1      */
+    STARTING_e          ,     /*!< This is the Starting State with value of 2       */
 
-    LEVEL1_e            ,     /*!< This is the Level 1 State with value of 2     */
-    LEVELF_e            ,     /*!< This is the Final Level State with value of 2 */
+    LEVEL1_e            ,     /*!< This is the Level 1 State with value of 2        */
+    LEVELF_e            ,     /*!< This is the Final Level State with value of 2    */
 
-    RETRY_= LEVELF_e + 1,     /*!< This is the Retry State with value of 50      */
-    PLAYGND_e           ,     /*!< This is the Playground State with value of 250*/
-    END_e               ,     /*!< This is the END State with value of 51        */
+    RETRY_= LEVELF_e + 1,     /*!< This is the Retry State with value of 50         */
+    PLAYGND_e           ,     /*!< This is the Playground State with value of 250   */
+    END_e               ,     /*!< This is the END State with value of 51           */
 /*@}*/
 }STATES_t;
 
@@ -87,7 +87,7 @@ typedef enum
 typedef struct player
 {
 /*@{*/
-    int score;  /*!< This varaible saves the player score                   */
+    int score;  /*!< This variable saves the player score                   */
     int color;  /*!< This variable saves the character colour               */
     int move_x; /*!< This variable saves the move position of the character */
 /*@}*/
