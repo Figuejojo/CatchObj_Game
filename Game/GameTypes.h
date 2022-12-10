@@ -20,9 +20,7 @@
 /*******************************************************************************
 * Macro Definitions
 *******************************************************************************/
-#define _DEBUG (1)
-
-#if _DEBUG == 1
+#if defined(_DEBUG)
 #define ASSERT assert
 #define dprintf printf
 #else
