@@ -167,6 +167,11 @@ STATES_t EventHandler(GEng_t * GE)
                         GE->PrevS = PLAYGND_e;
                         return END_e;
                     }
+                    else if(event_key('b'))
+                    {
+                        GE->nObjects++;
+                        dprintf("%d \n",GE->nObjects);
+                    }
                     break;
                 case INIT_e:
                     GE->PrevS = GE->CurrS;

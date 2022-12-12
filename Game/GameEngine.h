@@ -31,6 +31,7 @@ typedef struct GameEngine
     STATES_t CurrS;         /*!< This is the Current State to be executed       */
     STATES_t PrevS;         /*!< This is the Previous State that was executed   */
     StickMan_t * Player;    /*!< Player's Character Game Characteristics        */
+    int nObjects;
     proj_t * Object;
 /*@}*/
 }GEng_t;

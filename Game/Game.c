@@ -122,7 +122,14 @@ STATES_t GameRETWindow(GEng_t * Machine)
 STATES_t GamePGNWindow(GEng_t * Machine)
 {
     ASSERT(Machine != NULL);
+
+    if(Machine->PrevS == SELCTING_e)
+    {
+        Machine->nObjects = 0;
+    }
+
     STATES_t NextState = PLAYGND_e;
+    NextState = EventHandler(Machine);
 
     Draw_BackGround(&Machine->CurrS);
     //Draw_Object(&Machine,number)
@@ -131,7 +138,7 @@ STATES_t GamePGNWindow(GEng_t * Machine)
     update_display();
 
     pausefor(5);
-    NextState = EventHandler(Machine);
+
 
     Machine->PrevS = PLAYGND_e;
     return NextState;
