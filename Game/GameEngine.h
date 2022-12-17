@@ -31,8 +31,9 @@ typedef struct GameEngine
     STATES_t CurrS;         /*!< This is the Current State to be executed       */
     STATES_t PrevS;         /*!< This is the Previous State that was executed   */
     StickMan_t * Player;    /*!< Player's Character Game Characteristics        */
-    int nObjects;
-    proj_t * Object;
+    int nObjects;           /*!< Object with a random effect on the player      */
+    int nCatchObjts;        /*!< Object to be catch by the player to gain points*/
+    proj_t * Object;        /*!< Game Objects                                   */
 /*@}*/
 }GEng_t;
 
@@ -49,6 +50,8 @@ typedef STATES_t (*GamePhase_t)(GEng_t*);    /**< Typedef of a Function Pointer 
   *         the different function of each program window (Levels, Init windows, others).
   */
 void GameEngine(GamePhase_t * GPhase);
+
+void Draw_Objects(GEng_t * GE);
 
 /** @brief Stickman_draw will draw the stickman depending on the movement that is passed through the
   *         parameter Man.

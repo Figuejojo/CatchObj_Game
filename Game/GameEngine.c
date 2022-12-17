@@ -28,6 +28,7 @@ void GameEngine(GamePhase_t * GPhase)
     Machine.CurrS = INIT_e;
     Machine.PrevS = BOOT_e;
     Machine.Player = &Player1;
+    Machine.Object = NULL;
 
     do
     {
@@ -42,6 +43,27 @@ void GameEngine(GamePhase_t * GPhase)
 
     ASSERT(GPhase[END_e] != NULL);
     GPhase[END_e](&Machine);
+}
+#define DT (0.05)
+void Draw_Objects(GEng_t * GE)
+{
+    ASSERT(GE != NULL);
+    //!@TODO: object_create();
+    if(GE->Object[0].Pos_y > WIN_HIGH)
+    {
+        printf("End Animation");
+        GE->Object[0].Pos_y = CANY;
+        GE->Object[0].Pos_x = 0;
+        GE->Object[0].vel = -20;
+    }
+    else
+    {
+        GE->Object[0].Pos_x += 5  * cos(DEG2RAD(-65)) * 0.5;
+        GE->Object[0].vel = GE->Object[0].vel + 0.5*9.81*DT;
+        GE->Object[0].Pos_y += GE->Object[0].vel * DT;
+        filled_circle(GE->Object[0].Pos_x,  GE->Object[0].Pos_y,    10, WHITE);
+    }
+    //!@TODO: object_move();
 }
 
 void Stickman_draw(StickMan_t * Man)

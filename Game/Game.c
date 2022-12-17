@@ -125,14 +125,21 @@ STATES_t GamePGNWindow(GEng_t * Machine)
 
     if(Machine->PrevS == SELCTING_e)
     {
-        Machine->nObjects = 0;
+        printf("Just Once");
+        Machine->nObjects = 1;
+        Machine->Object = (proj_t*)malloc(Machine->nObjects*sizeof(proj_t));
+        Machine->Object[0].Pos_y = CANY;
+        Machine->Object[0].IPos_x= Machine->Object[0].IPos_x;
+        Machine->Object[0].Pos_x = CANR;
+        Machine->Object[0].angle = DEG2RAD(0);
+        Machine->Object[0].vel   = -20;
     }
 
     STATES_t NextState = PLAYGND_e;
     NextState = EventHandler(Machine);
 
     Draw_BackGround(&Machine->CurrS);
-    //Draw_Object(&Machine,number)
+    Draw_Objects(Machine);
     Stickman_draw(Machine->Player);
 
     update_display();

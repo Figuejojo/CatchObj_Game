@@ -28,6 +28,10 @@
 #define dprintf //
 #endif // _DEBUG
 
+/*! Macro Functions*/
+#define DEG2RAD(x) (x*PI/180)   ///< Macro Function for Converting between Degrees and Radians
+
+
 /*! Game Definitions */
 #define WIN_WIDTH (800)
 #define WIN_HIGH  (600)
@@ -108,7 +112,6 @@ typedef struct projectile
 {
 /*@{*/
     float IPos_x;  /*!< This variable saves the initial position in X               */
-    float IPos_y;  /*!< This variable saves the initial position in Y               */
     float Pos_x;   /*!< This variable saves Current Position in X of the Projectile */
     float Pos_y;   /*!< This variable saves Current Position in Y of the Projectile */
     float vel;     /*!< This is the total Projectile velocity                       */
