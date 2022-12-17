@@ -131,8 +131,8 @@ STATES_t GamePGNWindow(GEng_t * Machine)
         Machine->Object[0].Pos_y = CANY;
         Machine->Object[0].IPos_x= Machine->Object[0].IPos_x;
         Machine->Object[0].Pos_x = CANR;
-        Machine->Object[0].angle = DEG2RAD(0);
-        Machine->Object[0].vel   = -20;
+        Machine->Object[0].angle = DEG2RAD(-50);
+        Machine->Object[0].vel   = -10;
     }
 
     STATES_t NextState = PLAYGND_e;
