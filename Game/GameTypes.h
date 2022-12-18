@@ -111,12 +111,13 @@ typedef enum
 typedef struct projectile
 {
 /*@{*/
-    float IPos_x;  /*!< This variable saves the initial position in X               */
-    float Pos_x;   /*!< This variable saves Current Position in X of the Projectile */
-    float Pos_y;   /*!< This variable saves Current Position in Y of the Projectile */
-    float vel;     /*!< This is the total Projectile velocity                       */
-    float angle;   /*!< This variable saves the angle of the shooting Projectile    */
-    obj_t type;    /*!< This variable saves the type of the projectile              */
+    int   cannion; /*!< This variable indicates if the obj was shoot from R or L cannon */
+    float IPos_x;  /*!< This variable saves the initial position in X                   */
+    float Pos_x;   /*!< This variable saves Current Position in X of the Projectile     */
+    float Pos_y;   /*!< This variable saves Current Position in Y of the Projectile     */
+    float vel;     /*!< This is the total Projectile velocity                           */
+    float angle;   /*!< This variable saves the angle of the shooting Projectile        */
+    obj_t type;    /*!< This variable saves the type of the projectile                  */
 /*@}*/
 }proj_t;
 

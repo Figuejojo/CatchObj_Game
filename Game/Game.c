@@ -122,17 +122,19 @@ STATES_t GameRETWindow(GEng_t * Machine)
 STATES_t GamePGNWindow(GEng_t * Machine)
 {
     ASSERT(Machine != NULL);
-
     if(Machine->PrevS == SELCTING_e)
     {
-        printf("Just Once");
+        //Range for velocity must be from 0 to 75.
+        //Range for angle depends on the cannon.
+            // Left 0 to -90 -- Right -90 to -180
+        printf("Just Once\n");
         Machine->nObjects = 1;
         Machine->Object = (proj_t*)malloc(Machine->nObjects*sizeof(proj_t));
         Machine->Object[0].Pos_y = CANY;
         Machine->Object[0].IPos_x= Machine->Object[0].IPos_x;
         Machine->Object[0].Pos_x = CANR;
-        Machine->Object[0].angle = DEG2RAD(-50);
-        Machine->Object[0].vel   = -10;
+        Machine->Object[0].angle = DEG2RAD(-100);
+        Machine->Object[0].vel   = 50;
     }
 
     STATES_t NextState = PLAYGND_e;
@@ -172,5 +174,6 @@ STATES_t GameEndWindow(GEng_t * Machine)
             dprintf("Ended from ??\n");
             break;
     }
+    free(Machine->Object);
     return END_e;
 }

@@ -44,38 +44,44 @@ void GameEngine(GamePhase_t * GPhase)
     ASSERT(GPhase[END_e] != NULL);
     GPhase[END_e](&Machine);
 }
-#define DT (0.05)
+#define DT (0.05f)
 void Draw_Objects(GEng_t * GE)
 {
     ASSERT(GE != NULL);
     //!@TODO: object_create();
     if(GE->Object[0].Pos_y > WIN_HIGH)
     {
-        printf("End Animation");
+
+        if((rand() % 2 + 1) == 2)
+        {
+            GE->Object->cannion = (-1);
+            GE->Object[0].Pos_x = WIN_WIDTH - 10;
+        }
+        else
+        {
+            GE->Object->cannion = (+1);
+            GE->Object[0].Pos_x = 10;
+        }
+
         GE->Object[0].Pos_y = CANY;
-        GE->Object[0].Pos_x = 0;
-        GE->Object[0].angle = DEG2RAD(-45);
-        GE->Object[0].vel   = -50;
+        GE->Object[0].angle = DEG2RAD(-rand_number(0,45));//-rand() % 85);
+        GE->Object[0].vel   = rand_number(10,75);//rand() % 75;
+
     }
     else
     {
         float VelX = GE->Object[0].vel * cos(GE->Object[0].angle);
-        GE->Object[0].Pos_x += VelX * DT;
+        GE->Object[0].Pos_x += GE->Object->cannion*VelX * DT;
+
         float NewVelY = GE->Object[0].vel * sin((GE->Object[0].angle)) + 9.81*DT;
         GE->Object[0].Pos_y += NewVelY * DT;
 
         filled_circle(10,  GE->Object[0].Pos_y,    10, WHITE);
         filled_circle(GE->Object[0].Pos_x,  CANY, 10, WHITE);
         filled_circle(GE->Object[0].Pos_x,  GE->Object[0].Pos_y, 10, CYAN);
+
         GE->Object[0].angle = atan(NewVelY/VelX);
         GE->Object[0].vel = sqrt(pow(NewVelY,2)+pow(VelX,2));
-
-        #if 0
-        GE->Object[0].Pos_x += 5  * cos(DEG2RAD(-65)) * 0.5;
-        GE->Object[0].vel = GE->Object[0].vel + 0.5*9.81*DT;
-        GE->Object[0].Pos_y += GE->Object[0].vel * DT;
-        filled_circle(GE->Object[0].Pos_x,  GE->Object[0].Pos_y,    10, WHITE);
-        #endif
     }
     //!@TODO: object_move();
 }
