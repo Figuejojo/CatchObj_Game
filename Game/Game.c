@@ -33,7 +33,7 @@ void CatchGame_Init()
 
     amio_init_audio();
     amio_load_sample("init", "./data/mixkit-magic-astral-sweep-effect-2629.wav");
-
+    amio_load_sample("trans", "./data/mixkit-fast-small-sweep-transition-166.wav");
 
     GamePhase_t GamePhases[] = {GameInitWindow,
                                 GameSelWindow ,
@@ -85,6 +85,12 @@ STATES_t GameSelWindow(GEng_t * Machine)
 {
     ASSERT(Machine != NULL);
 
+    if(Machine->PrevS == INIT_e)
+    {
+        amio_add_sample_instance("trans", PLAY_ONCE, 1);
+        amio_update_audio();
+    }
+
     Machine->PrevS = SELCTING_e;
     STATES_t NextState = SELCTING_e;
 
@@ -102,7 +108,8 @@ STATES_t GameSRTWindow(GEng_t * Machine)
 
     if(Machine->PrevS == SELCTING_e)
     {
-        dprintf("Start Menu");
+        amio_add_sample_instance("trans", PLAY_ONCE, 1);
+        amio_update_audio();
         Machine->PrevS = STARTING_e;
         Machine->nObjects = 0;
     }
