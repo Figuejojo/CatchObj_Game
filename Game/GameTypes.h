@@ -32,7 +32,7 @@
 #define DEG2RAD(x) (x*PI/180)   ///< Macro Function for Converting between Degrees and Radians
 
 /*! Game Definitions*/
-#define ATTEMPTS (8)
+#define ATTEMPTS (2)
 #define DT       (0.05f)
 #define GRAV     (9.81)
 
@@ -87,7 +87,7 @@ typedef enum
     //LEVEL2_e            ,     /*!< This is the State for Level 2        */
     LEVELF_e            ,     /*!< This is the State for the Final Level*/
 
-    RETRY_= LEVELF_e + 1,     /*!< This is the Retry State with value of 50         */
+    ENL_e = LEVELF_e + 1,     /*!< This is the Retry State with value of 50         */
     PLAYGND_e           ,     /*!< This is the Playground State with value of 250   */
     END_e               ,     /*!< This is the END State with value of 51           */
 /*@}*/

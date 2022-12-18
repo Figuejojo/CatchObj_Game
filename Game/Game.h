@@ -58,7 +58,8 @@ STATES_t GameLV1Window(GEng_t * Machine);
 
 STATES_t GameLVFWindow(GEng_t * Machine);
 
-STATES_t GameRETWindow(GEng_t * Machine);
+
+STATES_t GameENLWindow(GEng_t * Machine);
 
 /** @brief Hidden playground level for the developers to test all the game elements.
  *

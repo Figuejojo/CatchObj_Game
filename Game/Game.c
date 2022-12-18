@@ -42,7 +42,7 @@ void CatchGame_Init()
                                 GameLV1Window ,
                                 //GameLV2Window ,
                                 GameLVFWindow ,
-                                GameRETWindow ,
+                                GameENLWindow ,
                                 GamePGNWindow ,
                                 GameEndWindow ,
                                };
@@ -157,6 +157,10 @@ STATES_t GameLV1Window(GEng_t * Machine)
     {
         NextState = END_e;
     }
+    if(Machine->lives == 0)
+    {
+        NextState = ENL_e;
+    }
 
     return NextState;
 }
@@ -167,11 +171,6 @@ STATES_t GameLV2Window(GEng_t * Machine)
 }
 
 STATES_t GameLVFWindow(GEng_t * Machine)
-{
-    return END_e;
-}
-
-STATES_t GameRETWindow(GEng_t * Machine)
 {
     return END_e;
 }
@@ -193,6 +192,26 @@ STATES_t GamePGNWindow(GEng_t * Machine)
     pausefor(5);
 
     Machine->PrevS = PLAYGND_e;
+    return NextState;
+}
+
+STATES_t GameENLWindow(GEng_t * Machine)
+{
+    STATES_t NextState = Machine->CurrS;
+
+    ASSERT(Machine != NULL);
+    ASSERT((Machine->PrevS >= LEVEL1_e && Machine->PrevS <= LEVELF_e) || Machine->PrevS == ENL_e);
+
+    if(Machine->PrevS >= LEVEL1_e && Machine->PrevS <= LEVELF_e)
+    {
+        printf("Out of Lives...Score %d\n",Machine->Score);
+        Draw_BackGround(Machine);
+        update_display();
+    }
+
+    NextState = EventHandler(Machine);
+    Machine->PrevS = ENL_e;
+
     return NextState;
 }
 

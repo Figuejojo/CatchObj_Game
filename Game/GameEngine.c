@@ -150,7 +150,7 @@ void Stickman_draw(StickMan_t * Man)
 
 void Draw_BackGround(const GEng_t * GE)
 {
-    char att_str[15];
+    char att_str[20];
     setcolor(LIGHTGRAY);
     ASSERT(GE->CurrS >= INIT_e && GE->CurrS < END_e);
     switch(GE->CurrS)
@@ -211,7 +211,12 @@ void Draw_BackGround(const GEng_t * GE)
             filled_circle(0,        CANY,   CANR,   LIGHTMAGENTA);
             filled_circle(WIN_WIDTH,CANY,   CANR,   LIGHTMAGENTA);
             break;
-
+        case ENL_e:
+            outtextxy(WIN_WIDTH/2,WIN_HIGH/2,"You Ran out of lifes");
+            sprintf(att_str,"Final Score: %d",GE->Score);
+            outtextxy(WIN_WIDTH/2,WIN_HIGH/2+20,att_str);
+            outtextxy(WIN_WIDTH/2,WIN_HIGH/2+40,"THANKS FOR PLAYING");
+            break;
         default:
             break;
     }
@@ -289,6 +294,9 @@ STATES_t EventHandler(GEng_t * GE)
                     break;
 
                 case LEVEL1_e:
+                    break;
+                case END_e:
+                    return END_e;
                     break;
                 default:
                     break;
