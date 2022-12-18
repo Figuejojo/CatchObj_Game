@@ -32,13 +32,15 @@
 #define DEG2RAD(x) (x*PI/180)   ///< Macro Function for Converting between Degrees and Radians
 
 /*! Game Definitions*/
-#define DT      (0.05f)
-#define GRAV    (9.81)
+#define ATTEMPTS (8)
+#define DT       (0.05f)
+#define GRAV     (9.81)
 
 /*! Game Definitions */
 #define WIN_WIDTH (800)
 #define WIN_HIGH  (600)
 #define GND       (500)
+#define SPACE     (20)
 
 /*! Player Definitions */
 #define IPosX     (WIN_WIDTH/2)

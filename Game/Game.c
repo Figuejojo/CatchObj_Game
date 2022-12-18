@@ -69,11 +69,11 @@ STATES_t GameInitWindow(GEng_t * Machine)
         Machine->nObjects = 0;
         Machine->Object = (proj_t*)calloc(1,sizeof(proj_t));
         Machine->Object[0].Pos_y = WIN_HIGH + 30;
-        Machine->lives = 5;
+        Machine->lives = ATTEMPTS;
         Machine->Score = 0;
     }
 
-    Draw_BackGround(&Machine->CurrS);
+    Draw_BackGround(Machine);
     update_display();
 
     NextState = EventHandler(Machine);
@@ -88,7 +88,7 @@ STATES_t GameSelWindow(GEng_t * Machine)
     Machine->PrevS = SELCTING_e;
     STATES_t NextState = SELCTING_e;
 
-    Draw_BackGround(&Machine->CurrS);
+    Draw_BackGround(Machine);
     update_display();
 
     NextState = EventHandler(Machine);
@@ -111,7 +111,7 @@ STATES_t GameSRTWindow(GEng_t * Machine)
 
     pausefor(5);
 
-    Draw_BackGround(&Machine->CurrS);
+    Draw_BackGround(Machine);
     Draw_Objects(Machine);
     Stickman_draw(Machine->Player);
     Get_Score(Machine);
@@ -142,7 +142,7 @@ STATES_t GamePGNWindow(GEng_t * Machine)
     STATES_t NextState = PLAYGND_e;
     NextState = EventHandler(Machine);
 
-    Draw_BackGround(&Machine->CurrS);
+    Draw_BackGround(Machine);
     Draw_Objects(Machine);
     Stickman_draw(Machine->Player);
     Get_Score(Machine);

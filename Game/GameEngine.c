@@ -47,6 +47,8 @@ void GameEngine(GamePhase_t * GPhase)
 
 void Get_Score(GEng_t * GE)
 {
+    ASSERT(GE != NULL);
+    ASSERT(GE->Object != NULL);
     if( (GE->Object[0].Pos_x < GE->Player->move_x + ARM2X)&&
     (GE->Object[0].Pos_x > GE->Player->move_x + ARM1X)&&
     (GE->Object[0].Pos_y < ArmY1)&&(GE->Object[0].Pos_y > ArmY2))
@@ -55,7 +57,6 @@ void Get_Score(GEng_t * GE)
         if(GE->CurrS != STARTING_e)
         {
             GE->Score++;
-            printf("Score: %d\n",GE->Score);
         }
     }
 
@@ -64,7 +65,6 @@ void Get_Score(GEng_t * GE)
         if(GE->CurrS != STARTING_e)
         {
             GE->lives--;
-            printf("Fail Att %d\n",GE->lives);
         }
         GE->Object[0].Pos_y = WIN_HIGH;
     }
@@ -144,13 +144,12 @@ void Stickman_draw(StickMan_t * Man)
     line(Man->move_x,   LEGY1,  Man->move_x + LEGX1,    LEGY2,  2);
 }
 
-void Draw_BackGround(STATES_t * ST)
+void Draw_BackGround(const GEng_t * GE)
 {
-    char jump = 20;
+    char att_str[15];
     setcolor(LIGHTGRAY);
-    ASSERT(ST != NULL);
-    ASSERT(*ST >= INIT_e && *ST < END_e);
-    switch(*ST)
+    ASSERT(GE->CurrS >= INIT_e && GE->CurrS < END_e);
+    switch(GE->CurrS)
     {
         case INIT_e:
             amio_update_audio();
@@ -160,17 +159,17 @@ void Draw_BackGround(STATES_t * ST)
 
         case SELCTING_e:
             outtextxy(WIN_HIGH/2,WIN_HIGH/2-100,"Choose you character Color");
-            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump,   "r - red");
-            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump*2, "g - green");
-            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump*3, "b - blue");
-            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump*4, "w - white");
+            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+SPACE,   "r - red");
+            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+SPACE*2, "g - green");
+            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+SPACE*3, "b - blue");
+            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+SPACE*4, "w - white");
             break;
 
         case STARTING_e:
             outtextxy(WIN_WIDTH/4,0,"TO START PRESS THE S BUTTON");
-            outtextxy(WIN_WIDTH/4,20,"HOW TO PLAY: ");
-            outtextxy(WIN_WIDTH/4,40,"Move around using mouse");
-            outtextxy(WIN_WIDTH/4,60,"Practice shooting balls with the 'b' key ");
+            outtextxy(WIN_WIDTH/4,SPACE,"HOW TO PLAY: ");
+            outtextxy(WIN_WIDTH/4,SPACE*2,"Move around using mouse");
+            outtextxy(WIN_WIDTH/4,SPACE*3,"Practice shooting balls with the 'b' key ");
             setcolor(LIGHTGRAY);
             line(0, GND,    WIN_WIDTH,  GND,    3);
             filled_circle(0,        CANY,   CANR,   LIGHTMAGENTA);
@@ -181,6 +180,13 @@ void Draw_BackGround(STATES_t * ST)
             outtextxy(0,0,"PlayGround Testing");
             outtextxy(0,20,"Move around using the mouse");
             outtextxy(WIN_WIDTH/4,60,"Practice shooting balls with the 'b' key ");
+
+            sprintf(att_str,"Lives: %d/%d",ATTEMPTS, GE->lives);
+            outtextxy(WIN_WIDTH/4,GND+40,att_str);
+
+            sprintf(att_str,"Score: %d",GE->Score);
+            outtextxy((WIN_WIDTH/4)*2,GND+40,att_str);
+
             setcolor(LIGHTGRAY);
             line(0, GND,    WIN_WIDTH,  GND,    3);
             filled_circle(0,        CANY,   CANR,   LIGHTMAGENTA);

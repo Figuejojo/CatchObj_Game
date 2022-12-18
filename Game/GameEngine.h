@@ -73,7 +73,7 @@ void Stickman_draw(StickMan_t * Man);
   *
   * @param STATES_t Is the enum type of the game engine.
   */
-void Draw_BackGround(STATES_t * ST);
+void Draw_BackGround(const GEng_t * GE);
 
 /** @brief EventHandler function creates a portable method for using the event functions for
   *         mouse, keyboard and display in a easy way.
