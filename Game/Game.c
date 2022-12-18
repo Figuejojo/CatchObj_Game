@@ -64,6 +64,15 @@ STATES_t GameInitWindow(GEng_t * Machine)
         amio_update_audio();
         amio_add_sample_instance("init", PLAY_ONCE, 0.3);
         Machine->PrevS = INIT_e;
+
+        //Range for velocity must be from 0 to 75.
+        //Range for angle depends on the cannon.
+            // Left 0 to -90 -- Right -90 to -180
+        printf("Just Once\n");
+        Machine->nObjects = 0;
+        Machine->Object = (proj_t*)calloc(1,sizeof(proj_t));
+        Machine->Object[0].Pos_y = WIN_HIGH+30;
+
     }
 
     Draw_BackGround(&Machine->CurrS);
@@ -122,16 +131,6 @@ STATES_t GameRETWindow(GEng_t * Machine)
 STATES_t GamePGNWindow(GEng_t * Machine)
 {
     ASSERT(Machine != NULL);
-    if(Machine->PrevS == SELCTING_e)
-    {
-        //Range for velocity must be from 0 to 75.
-        //Range for angle depends on the cannon.
-            // Left 0 to -90 -- Right -90 to -180
-        printf("Just Once\n");
-        Machine->nObjects = 0;
-        Machine->Object = (proj_t*)calloc(1,sizeof(proj_t));
-        Machine->Object[0].Pos_y = WIN_HIGH+30;
-    }
 
     STATES_t NextState = PLAYGND_e;
     NextState = EventHandler(Machine);
@@ -143,7 +142,6 @@ STATES_t GamePGNWindow(GEng_t * Machine)
     update_display();
 
     pausefor(5);
-
 
     Machine->PrevS = PLAYGND_e;
     return NextState;
