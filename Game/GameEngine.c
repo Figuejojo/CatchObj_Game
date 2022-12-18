@@ -79,9 +79,10 @@ void Draw_Objects(GEng_t * GE)
 
         float NewVelY = GE->Object[0].vel * sin((GE->Object[0].angle)) + GRAV*DT;
         GE->Object[0].Pos_y += NewVelY * DT;
-
+#if 0
         filled_circle(10,  GE->Object[0].Pos_y,    10, WHITE);
         filled_circle(GE->Object[0].Pos_x,  CANY, 10, WHITE);
+#endif
         filled_circle(GE->Object[0].Pos_x,  GE->Object[0].Pos_y, 10, CYAN);
 
         GE->Object[0].angle = atan(NewVelY/VelX);
@@ -129,22 +130,22 @@ void Draw_BackGround(STATES_t * ST)
         case INIT_e:
             amio_update_audio();
             outtextxy(WIN_HIGH/2,WIN_HIGH/2-100,"Welcome to the catch game!");
-            outtextxy(WIN_HIGH/2,WIN_HIGH/2,"Press xxx to start");
+            outtextxy(WIN_HIGH/2,WIN_HIGH/2,    "Press any key to start");
             break;
 
         case SELCTING_e:
             outtextxy(WIN_HIGH/2,WIN_HIGH/2-100,"Choose you character Color");
-            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump,"r - red");
-            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump*2,"g - green");
-            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump*3,"b - blue");
-            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump*4,"w - white");
+            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump,   "r - red");
+            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump*2, "g - green");
+            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump*3, "b - blue");
+            outtextxy(WIN_HIGH/2,WIN_HIGH/2-100+jump*4, "w - white");
             break;
 
         case STARTING_e:
             outtextxy(WIN_WIDTH/4,0,"TO START PRESS THE S BUTTON");
             outtextxy(WIN_WIDTH/4,20,"HOW TO PLAY: ");
             outtextxy(WIN_WIDTH/4,40,"Move around using mouse");
-            outtextxy(WIN_WIDTH/4,60,"Practice sending balls with the 'b' key ");
+            outtextxy(WIN_WIDTH/4,60,"Practice shooting balls with the 'b' key ");
             setcolor(LIGHTGRAY);
             line(0, GND,    WIN_WIDTH,  GND,    3);
             filled_circle(0,        CANY,   CANR,   LIGHTMAGENTA);
@@ -153,8 +154,8 @@ void Draw_BackGround(STATES_t * ST)
 
         case PLAYGND_e:
             outtextxy(0,0,"PlayGround Testing");
-            outtextxy(0,20,"Move with arrows < >");
-            outtextxy(0,40,"Return to Select with r");
+            outtextxy(0,20,"Move around using the mouse");
+            outtextxy(WIN_WIDTH/4,60,"Practice shooting balls with the 'b' key ");
             setcolor(LIGHTGRAY);
             line(0, GND,    WIN_WIDTH,  GND,    3);
             filled_circle(0,        CANY,   CANR,   LIGHTMAGENTA);
@@ -224,6 +225,10 @@ STATES_t EventHandler(GEng_t * GE)
                     {
                         GE->nObjects++;
                         dprintf("%d \n",GE->nObjects);
+                    }
+                    else if(event_key('s'))
+                    {
+                        printf("S Pressed\n");
                     }
                     break;
                 case INIT_e:

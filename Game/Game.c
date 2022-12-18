@@ -65,9 +65,6 @@ STATES_t GameInitWindow(GEng_t * Machine)
         amio_add_sample_instance("init", PLAY_ONCE, 0.3);
         Machine->PrevS = INIT_e;
 
-        //Range for velocity must be from 0 to 75.
-        //Range for angle depends on the cannon.
-            // Left 0 to -90 -- Right -90 to -180
         printf("Just Once\n");
         Machine->nObjects = 0;
         Machine->Object = (proj_t*)calloc(1,sizeof(proj_t));

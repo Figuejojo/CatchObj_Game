@@ -51,6 +51,10 @@ typedef STATES_t (*GamePhase_t)(GEng_t*);    /**< Typedef of a Function Pointer 
   */
 void GameEngine(GamePhase_t * GPhase);
 
+/** @brief Draw_Objects Function for handling the object movements and drawing.
+  *
+  * @param Pointer to GEng_t structure.
+  */
 void Draw_Objects(GEng_t * GE);
 
 /** @brief Stickman_draw will draw the stickman depending on the movement that is passed through the
