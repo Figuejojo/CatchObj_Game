@@ -35,6 +35,7 @@ void CatchGame_Init()
     amio_load_sample("init",  "./data/mixkit-magic-astral-sweep-effect-2629.wav");
     amio_load_sample("trans", "./data/mixkit-fast-small-sweep-transition-166.wav");
     amio_load_sample("shoot", "./data/mixkit-short-laser-gun-shot-1670.wav");
+    amio_load_sample("lose" , "./data/mixkit-player-losing-or-failing-2042.wav");
 
     GamePhase_t GamePhases[] = {GameInitWindow,
                                 GameSelWindow ,
@@ -204,6 +205,8 @@ STATES_t GameENLWindow(GEng_t * Machine)
 
     if(Machine->PrevS >= LEVEL1_e && Machine->PrevS <= LEVELF_e)
     {
+        amio_add_sample_instance("lose",PLAY_ONCE, 1);
+        amio_update_audio();
         printf("Out of Lives...Score %d\n",Machine->Score);
         Draw_BackGround(Machine);
         update_display();
@@ -237,6 +240,9 @@ STATES_t GameEndWindow(GEng_t * Machine)
             dprintf("Ending from LV1");
             break;
 
+        case ENL_e:
+            dprintf("Ended from ENDL");
+            break;
         default:
             dprintf("Ended from ??\n");
             break;
