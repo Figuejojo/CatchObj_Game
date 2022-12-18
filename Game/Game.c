@@ -129,7 +129,34 @@ STATES_t GameSRTWindow(GEng_t * Machine)
 
 STATES_t GameLV1Window(GEng_t * Machine)
 {
-    return END_e;
+    const int elem2catch = 5;
+    ASSERT(Machine != NULL);
+    ASSERT(elem2catch > 0);
+    ASSERT(Machine->lives > 0);
+
+    if(Machine->PrevS == STARTING_e)
+    {
+        Machine->nObjects = elem2catch + 1; // Number of Objects + 1
+    }
+
+    Draw_BackGround(Machine);
+    Draw_Objects(Machine);
+    Stickman_draw(Machine->Player);
+    Get_Score(Machine);
+
+    update_display();
+
+    pausefor(5);
+
+    STATES_t NextState = EventHandler(Machine);
+    Machine->PrevS = LEVEL1_e;
+
+    if(Machine->nObjects == 0)
+    {
+        NextState = END_e;
+    }
+
+    return NextState;
 }
 
 STATES_t GameLVFWindow(GEng_t * Machine)
@@ -179,6 +206,11 @@ STATES_t GameEndWindow(GEng_t * Machine)
         case PLAYGND_e:
             dprintf("Ending from Playground\n");
             break;
+
+        case LEVEL1_e:
+            dprintf("Ending from LV1");
+            break;
+
         default:
             dprintf("Ended from ??\n");
             break;

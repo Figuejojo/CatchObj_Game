@@ -80,6 +80,7 @@ void Draw_Objects(GEng_t * GE)
         if(GE->nObjects > 0)
         {
             GE->nObjects--;
+            dprintf("Obj: %d",GE->nObjects);
             if((rand() % 2 + 1) == 2)
             {
                 GE->Object->cannion = (-1);
@@ -192,6 +193,22 @@ void Draw_BackGround(const GEng_t * GE)
             filled_circle(0,        CANY,   CANR,   LIGHTMAGENTA);
             filled_circle(WIN_WIDTH,CANY,   CANR,   LIGHTMAGENTA);
             break;
+
+        case LEVEL1_e:
+            outtextxy(WIN_WIDTH/4,0,"LEVEL 1");
+
+            sprintf(att_str,"Lives: %d/%d",ATTEMPTS, GE->lives);
+            outtextxy(WIN_WIDTH/4,GND+40,att_str);
+
+            sprintf(att_str,"Score: %d",GE->Score);
+            outtextxy((WIN_WIDTH/4)*2,GND+40,att_str);
+
+            setcolor(LIGHTGRAY);
+            line(0, GND,    WIN_WIDTH,  GND,    3);
+            filled_circle(0,        CANY,   CANR,   LIGHTMAGENTA);
+            filled_circle(WIN_WIDTH,CANY,   CANR,   LIGHTMAGENTA);
+            break;
+
         default:
             break;
     }
@@ -260,11 +277,15 @@ STATES_t EventHandler(GEng_t * GE)
                     else if(event_key('s'))
                     {
                         printf("S Pressed\n");
+                        return LEVEL1_e;
                     }
                     break;
                 case INIT_e:
                     GE->PrevS = GE->CurrS;
                     return SELCTING_e;
+                    break;
+
+                case LEVEL1_e:
                     break;
                 default:
                     break;
