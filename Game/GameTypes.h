@@ -79,12 +79,13 @@ typedef enum
     DEFAULT_e       = -2,
 
     BOOT_e          = -1,     /*!< This is a flag used when the program is starting */
-    INIT_e          =  0,     /*!< This is the Initial State with value of 0        */
-    SELCTING_e          ,     /*!< This is the Selecting State with value of 1      */
-    STARTING_e          ,     /*!< This is the Starting State with value of 2       */
+    INIT_e          =  0,     /*!< This is the Initial State        */
+    SELCTING_e          ,     /*!< This is the Selecting State      */
+    STARTING_e          ,     /*!< This is the Starting State       */
 
-    LEVEL1_e            ,     /*!< This is the Level 1 State with value of 2        */
-    LEVELF_e            ,     /*!< This is the Final Level State with value of 2    */
+    LEVEL1_e            ,     /*!< This is the State for Level 1        */
+    //LEVEL2_e            ,     /*!< This is the State for Level 2        */
+    LEVELF_e            ,     /*!< This is the State for the Final Level*/
 
     RETRY_= LEVELF_e + 1,     /*!< This is the Retry State with value of 50         */
     PLAYGND_e           ,     /*!< This is the Playground State with value of 250   */

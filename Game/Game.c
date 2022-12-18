@@ -32,13 +32,15 @@ void CatchGame_Init()
     reg_display_events();
 
     amio_init_audio();
-    amio_load_sample("init", "./data/mixkit-magic-astral-sweep-effect-2629.wav");
+    amio_load_sample("init",  "./data/mixkit-magic-astral-sweep-effect-2629.wav");
     amio_load_sample("trans", "./data/mixkit-fast-small-sweep-transition-166.wav");
+    amio_load_sample("shoot", "./data/mixkit-short-laser-gun-shot-1670.wav");
 
     GamePhase_t GamePhases[] = {GameInitWindow,
                                 GameSelWindow ,
                                 GameSRTWindow ,
                                 GameLV1Window ,
+                                //GameLV2Window ,
                                 GameLVFWindow ,
                                 GameRETWindow ,
                                 GamePGNWindow ,
@@ -157,6 +159,11 @@ STATES_t GameLV1Window(GEng_t * Machine)
     }
 
     return NextState;
+}
+
+STATES_t GameLV2Window(GEng_t * Machine)
+{
+    return END_e;
 }
 
 STATES_t GameLVFWindow(GEng_t * Machine)

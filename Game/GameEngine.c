@@ -81,6 +81,9 @@ void Draw_Objects(GEng_t * GE)
         {
             GE->nObjects--;
             dprintf("Obj: %d",GE->nObjects);
+            amio_add_sample_instance("shoot",PLAY_ONCE, 1);
+            amio_update_audio();
+
             if((rand() % 2 + 1) == 2)
             {
                 GE->Object->cannion = (-1);
@@ -105,7 +108,7 @@ void Draw_Objects(GEng_t * GE)
 
         float NewVelY = GE->Object[0].vel * sin((GE->Object[0].angle)) + GRAV*DT;
         GE->Object[0].Pos_y += NewVelY * DT;
-#if 0
+#if 0 // Proyectile X and Y components for debugging.
         filled_circle(10,  GE->Object[0].Pos_y,    10, WHITE);
         filled_circle(GE->Object[0].Pos_x,  CANY, 10, WHITE);
 #endif
