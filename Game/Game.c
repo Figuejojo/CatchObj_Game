@@ -68,8 +68,9 @@ STATES_t GameInitWindow(GEng_t * Machine)
         printf("Just Once\n");
         Machine->nObjects = 0;
         Machine->Object = (proj_t*)calloc(1,sizeof(proj_t));
-        Machine->Object[0].Pos_y = WIN_HIGH+30;
-
+        Machine->Object[0].Pos_y = WIN_HIGH + 30;
+        Machine->lives = 5;
+        Machine->Score = 0;
     }
 
     Draw_BackGround(&Machine->CurrS);
@@ -113,6 +114,7 @@ STATES_t GameSRTWindow(GEng_t * Machine)
     Draw_BackGround(&Machine->CurrS);
     Draw_Objects(Machine);
     Stickman_draw(Machine->Player);
+    Get_Score(Machine);
     update_display();
 
     return NextState;
@@ -143,6 +145,7 @@ STATES_t GamePGNWindow(GEng_t * Machine)
     Draw_BackGround(&Machine->CurrS);
     Draw_Objects(Machine);
     Stickman_draw(Machine->Player);
+    Get_Score(Machine);
 
     update_display();
 

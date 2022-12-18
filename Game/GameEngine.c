@@ -25,8 +25,8 @@ void GameEngine(GamePhase_t * GPhase)
     dprintf("Game Engine - Debug print and ASSERTS ON\n");
     GEng_t Machine;
     StickMan_t Player1 = {0,0,WIN_WIDTH/2};
-    Machine.CurrS = INIT_e;
-    Machine.PrevS = BOOT_e;
+    Machine.CurrS  = INIT_e;
+    Machine.PrevS  = BOOT_e;
     Machine.Player = &Player1;
     Machine.Object = NULL;
 
@@ -43,6 +43,31 @@ void GameEngine(GamePhase_t * GPhase)
 
     ASSERT(GPhase[END_e] != NULL);
     GPhase[END_e](&Machine);
+}
+
+void Get_Score(GEng_t * GE)
+{
+    if( (GE->Object[0].Pos_x < GE->Player->move_x + ARM2X)&&
+    (GE->Object[0].Pos_x > GE->Player->move_x + ARM1X)&&
+    (GE->Object[0].Pos_y < ArmY1)&&(GE->Object[0].Pos_y > ArmY2))
+    {
+        GE->Object[0].Pos_y = WIN_HIGH;
+        if(GE->CurrS != STARTING_e)
+        {
+            GE->Score++;
+            printf("Score: %d\n",GE->Score);
+        }
+    }
+
+    if(GE->Object[0].Pos_y > GND && GE->Object[0].Pos_y < WIN_HIGH)
+    {
+        if(GE->CurrS != STARTING_e)
+        {
+            GE->lives--;
+            printf("Fail Att %d\n",GE->lives);
+        }
+        GE->Object[0].Pos_y = WIN_HIGH;
+    }
 }
 
 void Draw_Objects(GEng_t * GE)
