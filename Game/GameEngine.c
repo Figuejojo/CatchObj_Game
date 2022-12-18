@@ -44,36 +44,40 @@ void GameEngine(GamePhase_t * GPhase)
     ASSERT(GPhase[END_e] != NULL);
     GPhase[END_e](&Machine);
 }
-#define DT (0.05f)
+
 void Draw_Objects(GEng_t * GE)
 {
     ASSERT(GE != NULL);
-    //!@TODO: object_create();
-    if(GE->Object[0].Pos_y > WIN_HIGH)
+    //sASSERT(GE->Object != NULL);
+
+    if(GE->Object[0].Pos_y >= WIN_HIGH)
     {
-
-        if((rand() % 2 + 1) == 2)
+        if(GE->nObjects > 0)
         {
-            GE->Object->cannion = (-1);
-            GE->Object[0].Pos_x = WIN_WIDTH - 10;
-        }
-        else
-        {
-            GE->Object->cannion = (+1);
-            GE->Object[0].Pos_x = 10;
-        }
+            GE->nObjects--;
+            if((rand() % 2 + 1) == 2)
+            {
+                GE->Object->cannion = (-1);
+                GE->Object[0].Pos_x = WIN_WIDTH - 10;
+            }
+            else
+            {
+                GE->Object->cannion = (+1);
+                GE->Object[0].Pos_x = 10;
+            }
 
-        GE->Object[0].Pos_y = CANY;
-        GE->Object[0].angle = DEG2RAD(-rand_number(0,45));//-rand() % 85);
-        GE->Object[0].vel   = rand_number(10,75);//rand() % 75;
+            GE->Object[0].Pos_y = CANY;
+            GE->Object[0].angle = DEG2RAD(-rand_number(0,45));//-rand() % 85);
+            GE->Object[0].vel   = rand_number(10,75);//rand() % 75;
 
+        }
     }
     else
     {
         float VelX = GE->Object[0].vel * cos(GE->Object[0].angle);
         GE->Object[0].Pos_x += GE->Object->cannion*VelX * DT;
 
-        float NewVelY = GE->Object[0].vel * sin((GE->Object[0].angle)) + 9.81*DT;
+        float NewVelY = GE->Object[0].vel * sin((GE->Object[0].angle)) + GRAV*DT;
         GE->Object[0].Pos_y += NewVelY * DT;
 
         filled_circle(10,  GE->Object[0].Pos_y,    10, WHITE);
@@ -83,7 +87,6 @@ void Draw_Objects(GEng_t * GE)
         GE->Object[0].angle = atan(NewVelY/VelX);
         GE->Object[0].vel = sqrt(pow(NewVelY,2)+pow(VelX,2));
     }
-    //!@TODO: object_move();
 }
 
 void Stickman_draw(StickMan_t * Man)

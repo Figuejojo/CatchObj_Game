@@ -128,13 +128,9 @@ STATES_t GamePGNWindow(GEng_t * Machine)
         //Range for angle depends on the cannon.
             // Left 0 to -90 -- Right -90 to -180
         printf("Just Once\n");
-        Machine->nObjects = 1;
-        Machine->Object = (proj_t*)malloc(Machine->nObjects*sizeof(proj_t));
-        Machine->Object[0].Pos_y = CANY;
-        Machine->Object[0].IPos_x= Machine->Object[0].IPos_x;
-        Machine->Object[0].Pos_x = CANR;
-        Machine->Object[0].angle = DEG2RAD(-100);
-        Machine->Object[0].vel   = 50;
+        Machine->nObjects = 0;
+        Machine->Object = (proj_t*)calloc(1,sizeof(proj_t));
+        Machine->Object[0].Pos_y = WIN_HIGH+30;
     }
 
     STATES_t NextState = PLAYGND_e;
