@@ -218,7 +218,7 @@ void Draw_BackGround(const GEng_t * GE)
             break;
 
         case LEVEL2_e:
-            outtextxy(WIN_WIDTH/4,0,"LEVEL 1");
+            outtextxy(WIN_WIDTH/4,0,"LEVEL 2");
 
             sprintf(att_str,"Lives: %d/%d",ATTEMPTS, GE->lives);
             outtextxy(WIN_WIDTH/4,GND+40,att_str);

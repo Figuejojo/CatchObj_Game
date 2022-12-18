@@ -54,9 +54,32 @@ STATES_t GameSelWindow(GEng_t * Machine);
  */
 STATES_t GameSRTWindow(GEng_t * Machine);
 
+/** @brief Game Level 1 function.
+ *          5 balls to change level
+ *          Hazards: None
+ *  @param GEng_t ptr. This has the game info.
+ *
+ *  @return The next state to be executed in the state machine.
+ */
 STATES_t GameLV1Window(GEng_t * Machine);
 
+/** @brief Game Level 2 function.
+ *          7 Balls to change level.
+ *          Hazards: Rain Background.
+ *  @param GEng_t ptr. This has the game info.
+ *
+ *  @return The next state to be executed in the state machine.
+ */
 STATES_t GameLV2Window(GEng_t * Machine);
+
+/** @brief Game Level 3 function.
+ *          9 Balls to change level.
+ *          Hazards: Mouse Delay.
+ *  @param GEng_t ptr. This has the game info.
+ *
+ *  @return The next state to be executed in the state machine.
+ */
+STATES_t GameLV3Window(GEng_t * Machine);
 
 STATES_t GameLVFWindow(GEng_t * Machine);
 
