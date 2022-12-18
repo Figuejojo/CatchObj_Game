@@ -102,13 +102,21 @@ STATES_t GameSRTWindow(GEng_t * Machine)
 {
     ASSERT(Machine != NULL);
 
-    STATES_t NextState = STARTING_e;
+    if(Machine->PrevS == SELCTING_e)
+    {
+        dprintf("Start Menu");
+        Machine->PrevS = STARTING_e;
+        Machine->nObjects = 0;
+    }
+
+    STATES_t NextState = EventHandler(Machine);
+
+    pausefor(5);
 
     Draw_BackGround(&Machine->CurrS);
+    Draw_Objects(Machine);
     Stickman_draw(Machine->Player);
     update_display();
-
-    NextState = (EventHandler(Machine) == END_e)? (END_e):(NextState);
 
     return NextState;
 }

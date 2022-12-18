@@ -144,6 +144,7 @@ void Draw_BackGround(STATES_t * ST)
             outtextxy(WIN_WIDTH/4,0,"TO START PRESS THE S BUTTON");
             outtextxy(WIN_WIDTH/4,20,"HOW TO PLAY: ");
             outtextxy(WIN_WIDTH/4,40,"Move around using mouse");
+            outtextxy(WIN_WIDTH/4,60,"Practice sending balls with the 'b' key ");
             setcolor(LIGHTGRAY);
             line(0, GND,    WIN_WIDTH,  GND,    3);
             filled_circle(0,        CANY,   CANR,   LIGHTMAGENTA);
@@ -213,6 +214,13 @@ STATES_t EventHandler(GEng_t * GE)
                         return END_e;
                     }
                     else if(event_key('b'))
+                    {
+                        GE->nObjects++;
+                        dprintf("%d \n",GE->nObjects);
+                    }
+                    break;
+                case STARTING_e:
+                    if(event_key('b'))
                     {
                         GE->nObjects++;
                         dprintf("%d \n",GE->nObjects);
