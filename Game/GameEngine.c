@@ -13,7 +13,6 @@
 * Static Global Variables
 *******************************************************************************/
 
-
 /*******************************************************************************
 * Function Implementation
 *******************************************************************************/
@@ -29,6 +28,8 @@ void GameEngine(GamePhase_t * GPhase)
     Machine.PrevS  = BOOT_e;
     Machine.Player = &Player1;
     Machine.Object = NULL;
+
+    Machine.Bckgnd[1] = load_bitmap("./data/rain.png");
 
     do
     {
@@ -150,6 +151,7 @@ void Stickman_draw(StickMan_t * Man)
 
 void Draw_BackGround(const GEng_t * GE)
 {
+
     char att_str[20];
     setcolor(LIGHTGRAY);
     ASSERT(GE->CurrS >= INIT_e && GE->CurrS < END_e);
@@ -181,6 +183,7 @@ void Draw_BackGround(const GEng_t * GE)
             break;
 
         case PLAYGND_e:
+
             outtextxy(0,0,"PlayGround Testing");
             outtextxy(0,20,"Move around using the mouse");
             outtextxy(WIN_WIDTH/4,60,"Practice shooting balls with the 'b' key ");
@@ -190,6 +193,8 @@ void Draw_BackGround(const GEng_t * GE)
 
             sprintf(att_str,"Score: %d",GE->Score);
             outtextxy((WIN_WIDTH/4)*2,GND+40,att_str);
+
+            draw_bitmap(GE->Bckgnd[1], (int)WIN_WIDTH/2, (int)WIN_HIGH/2);
 
             setcolor(LIGHTGRAY);
             line(0, GND,    WIN_WIDTH,  GND,    3);
@@ -211,12 +216,31 @@ void Draw_BackGround(const GEng_t * GE)
             filled_circle(0,        CANY,   CANR,   LIGHTMAGENTA);
             filled_circle(WIN_WIDTH,CANY,   CANR,   LIGHTMAGENTA);
             break;
-        case ENL_e:
-            outtextxy(WIN_WIDTH/2,WIN_HIGH/2,"You Ran out of lifes");
-            sprintf(att_str,"Final Score: %d",GE->Score);
-            outtextxy(WIN_WIDTH/2,WIN_HIGH/2+20,att_str);
-            outtextxy(WIN_WIDTH/2,WIN_HIGH/2+40,"THANKS FOR PLAYING");
+
+        case LEVEL2_e:
+            outtextxy(WIN_WIDTH/4,0,"LEVEL 1");
+
+            sprintf(att_str,"Lives: %d/%d",ATTEMPTS, GE->lives);
+            outtextxy(WIN_WIDTH/4,GND+40,att_str);
+
+            sprintf(att_str,"Score: %d",GE->Score);
+            outtextxy((WIN_WIDTH/4)*2,GND+40,att_str);
+
+            draw_bitmap(GE->Bckgnd[1], (int)WIN_WIDTH/2, (int)WIN_HIGH/2);
+
+            setcolor(LIGHTGRAY);
+            line(0, GND,    WIN_WIDTH,  GND,    3);
+            filled_circle(0,        CANY,   CANR,   LIGHTMAGENTA);
+            filled_circle(WIN_WIDTH,CANY,   CANR,   LIGHTMAGENTA);
             break;
+
+        case ENL_e:
+            outtextxy(WIN_WIDTH/4,WIN_HIGH/4,"You Ran out of lifes");
+            sprintf(att_str,"Final Score: %d",GE->Score);
+            outtextxy(WIN_WIDTH/4,WIN_HIGH/4+20,att_str);
+            outtextxy(WIN_WIDTH/4,WIN_HIGH/4+40,"THANKS FOR PLAYING");
+            break;
+
         default:
             break;
     }
@@ -273,18 +297,15 @@ STATES_t EventHandler(GEng_t * GE)
                     else if(event_key('b'))
                     {
                         GE->nObjects++;
-                        dprintf("%d \n",GE->nObjects);
                     }
                     break;
                 case STARTING_e:
                     if(event_key('b'))
                     {
                         GE->nObjects++;
-                        dprintf("%d \n",GE->nObjects);
                     }
                     else if(event_key('s'))
                     {
-                        printf("S Pressed\n");
                         return LEVEL1_e;
                     }
                     break;
@@ -294,6 +315,7 @@ STATES_t EventHandler(GEng_t * GE)
                     break;
 
                 case LEVEL1_e:
+                case LEVEL2_e:
                     break;
                 case END_e:
                     return END_e;

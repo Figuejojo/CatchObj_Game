@@ -56,6 +56,8 @@ STATES_t GameSRTWindow(GEng_t * Machine);
 
 STATES_t GameLV1Window(GEng_t * Machine);
 
+STATES_t GameLV2Window(GEng_t * Machine);
+
 STATES_t GameLVFWindow(GEng_t * Machine);
 
 

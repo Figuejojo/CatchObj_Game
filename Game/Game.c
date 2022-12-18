@@ -41,7 +41,7 @@ void CatchGame_Init()
                                 GameSelWindow ,
                                 GameSRTWindow ,
                                 GameLV1Window ,
-                                //GameLV2Window ,
+                                GameLV2Window ,
                                 GameLVFWindow ,
                                 GameENLWindow ,
                                 GamePGNWindow ,
@@ -156,7 +156,7 @@ STATES_t GameLV1Window(GEng_t * Machine)
 
     if(Machine->nObjects == 0)
     {
-        NextState = END_e;
+        NextState = LEVEL2_e;
     }
     if(Machine->lives == 0)
     {
@@ -168,9 +168,41 @@ STATES_t GameLV1Window(GEng_t * Machine)
 
 STATES_t GameLV2Window(GEng_t * Machine)
 {
+    STATES_t NextState = Machine->CurrS;
+
+    if(Machine->PrevS == LEVEL1_e)
+    {
+        Machine->nObjects = 7;
+        Machine->PrevS = LEVEL2_e;
+    }
+
+    Draw_BackGround(Machine);
+    Draw_Objects(Machine);
+    Stickman_draw(Machine->Player);
+    Get_Score(Machine);
+    update_display();
+
+    NextState = EventHandler(Machine);
+    pausefor(5);
+
+    if(Machine->nObjects == 0)
+    {
+        NextState = END_e;
+    }
+    if(Machine->lives == 0)
+    {
+        NextState = ENL_e;
+    }
+
+
+    return NextState;
+}
+#if 0
+STATES_t GameLV3Window(GEng_t * Machine)
+{
     return END_e;
 }
-
+#endif
 STATES_t GameLVFWindow(GEng_t * Machine)
 {
     return END_e;
@@ -226,23 +258,28 @@ STATES_t GameEndWindow(GEng_t * Machine)
         case INIT_e:
             dprintf("Ending from Init\n");
             break;
+
         case SELCTING_e:
             dprintf("Ending from Colour Select\n");
             break;
+
         case STARTING_e:
             dprintf("Ending from Starting Window\n");
             break;
+
         case PLAYGND_e:
             dprintf("Ending from Playground\n");
             break;
 
         case LEVEL1_e:
-            dprintf("Ending from LV1");
+        case LEVEL2_e:
+            dprintf("Ending from LV");
             break;
 
         case ENL_e:
             dprintf("Ended from ENDL");
             break;
+
         default:
             dprintf("Ended from ??\n");
             break;

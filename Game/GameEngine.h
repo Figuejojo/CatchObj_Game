@@ -34,7 +34,7 @@ typedef struct GameEngine
     int Score;
     int lives;
     int nObjects;           /*!< Object with a random effect on the player      */
-    int nBadObjects;        /*!< Object to be catch by the player to gain points*/
+    BITMAP Bckgnd[LVLS];    /*!< Background images                              */
     proj_t * Object;        /*!< Game Objects                                   */
 /*@}*/
 }GEng_t;
