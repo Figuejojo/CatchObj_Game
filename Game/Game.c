@@ -195,15 +195,38 @@ STATES_t GameLV2Window(GEng_t * Machine)
         NextState = ENL_e;
     }
 
-
     return NextState;
 }
 
 STATES_t GameLV3Window(GEng_t * Machine)
 {
-    printf("\nLevel 3\n");
-    Machine->PrevS = LEVEL3_e;
-    return END_e;
+    STATES_t NextState = Machine->CurrS;
+
+    if(Machine->PrevS == LEVEL2_e)
+    {
+        Machine->nObjects = 10;
+        Machine->PrevS = LEVEL3_e;
+    }
+
+    Draw_BackGround(Machine);
+    Draw_Objects(Machine);
+    Stickman_draw(Machine->Player);
+    Get_Score(Machine);
+    update_display();
+
+    NextState = EventHandler(Machine);
+    pausefor(8);
+
+    if(Machine->nObjects == 0)
+    {
+        NextState = END_e;
+    }
+    if(Machine->lives == 0)
+    {
+        NextState = ENL_e;
+    }
+
+    return NextState;
 }
 
 STATES_t GameLVFWindow(GEng_t * Machine)
@@ -274,8 +297,9 @@ STATES_t GameEndWindow(GEng_t * Machine)
             dprintf("Ending from Playground\n");
             break;
 
-        case LEVEL1_e:
+
         case LEVEL2_e:
+        case LEVEL1_e:
         case LEVEL3_e:
             dprintf("Ending from LV");
             break;
@@ -288,6 +312,7 @@ STATES_t GameEndWindow(GEng_t * Machine)
             dprintf("Ended from ??\n");
             break;
     }
+    destroy_bitmap(Machine->Bckgnd[1]);
     free(Machine->Object);
     return END_e;
 }

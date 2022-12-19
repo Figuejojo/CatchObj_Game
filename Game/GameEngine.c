@@ -74,7 +74,6 @@ void Get_Score(GEng_t * GE)
 void Draw_Objects(GEng_t * GE)
 {
     ASSERT(GE != NULL);
-    //sASSERT(GE->Object != NULL);
 
     if(GE->Object[0].Pos_y >= WIN_HIGH)
     {
@@ -123,7 +122,7 @@ void Draw_Objects(GEng_t * GE)
 void Stickman_draw(StickMan_t * Man)
 {
     ASSERT(Man->color == RED || Man->color == CYAN || Man->color == GREEN || Man->color == WHITE || Man->color == BLUE);
-    //Set all lines to be the indicated color.
+
     setcolor(Man->color);
 
     if(Man->move_x < 15)
@@ -204,7 +203,7 @@ void Draw_BackGround(const GEng_t * GE)
 
         case LEVEL1_e:
             outtextxy(WIN_WIDTH/4,0,"LEVEL 1");
-
+            outtextxy(WIN_WIDTH/4,20,"Hazard: None");
             sprintf(att_str,"Lives: %d/%d",ATTEMPTS, GE->lives);
             outtextxy(WIN_WIDTH/4,GND+40,att_str);
 
@@ -218,7 +217,9 @@ void Draw_BackGround(const GEng_t * GE)
             break;
 
         case LEVEL2_e:
+            draw_bitmap(GE->Bckgnd[1], (int)WIN_WIDTH/2, (int)WIN_HIGH/2);
             outtextxy(WIN_WIDTH/4,0,"LEVEL 2");
+            outtextxy(WIN_WIDTH/4,20,"Hazard: Rain");
 
             sprintf(att_str,"Lives: %d/%d",ATTEMPTS, GE->lives);
             outtextxy(WIN_WIDTH/4,GND+40,att_str);
@@ -226,13 +227,29 @@ void Draw_BackGround(const GEng_t * GE)
             sprintf(att_str,"Score: %d",GE->Score);
             outtextxy((WIN_WIDTH/4)*2,GND+40,att_str);
 
-            draw_bitmap(GE->Bckgnd[1], (int)WIN_WIDTH/2, (int)WIN_HIGH/2);
-
             setcolor(LIGHTGRAY);
             line(0, GND,    WIN_WIDTH,  GND,    3);
             filled_circle(0,        CANY,   CANR,   LIGHTMAGENTA);
             filled_circle(WIN_WIDTH,CANY,   CANR,   LIGHTMAGENTA);
             break;
+
+        case LEVEL3_e:
+            outtextxy(WIN_WIDTH/4,0,"LEVEL 3");
+            outtextxy(WIN_WIDTH/4,20,"Hazard: Slippery Floor");
+
+            sprintf(att_str,"Lives: %d/%d",ATTEMPTS, GE->lives);
+            outtextxy(WIN_WIDTH/4,GND+40,att_str);
+
+            sprintf(att_str,"Score: %d",GE->Score);
+            outtextxy((WIN_WIDTH/4)*2,GND+40,att_str);
+
+            setcolor(CYAN);
+            line(0, GND,    WIN_WIDTH,  GND,    3);
+            setcolor(LIGHTGRAY);
+            filled_circle(0,        CANY,   CANR,   LIGHTMAGENTA);
+            filled_circle(WIN_WIDTH,CANY,   CANR,   LIGHTMAGENTA);
+            break;
+
 
         case ENL_e:
             outtextxy(WIN_WIDTH/4,WIN_HIGH/4,"You Ran out of lifes");
@@ -316,6 +333,7 @@ STATES_t EventHandler(GEng_t * GE)
 
                 case LEVEL1_e:
                 case LEVEL2_e:
+                case LEVEL3_e:
                     break;
                 case END_e:
                     return END_e;
