@@ -50,26 +50,46 @@ void Get_Score(GEng_t * GE)
 {
     ASSERT(GE != NULL);
     ASSERT(GE->Object != NULL);
-    if( (GE->Object[0].Pos_x < GE->Player->move_x + ARM2X)&&
-    (GE->Object[0].Pos_x > GE->Player->move_x + ARM1X)&&
-    (GE->Object[0].Pos_y < ArmY1)&&(GE->Object[0].Pos_y > ArmY2))
-    {
-        GE->Object[0].Pos_y = WIN_HIGH;
-        if(GE->CurrS != STARTING_e)
-        {
-            amio_add_sample_instance("ctch",PLAY_ONCE,0.5);
-            amio_update_audio();
-            GE->Player->Score += GE->CurrS;
-        }
-    }
+    ASSERT(GE->nTObjs > 0);
 
-    if(GE->Object[0].Pos_y > GND && GE->Object[0].Pos_y < WIN_HIGH)
+    for(int nObjts = 0; nObjts < GE->nTObjs; nObjts++)
     {
-        if(GE->CurrS != STARTING_e)
+        if( (GE->Object[nObjts].Pos_x < GE->Player->move_x + ARM2X)&&
+            (GE->Object[nObjts].Pos_x > GE->Player->move_x + ARM1X)&&
+            (GE->Object[nObjts].Pos_y < ArmY1)&&(GE->Object[nObjts].Pos_y > ArmY2))
         {
-            GE->Player->lives--;
+            GE->Object[nObjts].Pos_y = WIN_HIGH;
+            if(GE->CurrS != STARTING_e)
+            {
+                if(nObjts == 0)
+                {
+                    amio_add_sample_instance("ctch",PLAY_ONCE,0.5);
+                    amio_update_audio();
+                    GE->Player->Score += GE->CurrS;
+                }
+                else if(nObjts == 1)
+                {
+                    amio_add_sample_instance("ctch",PLAY_ONCE,0.5);
+                    amio_update_audio();
+                    GE->Player->Score -= GE->CurrS;
+                }
+                else if(nObjts == 2)
+                {
+                    amio_add_sample_instance("ctch",PLAY_ONCE,0.5);
+                    amio_update_audio();
+                    GE->Player->lives--;
+                }
+            }
         }
-        GE->Object[0].Pos_y = WIN_HIGH;
+
+        if(GE->Object[nObjts].Pos_y > GND && GE->Object[nObjts].Pos_y < WIN_HIGH)
+        {
+            if(GE->CurrS != STARTING_e && nObjts == 0)
+            {
+                GE->Player->lives--;
+            }
+            GE->Object[nObjts].Pos_y = WIN_HIGH;
+        }
     }
 }
 
@@ -120,9 +140,13 @@ void Draw_Objects(GEng_t * GE)
             {
                 filled_circle(GE->Object[nObjts].Pos_x,  GE->Object[nObjts].Pos_y, 10, CYAN);
             }
-            else
+            else if(nObjts == 1)
             {
                 filled_circle(GE->Object[nObjts].Pos_x,  GE->Object[nObjts].Pos_y, 10, WHITE);
+            }
+            else if(nObjts == 2)
+            {
+                filled_circle(GE->Object[nObjts].Pos_x,  GE->Object[nObjts].Pos_y, 10, RED);
             }
 
             GE->Object[nObjts].angle = atan(NewVelY/VelX);
@@ -171,7 +195,7 @@ void Draw_BackGround(const GEng_t * GE)
         case INIT_e:
             amio_update_audio();
             outtextxy(WIN_HIGH/2,WIN_HIGH/2-100,"Welcome to the catch game!");
-            outtextxy(WIN_HIGH/2,WIN_HIGH/2,    "Press any key to start");
+            outtextxy(WIN_HIGH/2,WIN_HIGH/2    ,"Press any key to start");
             break;
 
         case SELCTING_e:
@@ -183,10 +207,12 @@ void Draw_BackGround(const GEng_t * GE)
             break;
 
         case STARTING_e:
-            outtextxy(WIN_WIDTH/4,0,"TO START PRESS THE S BUTTON");
+            outtextxy(WIN_WIDTH/4,0,"TO START PRESS THE 'S' KEY");
             outtextxy(WIN_WIDTH/4,SPACE,"HOW TO PLAY: ");
             outtextxy(WIN_WIDTH/4,SPACE*2,"Move around using mouse");
             outtextxy(WIN_WIDTH/4,SPACE*3,"Practice shooting balls with the 'b' key ");
+            outtextxy(WIN_WIDTH/4,SPACE*4,"Remember to only collect the objects with this object color");
+
             setcolor(LIGHTGRAY);
             line(0, GND,    WIN_WIDTH,  GND,    3);
             filled_circle(0,        CANY,   CANR,   LIGHTMAGENTA);
@@ -197,8 +223,7 @@ void Draw_BackGround(const GEng_t * GE)
 
             outtextxy(0,0,"PlayGround Testing");
             outtextxy(0,20,"Move around using the mouse");
-            outtextxy(WIN_WIDTH/4,60,"Practice shooting balls with the 'b' key ");
-
+            outtextxy(WIN_WIDTH/4,40,"Practice shooting balls with the 'b' key ");
             sprintf(att_str,"Lives: %d/%d",ATTEMPTS, GE->Player->lives);
             outtextxy(WIN_WIDTH/4,GND+40,att_str);
 
@@ -276,6 +301,7 @@ void Draw_BackGround(const GEng_t * GE)
             filled_circle(0,        CANY,   CANR,   LIGHTMAGENTA);
             filled_circle(WIN_WIDTH,CANY,   CANR,   LIGHTMAGENTA);
             break;
+
         case ENL_e:
             outtextxy(WIN_WIDTH/4,WIN_HIGH/4,"You Ran out of lifes");
             sprintf(att_str,"Final Score: %d",GE->Player->Score);

@@ -269,7 +269,7 @@ STATES_t GameLV4Window(GEng_t * Machine)
     update_display();
 
     NextState = EventHandler(Machine);
-    pausefor(8);
+    pausefor(5);
 
     if(Machine->nObjects == 0)
     {
