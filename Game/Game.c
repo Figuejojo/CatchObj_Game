@@ -251,7 +251,7 @@ STATES_t GameLV4Window(GEng_t * Machine)
 
     STATES_t NextState = Machine->CurrS;
 
-    if(Machine->PrevS == LEVEL2_e)
+    if(Machine->PrevS == LEVEL3_e)
     {
         ASSERT(Machine->nObjects == 0);
         ASSERT(Machine->Player->lives > 0);
