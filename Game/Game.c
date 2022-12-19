@@ -320,7 +320,7 @@ STATES_t GameEndWindow(GEng_t * Machine)
             dprintf("Ended from ??\n");
             break;
     }
-    destroy_bitmap(Machine->Bckgnd[1]);
+    destroy_bitmap(Machine->Bckgnd);
     free(Machine->Object);
     return END_e;
 }

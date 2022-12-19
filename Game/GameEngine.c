@@ -29,7 +29,7 @@ void GameEngine(GamePhase_t * GPhase)
     Machine.Player = &Player1;
     Machine.Object = NULL;
 
-    Machine.Bckgnd[1] = load_bitmap("./data/rain.png");
+    Machine.Bckgnd = load_bitmap("./data/rain.png");
 
     do
     {
@@ -194,7 +194,7 @@ void Draw_BackGround(const GEng_t * GE)
             sprintf(att_str,"Score: %d",GE->Player->Score);
             outtextxy((WIN_WIDTH/4)*2,GND+40,att_str);
 
-            draw_bitmap(GE->Bckgnd[1], (int)WIN_WIDTH/2, (int)WIN_HIGH/2);
+            draw_bitmap(GE->Bckgnd, (int)WIN_WIDTH/2, (int)WIN_HIGH/2);
 
             setcolor(LIGHTGRAY);
             line(0, GND,    WIN_WIDTH,  GND,    3);
@@ -218,7 +218,7 @@ void Draw_BackGround(const GEng_t * GE)
             break;
 
         case LEVEL2_e:
-            draw_bitmap(GE->Bckgnd[1], (int)WIN_WIDTH/2, (int)WIN_HIGH/2);
+            draw_bitmap(GE->Bckgnd, (int)WIN_WIDTH/2, (int)WIN_HIGH/2);
             outtextxy(WIN_WIDTH/4,0,"LEVEL 2");
             outtextxy(WIN_WIDTH/4,20,"Hazard: Rain");
 
