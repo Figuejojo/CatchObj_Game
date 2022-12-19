@@ -87,6 +87,7 @@ typedef enum
     LEVEL1_e            ,     /*!< This is the State for Level 1        */
     LEVEL2_e            ,     /*!< This is the State for Level 2        */
     LEVEL3_e            ,     /*!< This is the State for Level 3        */
+    LEVEL4_e            ,     /*!< This is the State for Level 4        */
     LEVELF_e            ,     /*!< This is the State for the Final Level*/
 
     ENL_e = LEVELF_e + 1,     /*!< This is the Retry State with value of 50         */

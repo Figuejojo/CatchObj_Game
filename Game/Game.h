@@ -81,9 +81,30 @@ STATES_t GameLV2Window(GEng_t * Machine);
  */
 STATES_t GameLV3Window(GEng_t * Machine);
 
+/** @brief Game Level 4 function.
+ *          13 Balls to change level.
+ *          Hazards: Bad objects.
+ *  @param GEng_t ptr. This has the game info.
+ *
+ *  @return The next state to be executed in the state machine.
+ */
+STATES_t GameLV4Window(GEng_t * Machine);
+
+/** @brief Game Level 5 function.
+ *          15 Balls to change level.
+ *          Hazards: All.
+ *  @param GEng_t ptr. This has the game info.
+ *
+ *  @return The next state to be executed in the state machine.
+ */
 STATES_t GameLVFWindow(GEng_t * Machine);
 
-
+/** @brief End of Attempts.
+ *
+ *  @param GEng_t ptr. This has the game info.
+ *
+ *  @return The next state to be executed in the state machine.
+ */
 STATES_t GameENLWindow(GEng_t * Machine);
 
 /** @brief Hidden playground level for the developers to test all the game elements.

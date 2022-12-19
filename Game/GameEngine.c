@@ -80,7 +80,6 @@ void Draw_Objects(GEng_t * GE)
         if(GE->nObjects > 0)
         {
             GE->nObjects--;
-            dprintf("Obj: %d",GE->nObjects);
             amio_add_sample_instance("shoot",PLAY_ONCE, 1);
             amio_update_audio();
 

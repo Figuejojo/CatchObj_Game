@@ -43,6 +43,7 @@ void CatchGame_Init()
                                 GameLV1Window ,
                                 GameLV2Window ,
                                 GameLV3Window ,
+                                GameLV4Window ,
                                 GameLVFWindow ,
                                 GameENLWindow ,
                                 GamePGNWindow ,
@@ -219,7 +220,7 @@ STATES_t GameLV3Window(GEng_t * Machine)
 
     if(Machine->nObjects == 0)
     {
-        NextState = END_e;
+        NextState = LEVEL4_e;
     }
     if(Machine->lives == 0)
     {
@@ -227,6 +228,12 @@ STATES_t GameLV3Window(GEng_t * Machine)
     }
 
     return NextState;
+}
+
+STATES_t GameLV4Window(GEng_t * Machine)
+{
+    printf("LV4\n");
+    return END_e;
 }
 
 STATES_t GameLVFWindow(GEng_t * Machine)
@@ -298,8 +305,8 @@ STATES_t GameEndWindow(GEng_t * Machine)
             break;
 
 
-        case LEVEL2_e:
         case LEVEL1_e:
+        case LEVEL2_e:
         case LEVEL3_e:
             dprintf("Ending from LV");
             break;
