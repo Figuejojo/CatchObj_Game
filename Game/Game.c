@@ -58,7 +58,6 @@ void CatchGame_Init()
     closegraph();
 }
 
-//! @TODO: Check if any other assert is needed.
 STATES_t GameInitWindow(GEng_t * Machine)
 {
     STATES_t NextState = INIT_e;
@@ -211,7 +210,7 @@ STATES_t GameLV3Window(GEng_t * Machine)
 {
     const int elem_catch = 10;
     ASSERT(Machine != NULL);
-    ASSERT(elem_catch == 7);
+    ASSERT(elem_catch == 10);
 
     STATES_t NextState = Machine->CurrS;
 
@@ -230,7 +229,7 @@ STATES_t GameLV3Window(GEng_t * Machine)
     update_display();
 
     NextState = EventHandler(Machine);
-    pausefor(8);
+    pausefor(9);
 
     if(Machine->nObjects == 0)
     {
@@ -248,7 +247,7 @@ STATES_t GameLV4Window(GEng_t * Machine)
 {
     const int elem_catch = 13;
     ASSERT(Machine != NULL);
-    ASSERT(elem_catch == 7);
+    ASSERT(elem_catch == 13);
 
     STATES_t NextState = Machine->CurrS;
 
@@ -271,7 +270,7 @@ STATES_t GameLV4Window(GEng_t * Machine)
 
     if(Machine->nObjects == 0)
     {
-        NextState = LEVEL4_e;
+        NextState = END_e;
     }
     if(Machine->Player->lives == 0)
     {
@@ -349,7 +348,8 @@ STATES_t GameEndWindow(GEng_t * Machine)
             dprintf("Ending from Playground\n");
             break;
 
-
+        case LEVEL4_e:
+            dprintf("Four ");
         case LEVEL1_e:
         case LEVEL2_e:
         case LEVEL3_e:

@@ -32,7 +32,7 @@
 #define DEG2RAD(x) (x*PI/180)   ///< Macro Function for Converting between Degrees and Radians
 
 /*! Game Definitions*/
-#define ATTEMPTS (2)
+#define ATTEMPTS (40)
 #define DT       (0.05f)
 #define GRAV     (9.81)
 #define LVLS     (5)
