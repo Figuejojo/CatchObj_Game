@@ -138,10 +138,11 @@ STATES_t GameLV1Window(GEng_t * Machine)
     const int elem2catch = 5;
     ASSERT(Machine != NULL);
     ASSERT(elem2catch > 0);
-    ASSERT(Machine->Player->lives > 0);
 
     if(Machine->PrevS == STARTING_e)
     {
+        ASSERT(Machine->Player->lives > 0);
+        ASSERT(Machine->Player->Score == 0);
         Machine->nObjects = elem2catch + 1; // Number of Objects + 1
     }
 
@@ -171,11 +172,17 @@ STATES_t GameLV1Window(GEng_t * Machine)
 
 STATES_t GameLV2Window(GEng_t * Machine)
 {
+    const int elem_catch = 7;
+    ASSERT(Machine != NULL);
+    ASSERT(elem_catch == 7);
+
     STATES_t NextState = Machine->CurrS;
 
     if(Machine->PrevS == LEVEL1_e)
     {
-        Machine->nObjects = 7;
+        ASSERT(Machine->nObjects == 0);
+        ASSERT(Machine->Player->lives > 0);
+        Machine->nObjects = elem_catch;
         Machine->PrevS = LEVEL2_e;
     }
 
@@ -202,11 +209,17 @@ STATES_t GameLV2Window(GEng_t * Machine)
 
 STATES_t GameLV3Window(GEng_t * Machine)
 {
+    const int elem_catch = 10;
+    ASSERT(Machine != NULL);
+    ASSERT(elem_catch == 7);
+
     STATES_t NextState = Machine->CurrS;
 
     if(Machine->PrevS == LEVEL2_e)
     {
-        Machine->nObjects = 10;
+        ASSERT(Machine->nObjects == 0);
+        ASSERT(Machine->Player->lives > 0);
+        Machine->nObjects = elem_catch;
         Machine->PrevS = LEVEL3_e;
     }
 
@@ -233,8 +246,39 @@ STATES_t GameLV3Window(GEng_t * Machine)
 
 STATES_t GameLV4Window(GEng_t * Machine)
 {
-    printf("LV4\n");
-    return END_e;
+    const int elem_catch = 13;
+    ASSERT(Machine != NULL);
+    ASSERT(elem_catch == 7);
+
+    STATES_t NextState = Machine->CurrS;
+
+    if(Machine->PrevS == LEVEL2_e)
+    {
+        ASSERT(Machine->nObjects == 0);
+        ASSERT(Machine->Player->lives > 0);
+        Machine->nObjects = elem_catch;
+        Machine->PrevS = LEVEL4_e;
+    }
+
+    Draw_BackGround(Machine);
+    Draw_Objects(Machine);
+    Stickman_draw(Machine->Player);
+    Get_Score(Machine);
+    update_display();
+
+    NextState = EventHandler(Machine);
+    pausefor(8);
+
+    if(Machine->nObjects == 0)
+    {
+        NextState = LEVEL4_e;
+    }
+    if(Machine->Player->lives == 0)
+    {
+        NextState = ENL_e;
+    }
+
+    return NextState;
 }
 
 STATES_t GameLVFWindow(GEng_t * Machine)
