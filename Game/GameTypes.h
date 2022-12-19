@@ -41,7 +41,7 @@
 #define WIN_WIDTH (800)
 #define WIN_HIGH  (600)
 #define GND       (500)
-#define SPACE     (20)
+#define SPACE     (10)
 
 /*! Player Definitions */
 #define IPosX     (WIN_WIDTH/2)
