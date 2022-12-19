@@ -72,7 +72,8 @@ STATES_t GameInitWindow(GEng_t * Machine)
 
         printf("Just Once\n");
         Machine->nObjects = 0;
-        Machine->Object = (proj_t*)calloc(1,sizeof(proj_t));
+        Machine->nTObjs = 1;
+        Machine->Object = (proj_t*)calloc(Machine->nTObjs,sizeof(proj_t));
         Machine->Object[0].Pos_y = WIN_HIGH + 30;
         Machine->Player->lives = ATTEMPTS;
         Machine->Player->Score = 0;
@@ -255,8 +256,10 @@ STATES_t GameLV4Window(GEng_t * Machine)
     {
         ASSERT(Machine->nObjects == 0);
         ASSERT(Machine->Player->lives > 0);
+        Machine->nTObjs = 5;
         Machine->nObjects = elem_catch;
         Machine->PrevS = LEVEL4_e;
+        Machine->Object = (proj_t*)realloc(Machine->Object ,Machine->nTObjs*sizeof(proj_t));
     }
 
     Draw_BackGround(Machine);

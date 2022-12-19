@@ -76,47 +76,58 @@ void Get_Score(GEng_t * GE)
 void Draw_Objects(GEng_t * GE)
 {
     ASSERT(GE != NULL);
-
-    if(GE->Object[0].Pos_y >= WIN_HIGH)
+    ASSERT(GE->nTObjs > 0 );
+    for(int nObjts = 0; nObjts < GE->nTObjs; nObjts++)
     {
-        if(GE->nObjects > 0)
+        if(GE->Object[nObjts].Pos_y >= WIN_HIGH)
         {
-            GE->nObjects--;
-            amio_add_sample_instance("shoot",PLAY_ONCE, 1);
-            amio_update_audio();
-
-            if((rand() % 2 + 1) == 2)
+            if(GE->nObjects > 0)
             {
-                GE->Object->cannion = (-1);
-                GE->Object[0].Pos_x = WIN_WIDTH - 10;
+
+                if(nObjts == 0)
+                {
+                    GE->nObjects--;
+                }
+
+                amio_add_sample_instance("shoot",PLAY_ONCE, 1);
+                amio_update_audio();
+
+                if((rand() % 2 + 1) == 2)
+                {
+                    GE->Object[nObjts].cannion = (-1);
+                    GE->Object[nObjts].Pos_x = WIN_WIDTH - 10;
+                }
+                else
+                {
+                    GE->Object[nObjts].cannion = (+1);
+                    GE->Object[nObjts].Pos_x = 10;
+                }
+
+                GE->Object[nObjts].Pos_y = CANY;
+                GE->Object[nObjts].angle = DEG2RAD(-rand_number(0,45));//-rand() % 85);
+                GE->Object[nObjts].vel   = rand_number(10,75);//rand() % 75;
+
+            }
+        }
+        else
+        {
+            float VelX = GE->Object[nObjts].vel * cos(GE->Object[nObjts].angle);
+            GE->Object[nObjts].Pos_x += GE->Object[nObjts].cannion*VelX * DT;
+
+            float NewVelY = GE->Object[nObjts].vel * sin((GE->Object[nObjts].angle)) + GRAV*DT;
+            GE->Object[nObjts].Pos_y += NewVelY * DT;
+            if(nObjts == 0)
+            {
+                filled_circle(GE->Object[nObjts].Pos_x,  GE->Object[nObjts].Pos_y, 10, CYAN);
             }
             else
             {
-                GE->Object->cannion = (+1);
-                GE->Object[0].Pos_x = 10;
+                filled_circle(GE->Object[nObjts].Pos_x,  GE->Object[nObjts].Pos_y, 10, WHITE);
             }
 
-            GE->Object[0].Pos_y = CANY;
-            GE->Object[0].angle = DEG2RAD(-rand_number(0,45));//-rand() % 85);
-            GE->Object[0].vel   = rand_number(10,75);//rand() % 75;
-
+            GE->Object[nObjts].angle = atan(NewVelY/VelX);
+            GE->Object[nObjts].vel = sqrt(pow(NewVelY,2)+pow(VelX,2));
         }
-    }
-    else
-    {
-        float VelX = GE->Object[0].vel * cos(GE->Object[0].angle);
-        GE->Object[0].Pos_x += GE->Object->cannion*VelX * DT;
-
-        float NewVelY = GE->Object[0].vel * sin((GE->Object[0].angle)) + GRAV*DT;
-        GE->Object[0].Pos_y += NewVelY * DT;
-#if 0 // Proyectile X and Y components for debugging.
-        filled_circle(10,  GE->Object[0].Pos_y,    10, WHITE);
-        filled_circle(GE->Object[0].Pos_x,  CANY, 10, WHITE);
-#endif
-        filled_circle(GE->Object[0].Pos_x,  GE->Object[0].Pos_y, 10, CYAN);
-
-        GE->Object[0].angle = atan(NewVelY/VelX);
-        GE->Object[0].vel = sqrt(pow(NewVelY,2)+pow(VelX,2));
     }
 }
 
