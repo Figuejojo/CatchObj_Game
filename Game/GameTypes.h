@@ -100,23 +100,13 @@ typedef enum
 typedef struct player
 {
 /*@{*/
-    int score;  /*!< This variable saves the player score                   */
     int color;  /*!< This variable saves the character colour               */
-    int Score;
-    int lives;
+    int Score;  /*!< This variable saves the player score                   */
+    int lives;  /*!< This variable saves the player attempts left           */
     int move_x; /*!< This variable saves the move position of the character */
 /*@}*/
 }StickMan_t;
 
-/*! This enum class named Objects contains types of game objects            */
-typedef enum
-{
-/*@{*/
-    BALL_e   = 0,
-    SQUARE_e    ,
-    OBJ_END     ,
-/*@}*/
-}obj_t;
 
 /*! This struct class named Projectile contains the objects information     */
 typedef struct projectile
@@ -127,7 +117,6 @@ typedef struct projectile
     float Pos_y;   /*!< This variable saves Current Position in Y of the Projectile     */
     float vel;     /*!< This is the total Projectile velocity                           */
     float angle;   /*!< This variable saves the angle of the shooting Projectile        */
-    obj_t type;    /*!< This variable saves the type of the projectile                  */
 /*@}*/
 }proj_t;
 

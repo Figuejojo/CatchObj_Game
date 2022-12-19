@@ -52,7 +52,10 @@ typedef STATES_t (*GamePhase_t)(GEng_t*);    /**< Typedef of a Function Pointer 
   */
 void GameEngine(GamePhase_t * GPhase);
 
-
+/** @brief Handle the changes in the player's lives and score.
+  *
+  * @param Pointer to GEng_t structure.
+  */
 void Get_Score(GEng_t * GE);
 
 /** @brief Draw_Objects Function for handling the object movements and drawing.
