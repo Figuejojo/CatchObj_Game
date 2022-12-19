@@ -37,6 +37,8 @@ void CatchGame_Init()
     amio_load_sample("shoot", "./data/mixkit-short-laser-gun-shot-1670.wav");
     amio_load_sample("lose" , "./data/mixkit-player-losing-or-failing-2042.wav");
     amio_load_sample("ctch" , "./data/mixkit-quick-positive-video-game-notification-interface-265.wav");
+    amio_load_sample("bad"  , "./data/mixkit-falling-hit-on-gravel-756.wav" );
+
 
     GamePhase_t GamePhases[] = {GameInitWindow,
                                 GameSelWindow ,

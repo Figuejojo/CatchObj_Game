@@ -69,13 +69,13 @@ void Get_Score(GEng_t * GE)
                 }
                 else if(nObjts == 1)
                 {
-                    amio_add_sample_instance("ctch",PLAY_ONCE,0.5);
+                    amio_add_sample_instance("bad",PLAY_ONCE,0.5);
                     amio_update_audio();
                     GE->Player->Score -= GE->CurrS;
                 }
                 else if(nObjts == 2)
                 {
-                    amio_add_sample_instance("ctch",PLAY_ONCE,0.5);
+                    amio_add_sample_instance("bad",PLAY_ONCE,0.5);
                     amio_update_audio();
                     GE->Player->lives--;
                 }
