@@ -31,8 +31,8 @@ typedef struct GameEngine
     STATES_t CurrS;         /*!< This is the Current State to be executed       */
     STATES_t PrevS;         /*!< This is the Previous State that was executed   */
     StickMan_t * Player;    /*!< Player's Character Game Characteristics        */
-    int Score;
-    int lives;
+    //int Score;
+    //int lives;
     int nObjects;           /*!< Object with a random effect on the player      */
     BITMAP Bckgnd[LVLS];    /*!< Background images                              */
     proj_t * Object;        /*!< Game Objects                                   */

@@ -32,7 +32,7 @@
 #define DEG2RAD(x) (x*PI/180)   ///< Macro Function for Converting between Degrees and Radians
 
 /*! Game Definitions*/
-#define ATTEMPTS (40)
+#define ATTEMPTS (2)
 #define DT       (0.05f)
 #define GRAV     (9.81)
 #define LVLS     (5)
@@ -102,6 +102,8 @@ typedef struct player
 /*@{*/
     int score;  /*!< This variable saves the player score                   */
     int color;  /*!< This variable saves the character colour               */
+    int Score;
+    int lives;
     int move_x; /*!< This variable saves the move position of the character */
 /*@}*/
 }StickMan_t;
@@ -121,7 +123,6 @@ typedef struct projectile
 {
 /*@{*/
     int   cannion; /*!< This variable indicates if the obj was shoot from R or L cannon */
-    float IPos_x;  /*!< This variable saves the initial position in X                   */
     float Pos_x;   /*!< This variable saves Current Position in X of the Projectile     */
     float Pos_y;   /*!< This variable saves Current Position in Y of the Projectile     */
     float vel;     /*!< This is the total Projectile velocity                           */

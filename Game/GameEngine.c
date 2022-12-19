@@ -57,7 +57,9 @@ void Get_Score(GEng_t * GE)
         GE->Object[0].Pos_y = WIN_HIGH;
         if(GE->CurrS != STARTING_e)
         {
-            GE->Score++;
+            amio_add_sample_instance("ctch",PLAY_ONCE,0.5);
+            amio_update_audio();
+            GE->Player->Score += GE->CurrS;
         }
     }
 
@@ -65,7 +67,7 @@ void Get_Score(GEng_t * GE)
     {
         if(GE->CurrS != STARTING_e)
         {
-            GE->lives--;
+            GE->Player->lives--;
         }
         GE->Object[0].Pos_y = WIN_HIGH;
     }
@@ -186,10 +188,10 @@ void Draw_BackGround(const GEng_t * GE)
             outtextxy(0,20,"Move around using the mouse");
             outtextxy(WIN_WIDTH/4,60,"Practice shooting balls with the 'b' key ");
 
-            sprintf(att_str,"Lives: %d/%d",ATTEMPTS, GE->lives);
+            sprintf(att_str,"Lives: %d/%d",ATTEMPTS, GE->Player->lives);
             outtextxy(WIN_WIDTH/4,GND+40,att_str);
 
-            sprintf(att_str,"Score: %d",GE->Score);
+            sprintf(att_str,"Score: %d",GE->Player->Score);
             outtextxy((WIN_WIDTH/4)*2,GND+40,att_str);
 
             draw_bitmap(GE->Bckgnd[1], (int)WIN_WIDTH/2, (int)WIN_HIGH/2);
@@ -203,10 +205,10 @@ void Draw_BackGround(const GEng_t * GE)
         case LEVEL1_e:
             outtextxy(WIN_WIDTH/4,0,"LEVEL 1");
             outtextxy(WIN_WIDTH/4,20,"Hazard: None");
-            sprintf(att_str,"Lives: %d/%d",ATTEMPTS, GE->lives);
+            sprintf(att_str,"Lives: %d/%d",ATTEMPTS, GE->Player->lives);
             outtextxy(WIN_WIDTH/4,GND+40,att_str);
 
-            sprintf(att_str,"Score: %d",GE->Score);
+            sprintf(att_str,"Score: %d",GE->Player->Score);
             outtextxy((WIN_WIDTH/4)*2,GND+40,att_str);
 
             setcolor(LIGHTGRAY);
@@ -220,10 +222,10 @@ void Draw_BackGround(const GEng_t * GE)
             outtextxy(WIN_WIDTH/4,0,"LEVEL 2");
             outtextxy(WIN_WIDTH/4,20,"Hazard: Rain");
 
-            sprintf(att_str,"Lives: %d/%d",ATTEMPTS, GE->lives);
+            sprintf(att_str,"Lives: %d/%d",ATTEMPTS, GE->Player->lives);
             outtextxy(WIN_WIDTH/4,GND+40,att_str);
 
-            sprintf(att_str,"Score: %d",GE->Score);
+            sprintf(att_str,"Score: %d",GE->Player->Score);
             outtextxy((WIN_WIDTH/4)*2,GND+40,att_str);
 
             setcolor(LIGHTGRAY);
@@ -236,10 +238,10 @@ void Draw_BackGround(const GEng_t * GE)
             outtextxy(WIN_WIDTH/4,0,"LEVEL 3");
             outtextxy(WIN_WIDTH/4,20,"Hazard: Slippery Floor");
 
-            sprintf(att_str,"Lives: %d/%d",ATTEMPTS, GE->lives);
+            sprintf(att_str,"Lives: %d/%d",ATTEMPTS, GE->Player->lives);
             outtextxy(WIN_WIDTH/4,GND+40,att_str);
 
-            sprintf(att_str,"Score: %d",GE->Score);
+            sprintf(att_str,"Score: %d",GE->Player->Score);
             outtextxy((WIN_WIDTH/4)*2,GND+40,att_str);
 
             setcolor(CYAN);
@@ -252,7 +254,7 @@ void Draw_BackGround(const GEng_t * GE)
 
         case ENL_e:
             outtextxy(WIN_WIDTH/4,WIN_HIGH/4,"You Ran out of lifes");
-            sprintf(att_str,"Final Score: %d",GE->Score);
+            sprintf(att_str,"Final Score: %d",GE->Player->Score);
             outtextxy(WIN_WIDTH/4,WIN_HIGH/4+20,att_str);
             outtextxy(WIN_WIDTH/4,WIN_HIGH/4+40,"THANKS FOR PLAYING");
             break;

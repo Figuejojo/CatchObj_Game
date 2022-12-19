@@ -36,6 +36,7 @@ void CatchGame_Init()
     amio_load_sample("trans", "./data/mixkit-fast-small-sweep-transition-166.wav");
     amio_load_sample("shoot", "./data/mixkit-short-laser-gun-shot-1670.wav");
     amio_load_sample("lose" , "./data/mixkit-player-losing-or-failing-2042.wav");
+    amio_load_sample("ctch" , "./data/mixkit-quick-positive-video-game-notification-interface-265.wav");
 
     GamePhase_t GamePhases[] = {GameInitWindow,
                                 GameSelWindow ,
@@ -74,8 +75,8 @@ STATES_t GameInitWindow(GEng_t * Machine)
         Machine->nObjects = 0;
         Machine->Object = (proj_t*)calloc(1,sizeof(proj_t));
         Machine->Object[0].Pos_y = WIN_HIGH + 30;
-        Machine->lives = ATTEMPTS;
-        Machine->Score = 0;
+        Machine->Player->lives = ATTEMPTS;
+        Machine->Player->Score = 0;
     }
 
     Draw_BackGround(Machine);
@@ -137,7 +138,7 @@ STATES_t GameLV1Window(GEng_t * Machine)
     const int elem2catch = 5;
     ASSERT(Machine != NULL);
     ASSERT(elem2catch > 0);
-    ASSERT(Machine->lives > 0);
+    ASSERT(Machine->Player->lives > 0);
 
     if(Machine->PrevS == STARTING_e)
     {
@@ -160,7 +161,7 @@ STATES_t GameLV1Window(GEng_t * Machine)
     {
         NextState = LEVEL2_e;
     }
-    if(Machine->lives == 0)
+    if(Machine->Player->lives == 0)
     {
         NextState = ENL_e;
     }
@@ -191,7 +192,7 @@ STATES_t GameLV2Window(GEng_t * Machine)
     {
         NextState = LEVEL3_e;
     }
-    if(Machine->lives == 0)
+    if(Machine->Player->lives == 0)
     {
         NextState = ENL_e;
     }
@@ -222,7 +223,7 @@ STATES_t GameLV3Window(GEng_t * Machine)
     {
         NextState = LEVEL4_e;
     }
-    if(Machine->lives == 0)
+    if(Machine->Player->lives == 0)
     {
         NextState = ENL_e;
     }
@@ -272,7 +273,7 @@ STATES_t GameENLWindow(GEng_t * Machine)
     {
         amio_add_sample_instance("lose",PLAY_ONCE, 1);
         amio_update_audio();
-        printf("Out of Lives...Score %d\n",Machine->Score);
+        printf("Out of Lives...Score %d\n",Machine->Player->Score);
         Draw_BackGround(Machine);
         update_display();
     }
