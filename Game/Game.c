@@ -49,6 +49,7 @@ void CatchGame_Init()
                                 GameLV4Window ,
                                 GameLVFWindow ,
                                 GameENLWindow ,
+                                GameENFWindow ,
                                 GamePGNWindow ,
                                 GameEndWindow ,
                                };
@@ -315,7 +316,7 @@ STATES_t GameLVFWindow(GEng_t * Machine)
     if(Machine->nObjects == 0)
     {
         printf("\nWOOOON\n");
-        NextState = END_e;
+        NextState = ENF_e;
     }
     if(Machine->Player->lives == 0)
     {
@@ -342,6 +343,28 @@ STATES_t GamePGNWindow(GEng_t * Machine)
     pausefor(5);
 
     Machine->PrevS = PLAYGND_e;
+    return NextState;
+}
+
+STATES_t GameENFWindow(GEng_t * Machine)
+{
+    ASSERT(Machine != NULL);
+
+    STATES_t NextState = Machine->CurrS;
+    ASSERT(NextState == ENF_e);
+
+    if(Machine->PrevS == LEVELF_e)
+    {
+        ASSERT(Machine->nObjects == 0);
+        ASSERT(Machine->Player->lives > 0);
+        Machine->PrevS = ENF_e;
+    }
+
+    NextState = EventHandler(Machine);
+
+    Draw_BackGround(Machine);
+    update_display();
+
     return NextState;
 }
 
@@ -388,14 +411,15 @@ STATES_t GameEndWindow(GEng_t * Machine)
             dprintf("Ending from Playground\n");
             break;
 
+        case LEVELF_e:
         case LEVEL4_e:
-            dprintf("Four ");
         case LEVEL1_e:
         case LEVEL2_e:
         case LEVEL3_e:
             dprintf("Ending from LV");
             break;
-
+        case ENF_e:
+            dprintf("Ended from ENDF");
         case ENL_e:
             dprintf("Ended from ENDL");
             break;

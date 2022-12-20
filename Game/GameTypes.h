@@ -20,6 +20,12 @@
 /*******************************************************************************
 * Macro Definitions
 *******************************************************************************/
+/*! Version */
+#define GAME_VERSION     (0)
+#define GAME_SUB_VERSION (18)
+#define GAME_WIP_VERSION (0)
+
+/*! Macro Flags*/
 #if defined(_DEBUG)
 #define ASSERT assert
 #define dprintf printf
@@ -91,6 +97,7 @@ typedef enum
     LEVELF_e            ,     /*!< This is the State for the Final Level*/
 
     ENL_e = LEVELF_e + 1,     /*!< This is the Retry State with value of 50         */
+    ENF_e               ,     /*!< This is the Final State if the game was completed*/
     PLAYGND_e           ,     /*!< This is the Playground State with value of 250   */
     END_e               ,     /*!< This is the END State with value of 51           */
 /*@}*/

@@ -321,6 +321,19 @@ void Draw_BackGround(const GEng_t * GE)
             filled_circle(WIN_WIDTH,CANY,   CANR,   LIGHTMAGENTA);
             break;
 
+        case ENF_e:
+            sprintf(att_str,"Your Score: \t%d",GE->Player->Score);
+            outtextxy(WIN_WIDTH/4,WIN_HIGH/4+20,att_str);
+            GE->Player->lives = 3;
+            sprintf(att_str,"Live left score: \t%d",GE->Player->lives*20);
+            outtextxy(WIN_WIDTH/4,WIN_HIGH/4+40,att_str);
+
+            sprintf(att_str,"Final score: \t%d",GE->Player->lives*20 + GE->Player->Score);
+            outtextxy(WIN_WIDTH/4,WIN_HIGH/4+60,att_str);
+
+            outtextxy(WIN_WIDTH/4,WIN_HIGH/4+100,"THANKS FOR PLAYING");
+            break;
+
         case ENL_e:
             outtextxy(WIN_WIDTH/4,WIN_HIGH/4,"You Ran out of lifes");
             sprintf(att_str,"Final Score: %d",GE->Player->Score);
@@ -406,6 +419,9 @@ STATES_t EventHandler(GEng_t * GE)
                 case LEVEL3_e:
                 case LEVEL4_e:
                 case LEVELF_e:
+                    break;
+                case ENF_e:
+                    return END_e;
                     break;
                 case END_e:
                     return END_e;

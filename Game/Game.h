@@ -90,7 +90,7 @@ STATES_t GameLV3Window(GEng_t * Machine);
  */
 STATES_t GameLV4Window(GEng_t * Machine);
 
-/** @brief Game Level 5 function.
+/** @brief Game Final Level or fifth level function.
  *          15 Balls to change level.
  *          Hazards: All.
  *  @param GEng_t ptr. This has the game info.
@@ -98,6 +98,15 @@ STATES_t GameLV4Window(GEng_t * Machine);
  *  @return The next state to be executed in the state machine.
  */
 STATES_t GameLVFWindow(GEng_t * Machine);
+
+/** @brief Winners end window. If player get to the end with all lives.
+ *          15 Balls to change level.
+ *          Hazards: All.
+ *  @param GEng_t ptr. This has the game info.
+ *
+ *  @return The next state to be executed in the state machine.
+ */
+STATES_t GameENFWindow(GEng_t * Machine);
 
 /** @brief End of Attempts.
  *
