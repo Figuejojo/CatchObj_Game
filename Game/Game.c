@@ -70,11 +70,12 @@ STATES_t GameInitWindow(GEng_t * Machine)
 
     if(Machine->PrevS == BOOT_e)
     {
+        ASSERT(Machine->PrevS == BOOT_e);
         amio_add_sample_instance("init", PLAY_ONCE, 0.3);
         amio_update_audio();
         Machine->PrevS = INIT_e;
 
-        printf("Just Once\n");
+        dprintf("Just Once\n");
         Machine->nObjects = 0;
         Machine->nTObjs = 1;
         Machine->Object = (proj_t*)calloc(Machine->nTObjs,sizeof(proj_t));
@@ -84,7 +85,7 @@ STATES_t GameInitWindow(GEng_t * Machine)
     }
 
     Draw_BackGround(Machine);
-    pausefor(1);
+    pausefor(2);
     update_display();
 
     NextState = EventHandler(Machine);

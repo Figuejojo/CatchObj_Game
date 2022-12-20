@@ -193,7 +193,6 @@ void Draw_BackGround(const GEng_t * GE)
     switch(GE->CurrS)
     {
         case INIT_e:
-            amio_update_audio();
             outtextxy(WIN_HIGH/2,WIN_HIGH/2-100,"Welcome to the catch game!");
             outtextxy(WIN_HIGH/2,WIN_HIGH/2    ,"Press any key to start");
             break;
