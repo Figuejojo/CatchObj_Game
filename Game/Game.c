@@ -61,7 +61,7 @@ void CatchGame_Init()
     amio_destroy_audio();
     closegraph();
 }
-//! @TODO: Check why does it died if left for too long.
+
 STATES_t GameInitWindow(GEng_t * Machine)
 {
     STATES_t NextState = INIT_e;

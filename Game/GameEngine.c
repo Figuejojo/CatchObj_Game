@@ -419,9 +419,10 @@ STATES_t EventHandler(GEng_t * GE)
                 case LEVELF_e:
                     break;
                 case ENF_e:
+                case ENL_e:
+                case END_e:
                     return END_e;
                     break;
-                case END_e:
                     return END_e;
                     break;
                 default:
