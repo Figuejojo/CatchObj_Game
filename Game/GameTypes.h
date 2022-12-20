@@ -22,9 +22,9 @@
 * Macro Definitions
 *******************************************************************************/
 /*! Version */
-#define GAME_VERSION     (0)
-#define GAME_SUB_VERSION (18)
-#define GAME_WIP_VERSION (2)
+#define GAME_VERSION     (1)
+#define GAME_SUB_VERSION (0)
+#define GAME_WIP_VERSION (0)
 
 /*! Macro Flags*/
 #if defined(_DEBUG)
