@@ -30,6 +30,7 @@ void CatchGame_Init()
     reg_keyboard_events();
     reg_mouse_events();
     reg_display_events();
+    //hide_mouse_cursor();
 
     amio_init_audio();
     amio_load_sample("init",  "./data/mixkit-magic-astral-sweep-effect-2629.wav");
@@ -38,7 +39,7 @@ void CatchGame_Init()
     amio_load_sample("lose" , "./data/mixkit-player-losing-or-failing-2042.wav");
     amio_load_sample("ctch" , "./data/mixkit-quick-positive-video-game-notification-interface-265.wav");
     amio_load_sample("bad"  , "./data/mixkit-falling-hit-on-gravel-756.wav" );
-
+    amio_load_sample("win"  , "./data/mixkit-melodic-bonus-collect-1938.wav");
 
     GamePhase_t GamePhases[] = {GameInitWindow,
                                 GameSelWindow ,
@@ -60,7 +61,7 @@ void CatchGame_Init()
     amio_destroy_audio();
     closegraph();
 }
-
+//! @TODO: Check why does it died if left for too long.
 STATES_t GameInitWindow(GEng_t * Machine)
 {
     STATES_t NextState = INIT_e;
@@ -69,8 +70,8 @@ STATES_t GameInitWindow(GEng_t * Machine)
 
     if(Machine->PrevS == BOOT_e)
     {
-        amio_update_audio();
         amio_add_sample_instance("init", PLAY_ONCE, 0.3);
+        amio_update_audio();
         Machine->PrevS = INIT_e;
 
         printf("Just Once\n");
@@ -83,6 +84,7 @@ STATES_t GameInitWindow(GEng_t * Machine)
     }
 
     Draw_BackGround(Machine);
+    pausefor(1);
     update_display();
 
     NextState = EventHandler(Machine);
@@ -144,6 +146,8 @@ STATES_t GameLV1Window(GEng_t * Machine)
 
     if(Machine->PrevS == STARTING_e)
     {
+        amio_add_sample_instance("trans", PLAY_ONCE, 1);
+        amio_update_audio();
         ASSERT(Machine->Player->lives > 0);
         ASSERT(Machine->Player->Score == 0);
         Machine->nObjects = elem2catch + 1; // Number of Objects + 1
@@ -183,6 +187,8 @@ STATES_t GameLV2Window(GEng_t * Machine)
 
     if(Machine->PrevS == LEVEL1_e)
     {
+        amio_add_sample_instance("trans", PLAY_ONCE, 1);
+        amio_update_audio();
         ASSERT(Machine->nObjects == 0);
         ASSERT(Machine->Player->lives > 0);
         Machine->nObjects = elem_catch;
@@ -220,6 +226,8 @@ STATES_t GameLV3Window(GEng_t * Machine)
 
     if(Machine->PrevS == LEVEL2_e)
     {
+        amio_add_sample_instance("trans", PLAY_ONCE, 1);
+        amio_update_audio();
         ASSERT(Machine->nObjects == 0);
         ASSERT(Machine->Player->lives > 0);
         Machine->nObjects = elem_catch;
@@ -233,7 +241,7 @@ STATES_t GameLV3Window(GEng_t * Machine)
     update_display();
 
     NextState = EventHandler(Machine);
-    pausefor(8.5);
+    pausefor(9);
 
     if(Machine->nObjects == 0)
     {
@@ -257,6 +265,8 @@ STATES_t GameLV4Window(GEng_t * Machine)
 
     if(Machine->PrevS == LEVEL3_e)
     {
+        amio_add_sample_instance("trans", PLAY_ONCE, 1);
+        amio_update_audio();
         ASSERT(Machine->nObjects == 0);
         ASSERT(Machine->Player->lives > 0);
         Machine->nTObjs = 3;
@@ -296,6 +306,8 @@ STATES_t GameLVFWindow(GEng_t * Machine)
 
     if(Machine->PrevS == LEVEL4_e)
     {
+        amio_add_sample_instance("trans", PLAY_ONCE, 1);
+        amio_update_audio();
         ASSERT(Machine->nObjects == 0);
         ASSERT(Machine->Player->lives > 0);
         Machine->nTObjs = 3;
@@ -355,6 +367,8 @@ STATES_t GameENFWindow(GEng_t * Machine)
 
     if(Machine->PrevS == LEVELF_e)
     {
+        amio_add_sample_instance("init", PLAY_ONCE, 0.3);
+        amio_update_audio();
         ASSERT(Machine->nObjects == 0);
         ASSERT(Machine->Player->lives > 0);
         Machine->PrevS = ENF_e;

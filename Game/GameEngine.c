@@ -125,7 +125,7 @@ void Draw_Objects(GEng_t * GE)
 
                 GE->Object[nObjts].Pos_y = CANY;
                 GE->Object[nObjts].angle = DEG2RAD(-rand_number(0,45));//-rand() % 85);
-                GE->Object[nObjts].vel   = rand_number(10,75);//rand() % 75;
+                GE->Object[nObjts].vel   = rand_number(10,70);//rand() % 75;
 
             }
         }
@@ -187,7 +187,7 @@ void Stickman_draw(StickMan_t * Man)
 void Draw_BackGround(const GEng_t * GE)
 {
 
-    char att_str[20];
+    char att_str[30];
     setcolor(LIGHTGRAY);
     ASSERT(GE->CurrS >= INIT_e && GE->CurrS < END_e);
     switch(GE->CurrS)
@@ -322,13 +322,12 @@ void Draw_BackGround(const GEng_t * GE)
             break;
 
         case ENF_e:
-            sprintf(att_str,"Your Score: \t%d",GE->Player->Score);
+            sprintf(att_str,"Your Score:     %d",GE->Player->Score);
             outtextxy(WIN_WIDTH/4,WIN_HIGH/4+20,att_str);
-            GE->Player->lives = 3;
-            sprintf(att_str,"Live left score: \t%d",GE->Player->lives*20);
+            sprintf(att_str,"Live left score: %d",GE->Player->lives*20);
             outtextxy(WIN_WIDTH/4,WIN_HIGH/4+40,att_str);
 
-            sprintf(att_str,"Final score: \t%d",GE->Player->lives*20 + GE->Player->Score);
+            sprintf(att_str,"Final score:    %d",GE->Player->lives*20 + GE->Player->Score);
             outtextxy(WIN_WIDTH/4,WIN_HIGH/4+60,att_str);
 
             outtextxy(WIN_WIDTH/4,WIN_HIGH/4+100,"THANKS FOR PLAYING");

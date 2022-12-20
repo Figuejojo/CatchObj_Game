@@ -23,7 +23,7 @@
 /*! Version */
 #define GAME_VERSION     (0)
 #define GAME_SUB_VERSION (18)
-#define GAME_WIP_VERSION (0)
+#define GAME_WIP_VERSION (1)
 
 /*! Macro Flags*/
 #if defined(_DEBUG)
@@ -38,7 +38,7 @@
 #define DEG2RAD(x) (x*PI/180)   ///< Macro Function for Converting between Degrees and Radians
 
 /*! Game Definitions*/
-#define ATTEMPTS (800)
+#define ATTEMPTS (10)
 #define DT       (0.05f)
 #define GRAV     (9.81)
 #define LVLS     (5)
