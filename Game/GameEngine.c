@@ -302,6 +302,25 @@ void Draw_BackGround(const GEng_t * GE)
             filled_circle(WIN_WIDTH,CANY,   CANR,   LIGHTMAGENTA);
             break;
 
+        case LEVELF_e:
+            draw_bitmap(GE->Bckgnd, (int)WIN_WIDTH/2, (int)WIN_HIGH/2);
+
+            outtextxy(WIN_WIDTH/4,0,"LEVEL Last");
+            outtextxy(WIN_WIDTH/4,20,"Hazard: All");
+
+            sprintf(att_str,"Lives: %d/%d",ATTEMPTS, GE->Player->lives);
+            outtextxy(WIN_WIDTH/4,GND+40,att_str);
+
+            sprintf(att_str,"Score: %d",GE->Player->Score);
+            outtextxy((WIN_WIDTH/4)*2,GND+40,att_str);
+
+            setcolor(CYAN);
+            line(0, GND,    WIN_WIDTH,  GND,    3);
+            setcolor(LIGHTGRAY);
+            filled_circle(0,        CANY,   CANR,   LIGHTMAGENTA);
+            filled_circle(WIN_WIDTH,CANY,   CANR,   LIGHTMAGENTA);
+            break;
+
         case ENL_e:
             outtextxy(WIN_WIDTH/4,WIN_HIGH/4,"You Ran out of lifes");
             sprintf(att_str,"Final Score: %d",GE->Player->Score);
@@ -386,6 +405,7 @@ STATES_t EventHandler(GEng_t * GE)
                 case LEVEL2_e:
                 case LEVEL3_e:
                 case LEVEL4_e:
+                case LEVELF_e:
                     break;
                 case END_e:
                     return END_e;

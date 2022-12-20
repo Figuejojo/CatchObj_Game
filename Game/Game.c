@@ -232,7 +232,7 @@ STATES_t GameLV3Window(GEng_t * Machine)
     update_display();
 
     NextState = EventHandler(Machine);
-    pausefor(9);
+    pausefor(8.5);
 
     if(Machine->nObjects == 0)
     {
@@ -258,7 +258,7 @@ STATES_t GameLV4Window(GEng_t * Machine)
     {
         ASSERT(Machine->nObjects == 0);
         ASSERT(Machine->Player->lives > 0);
-        Machine->nTObjs = 5;
+        Machine->nTObjs = 3;
         Machine->nObjects = elem_catch;
         Machine->PrevS = LEVEL4_e;
         Machine->Object = (proj_t*)realloc(Machine->Object ,Machine->nTObjs*sizeof(proj_t));
@@ -275,7 +275,7 @@ STATES_t GameLV4Window(GEng_t * Machine)
 
     if(Machine->nObjects == 0)
     {
-        NextState = END_e;
+        NextState = LEVELF_e;
     }
     if(Machine->Player->lives == 0)
     {
@@ -287,7 +287,42 @@ STATES_t GameLV4Window(GEng_t * Machine)
 
 STATES_t GameLVFWindow(GEng_t * Machine)
 {
-    return END_e;
+    const int elem_catch = 15;
+    ASSERT(Machine != NULL);
+    ASSERT(elem_catch == 15);
+
+    STATES_t NextState = Machine->CurrS;
+
+    if(Machine->PrevS == LEVEL4_e)
+    {
+        ASSERT(Machine->nObjects == 0);
+        ASSERT(Machine->Player->lives > 0);
+        Machine->nTObjs = 3;
+        Machine->nObjects = elem_catch;
+        Machine->PrevS = LEVELF_e;
+        Machine->Object = (proj_t*)realloc(Machine->Object ,Machine->nTObjs*sizeof(proj_t));
+    }
+
+    Draw_BackGround(Machine);
+    Draw_Objects(Machine);
+    Stickman_draw(Machine->Player);
+    Get_Score(Machine);
+    update_display();
+
+    NextState = EventHandler(Machine);
+    pausefor(8.5);
+
+    if(Machine->nObjects == 0)
+    {
+        printf("\nWOOOON\n");
+        NextState = END_e;
+    }
+    if(Machine->Player->lives == 0)
+    {
+        NextState = ENL_e;
+    }
+
+    return NextState;
 }
 
 STATES_t GamePGNWindow(GEng_t * Machine)
