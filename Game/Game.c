@@ -8,7 +8,6 @@
 * Includes
 *******************************************************************************/
 #include "Game.h"
-
 /*******************************************************************************
 * Static Global Variables
 *******************************************************************************/
@@ -24,7 +23,6 @@ void CatchGame_Init()
     initfont();
     initkeyboard();
     initmouse();
-
     create_event_queue();
 
     reg_keyboard_events();
@@ -54,6 +52,8 @@ void CatchGame_Init()
                                 GamePGNWindow ,
                                 GameEndWindow ,
                                };
+    srand(time(NULL));
+
     GameEngine(GamePhases);
 
     closemouse();
