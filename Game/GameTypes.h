@@ -22,57 +22,59 @@
 * Macro Definitions
 *******************************************************************************/
 /*! Version */
-#define GAME_VERSION     (1)
-#define GAME_SUB_VERSION (0)
-#define GAME_WIP_VERSION (0)
+#define GAME_VERSION     (1)    ///< Game Release version
+#define GAME_SUB_VERSION (0)    ///< Game Feature implementations
+#define GAME_WIP_VERSION (1)    ///< Minor changes or BugFixes
 
 /*! Macro Flags*/
-#if defined(_DEBUG)
-#define ASSERT assert
-#define dprintf printf
+#if defined(_DEBUG)             ///!< Macro enabled in with the debug_asssignment build target
+
+#define ASSERT assert           ///< Re-definition for the assertions
+#define dprintf printf          ///< Re-definition for the printf
+
 #else
-#define ASSERT //
-#define dprintf //
+#define ASSERT  //              ///< Redefinition for disabling the ASSERT
+#define dprintf //              ///< Redefinition for disabling the dprintf
 #endif // _DEBUG
 
 /*! Macro Functions*/
 #define DEG2RAD(x) (x*PI/180)   ///< Macro Function for Converting between Degrees and Radians
 
 /*! Game Definitions*/
-#define ATTEMPTS (10)
-#define DT       (0.05f)
-#define GRAV     (9.81)
-#define LVLS     (5)
+#define ATTEMPTS (10)           ///< Player Attempts or Lives
+#define DT       (0.05f)        ///< Delta Time used for the parabola equations
+#define GRAV     (9.81)         ///< Gravity Used for the parabola equations.
+#define LVLS     (5)            ///< In game levels. (Must match with the Game.c prototypes)
 
 /*! Game Definitions */
-#define WIN_WIDTH (800)
-#define WIN_HIGH  (600)
-#define GND       (500)
-#define SPACE     (20)
+#define WIN_WIDTH (800)         ///< Windows Width
+#define WIN_HIGH  (600)         ///< Windows High
+#define GND       (500)         ///< Floor for the player to stand on
+#define SPACE     (20)          ///< Space used between text lines
 
 /*! Player Definitions */
-#define IPosX     (WIN_WIDTH/2)
-#define IPosY     (GND)
-#define HeadY     (GND-100)
-#define HeadR     (15)
-#define BodyY1    (HeadY+HeadR)
-#define BodyY2    (BodyY1+60)
+#define IPosX     (WIN_WIDTH/2) ///< Player Initial Position in X axis
+#define IPosY     (GND)         ///< Player Initial Position in Y axis
+#define HeadY     (GND-100)     ///< Player head position in Y axis
+#define HeadR     (15)          ///< Head radius
+#define BodyY1    (HeadY+HeadR) ///< Position 1 in the Y axis for the Body
+#define BodyY2    (BodyY1+60)   ///< Position 2 in the Y axis for the Body
 
-#define LEGY1     (BodyY2)
-#define LEGY2     (GND)
-#define LEGX1     (-15)
-#define LEGX2     (+15)
+#define LEGY1     (BodyY2)      ///< Leg1 end position in y axis
+#define LEGY2     (GND)         ///< Leg2 end position in y axis
+#define LEGX1     (-15)         ///< Leg1 end position in x axis
+#define LEGX2     (+15)         ///< Leg2 end position in w axis
 
-#define ArmY1     (BodyY1+50)
-#define ArmY2     (ArmY1-30)
-#define ARM1X     (-15)
-#define ARM2X     (+15)
+#define ArmY1     (BodyY1+50)   ///< Arms Position 1 for the Y axis
+#define ArmY2     (ArmY1-30)    ///< Amrs Position 2 for the Y axis
+#define ARM1X     (-15)         ///< Amr1 X axis position
+#define ARM2X     (+15)         ///< Amr2 X axis position
 
-#define HANDRANGE (30)
+#define HANDRANGE (30)          ///< Hand Range for catching objects (x position)
 
 /*! Cannon */
-#define CANY (150)
-#define CANR (30)
+#define CANY (150)              ///< Cannon size in the y axis
+#define CANR (30)               ///< Cannon radius
 
 
 /*******************************************************************************
