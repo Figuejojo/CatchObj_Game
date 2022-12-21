@@ -423,8 +423,6 @@ STATES_t EventHandler(GEng_t * GE)
                 case END_e:
                     return END_e;
                     break;
-                    return END_e;
-                    break;
                 default:
                     break;
             }

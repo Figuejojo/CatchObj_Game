@@ -22,9 +22,9 @@
 * Macro Definitions
 *******************************************************************************/
 /*! Version */
-#define GAME_VERSION     (1)    ///< Game Release version
-#define GAME_SUB_VERSION (0)    ///< Game Feature implementations
-#define GAME_WIP_VERSION (1)    ///< Minor changes or BugFixes
+#define GAME_VERSION     (1)    ///< A - Game Release version
+#define GAME_SUB_VERSION (0)    ///< B - Game Feature implementations
+#define GAME_WIP_VERSION (2)    ///< C - Minor changes or BugFixes
 
 /*! Macro Flags*/
 #if defined(_DEBUG)             ///!< Macro enabled in with the debug_asssignment build target
