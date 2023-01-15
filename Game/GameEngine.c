@@ -80,6 +80,11 @@ void Get_Score(GEng_t * GE)
                     GE->Player->lives--;
                 }
             }
+            else if(GE->CurrS == STARTING_e)
+            {
+                amio_add_sample_instance("ctch",PLAY_ONCE,0.5);
+                amio_update_audio();
+            }
         }
 
         if(GE->Object[nObjts].Pos_y > GND && GE->Object[nObjts].Pos_y < WIN_HIGH)

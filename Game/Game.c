@@ -28,7 +28,7 @@ void CatchGame_Init()
     reg_keyboard_events();
     reg_mouse_events();
     reg_display_events();
-    //hide_mouse_cursor();
+    hide_mouse_cursor();
 
     amio_init_audio();
     amio_load_sample("init",  "./data/mixkit-magic-astral-sweep-effect-2629.wav");
@@ -324,7 +324,7 @@ STATES_t GameLVFWindow(GEng_t * Machine)
     update_display();
 
     NextState = EventHandler(Machine);
-    pausefor(8.5);
+    pausefor(9);
 
     if(Machine->nObjects == 0)
     {
