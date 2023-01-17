@@ -96,11 +96,10 @@ STATES_t GameInitWindow(GEng_t * Machine)
         Machine->Player->Score = 0;
     }
 
-    Draw_BackGround(Machine);
-    pausefor(2);
-    update_display();
-
     NextState = EventHandler(Machine);
+    Draw_BackGround(Machine);
+    update_display();
+    pausefor(2);
 
     return NextState;
 }
@@ -139,14 +138,12 @@ STATES_t GameSRTWindow(GEng_t * Machine)
     }
 
     STATES_t NextState = EventHandler(Machine);
-
-    pausefor(5);
-
     Draw_BackGround(Machine);
     Draw_Objects(Machine);
     Stickman_draw(Machine->Player);
     Get_Score(Machine);
     update_display();
+    pausefor(5);
 
     return NextState;
 }
@@ -166,16 +163,14 @@ STATES_t GameLV1Window(GEng_t * Machine)
         Machine->nObjects = elem2catch + 1; // Number of Objects + 1
     }
 
+    STATES_t NextState = EventHandler(Machine);
     Draw_BackGround(Machine);
     Draw_Objects(Machine);
     Stickman_draw(Machine->Player);
     Get_Score(Machine);
-
     update_display();
-
     pausefor(5);
 
-    STATES_t NextState = EventHandler(Machine);
     Machine->PrevS = LEVEL1_e;
 
     if(Machine->nObjects == 0)
@@ -208,13 +203,12 @@ STATES_t GameLV2Window(GEng_t * Machine)
         Machine->PrevS = LEVEL2_e;
     }
 
+    NextState = EventHandler(Machine);
     Draw_BackGround(Machine);
     Draw_Objects(Machine);
     Stickman_draw(Machine->Player);
     Get_Score(Machine);
     update_display();
-
-    NextState = EventHandler(Machine);
     pausefor(5);
 
     if(Machine->nObjects == 0)
@@ -247,13 +241,12 @@ STATES_t GameLV3Window(GEng_t * Machine)
         Machine->PrevS = LEVEL3_e;
     }
 
+    NextState = EventHandler(Machine);
     Draw_BackGround(Machine);
     Draw_Objects(Machine);
     Stickman_draw(Machine->Player);
     Get_Score(Machine);
     update_display();
-
-    NextState = EventHandler(Machine);
     pausefor(9);
 
     if(Machine->nObjects == 0)
@@ -288,13 +281,12 @@ STATES_t GameLV4Window(GEng_t * Machine)
         Machine->Object = (proj_t*)realloc(Machine->Object ,Machine->nTObjs*sizeof(proj_t));
     }
 
+    NextState = EventHandler(Machine);
     Draw_BackGround(Machine);
     Draw_Objects(Machine);
     Stickman_draw(Machine->Player);
     Get_Score(Machine);
     update_display();
-
-    NextState = EventHandler(Machine);
     pausefor(5);
 
     if(Machine->nObjects == 0)
@@ -329,18 +321,17 @@ STATES_t GameLVFWindow(GEng_t * Machine)
         Machine->Object = (proj_t*)realloc(Machine->Object ,Machine->nTObjs*sizeof(proj_t));
     }
 
+    NextState = EventHandler(Machine);
     Draw_BackGround(Machine);
     Draw_Objects(Machine);
     Stickman_draw(Machine->Player);
     Get_Score(Machine);
     update_display();
-
-    NextState = EventHandler(Machine);
     pausefor(9);
 
     if(Machine->nObjects == 0)
     {
-        printf("\nWOOOON\n");
+        dprintf("\nWOOOON\n");
         NextState = ENF_e;
     }
     if(Machine->Player->lives == 0)
@@ -406,7 +397,7 @@ STATES_t GameENLWindow(GEng_t * Machine)
     {
         amio_add_sample_instance("lose",PLAY_ONCE, 1);
         amio_update_audio();
-        printf("Out of Lives...Score %d\n",Machine->Player->Score);
+        dprintf("Out of Lives...Score %d\n",Machine->Player->Score);
         Draw_BackGround(Machine);
         update_display();
     }
