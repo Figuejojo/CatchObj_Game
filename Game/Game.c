@@ -18,6 +18,32 @@
 
 void CatchGame_Init()
 {
+
+    initPeripherals();
+
+    GamePhase_t GamePhases[] = {GameInitWindow,
+                                GameSelWindow ,
+                                GameSRTWindow ,
+                                GameLV1Window ,
+                                GameLV2Window ,
+                                GameLV3Window ,
+                                GameLV4Window ,
+                                GameLVFWindow ,
+                                GameENLWindow ,
+                                GameENFWindow ,
+                                GamePGNWindow ,
+                                GameEndWindow ,
+                               };
+    srand(time(NULL));
+
+    GameEngine(GamePhases);
+
+    closePeripherals();
+
+}
+
+void initPeripherals()
+{
     ASSERT(WIN_WIDTH > 0 && WIN_HIGH > 0);
     initwindow(WIN_WIDTH, WIN_HIGH);
     initfont();
@@ -38,24 +64,10 @@ void CatchGame_Init()
     amio_load_sample("ctch" , "./data/mixkit-quick-positive-video-game-notification-interface-265.wav");
     amio_load_sample("bad"  , "./data/mixkit-falling-hit-on-gravel-756.wav" );
     amio_load_sample("win"  , "./data/mixkit-melodic-bonus-collect-1938.wav");
+}
 
-    GamePhase_t GamePhases[] = {GameInitWindow,
-                                GameSelWindow ,
-                                GameSRTWindow ,
-                                GameLV1Window ,
-                                GameLV2Window ,
-                                GameLV3Window ,
-                                GameLV4Window ,
-                                GameLVFWindow ,
-                                GameENLWindow ,
-                                GameENFWindow ,
-                                GamePGNWindow ,
-                                GameEndWindow ,
-                               };
-    srand(time(NULL));
-
-    GameEngine(GamePhases);
-
+void closePeripherals(void)
+{
     closemouse();
     closekeyboard();
     amio_destroy_audio();

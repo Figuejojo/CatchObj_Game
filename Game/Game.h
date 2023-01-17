@@ -28,7 +28,17 @@
  */
 void CatchGame_Init(void);
 
-/** @brief Initialization window for displaying the game name and welcome the player.
+
+ /** @brief Initialized all the peripherals: mouse, keyboard, display, font, event queue
+ *          as well as loading all the audio effects for the game.
+ */
+ void initPeripherals(void);
+
+ /** @brief Close the window and terminate the peripherals: Mouse, keyboard, and audio.
+ */
+ void closePeripherals(void);
+
+ /** @brief Initialization window for displaying the game name and welcome the player.
  *
  *  @param GEng_t ptr. This has the game info.
  *
