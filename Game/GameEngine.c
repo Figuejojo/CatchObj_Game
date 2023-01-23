@@ -72,14 +72,14 @@ void Get_Score(GEng_t * GE)
                 }
                 else if(nObjts == 1)
                 {
-                    // Red/Bad1 Objects
+                    // White/Bad1 Objects
                     amio_add_sample_instance("bad",PLAY_ONCE,0.5);
                     amio_update_audio();
                     GE->Player->Score -= GE->CurrS;
                 }
                 else if(nObjts == 2)
                 {
-                    // White/Bad2 Objects
+                    // Red/Bad2 Objects
                     amio_add_sample_instance("bad",PLAY_ONCE,0.5);
                     amio_update_audio();
                     GE->Player->lives--;
