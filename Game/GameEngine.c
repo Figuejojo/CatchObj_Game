@@ -19,7 +19,7 @@
 
 void GameEngine(GamePhase_t * GPhase)
 {
-    ASSERT(GPhase != NULL);
+    ASSERT(GPhase != NULL); //Check for GPhase to be different from NULL.
 
     dprintf("Game Engine - Debug print and ASSERTS ON\n");
     GEng_t Machine;
@@ -31,50 +31,55 @@ void GameEngine(GamePhase_t * GPhase)
 
     Machine.Bckgnd = load_bitmap("./data/rain.png");
 
-    do
+    do  //Execution of the State Machine
     {
         cleardevice();
 
-        ASSERT(Machine.CurrS >= BOOT_e && Machine.CurrS < END_e);
-        ASSERT(GPhase[Machine.CurrS] != NULL);
+        ASSERT(Machine.CurrS >= BOOT_e && Machine.CurrS < END_e);   // Check for the States to exist
+        ASSERT(GPhase[Machine.CurrS] != NULL);  // GamePhase pointer to current state must Exist.
 
-        Machine.CurrS = GPhase[Machine.CurrS](&Machine);
+        Machine.CurrS = GPhase[Machine.CurrS](&Machine);    //Execution of current state.
 
     }while(Machine.CurrS != END_e);
 
-    ASSERT(GPhase[END_e] != NULL);
+    ASSERT(GPhase[END_e] != NULL);  // Check if the end state exists.
     GPhase[END_e](&Machine);
 }
 
 void Get_Score(GEng_t * GE)
 {
-    ASSERT(GE != NULL);
-    ASSERT(GE->Object != NULL);
-    ASSERT(GE->nTObjs > 0);
+    ASSERT(GE != NULL); // Check for GE to not be NULL.
+    ASSERT(GE->Object != NULL); //Check for Objects to not be null.
+    ASSERT(GE->nTObjs > 0); // Check for the number of Thrown Objects to be greater than zero.
 
     for(int nObjts = 0; nObjts < GE->nTObjs; nObjts++)
     {
+        // Check the Position of the Ball if its in the catch area or not.
         if( (GE->Object[nObjts].Pos_x < GE->Player->move_x + ARM2X)&&
             (GE->Object[nObjts].Pos_x > GE->Player->move_x + ARM1X)&&
             (GE->Object[nObjts].Pos_y < ArmY1)&&(GE->Object[nObjts].Pos_y > ArmY2))
         {
+            //Reset Ball
             GE->Object[nObjts].Pos_y = WIN_HIGH;
-            if(GE->CurrS != STARTING_e)
+            if(GE->CurrS != STARTING_e) // Check if is not the starting trial for count points.
             {
                 if(nObjts == 0)
                 {
+                    // Cyan/Good Objects
                     amio_add_sample_instance("ctch",PLAY_ONCE,0.5);
                     amio_update_audio();
                     GE->Player->Score += GE->CurrS;
                 }
                 else if(nObjts == 1)
                 {
+                    // Red/Bad1 Objects
                     amio_add_sample_instance("bad",PLAY_ONCE,0.5);
                     amio_update_audio();
                     GE->Player->Score -= GE->CurrS;
                 }
                 else if(nObjts == 2)
                 {
+                    // White/Bad2 Objects
                     amio_add_sample_instance("bad",PLAY_ONCE,0.5);
                     amio_update_audio();
                     GE->Player->lives--;
@@ -82,6 +87,7 @@ void Get_Score(GEng_t * GE)
             }
             else if(GE->CurrS == STARTING_e)
             {
+                // For the trial window catch sound.
                 amio_add_sample_instance("ctch",PLAY_ONCE,0.5);
                 amio_update_audio();
             }
@@ -89,10 +95,12 @@ void Get_Score(GEng_t * GE)
 
         if(GE->Object[nObjts].Pos_y > GND && GE->Object[nObjts].Pos_y < WIN_HIGH)
         {
+            // If the ball fall to the ground.
             if(GE->CurrS != STARTING_e && nObjts == 0)
             {
                 GE->Player->lives--;
             }
+            //Reset the ball
             GE->Object[nObjts].Pos_y = WIN_HIGH;
         }
     }
@@ -100,15 +108,16 @@ void Get_Score(GEng_t * GE)
 
 void Draw_Objects(GEng_t * GE)
 {
-    ASSERT(GE != NULL);
-    ASSERT(GE->nTObjs > 0 );
+    ASSERT(GE != NULL); // Check for GE to not be NULL.
+    ASSERT(GE->nTObjs > 0 );    // Check for the number of Thrown Objects to be greater than zero.
     for(int nObjts = 0; nObjts < GE->nTObjs; nObjts++)
     {
+    // Iterate for the number of in game balls
         if(GE->Object[nObjts].Pos_y >= WIN_HIGH)
         {
+            //Ball at starting point.
             if(GE->nObjects > 0)
             {
-
                 if(nObjts == 0)
                 {
                     GE->nObjects--;
@@ -136,6 +145,7 @@ void Draw_Objects(GEng_t * GE)
         }
         else
         {
+            //Falling motions mechanics.
             float VelX = GE->Object[nObjts].vel * cos(GE->Object[nObjts].angle);
             GE->Object[nObjts].Pos_x += GE->Object[nObjts].cannion*VelX * DT;
 
@@ -162,10 +172,12 @@ void Draw_Objects(GEng_t * GE)
 
 void Stickman_draw(StickMan_t * Man)
 {
+    //Check colors to be available ones.
     ASSERT(Man->color == RED || Man->color == CYAN || Man->color == GREEN || Man->color == WHITE || Man->color == BLUE);
 
     setcolor(Man->color);
 
+    // Limit the movement of the stick man to only inside the game window.
     if(Man->move_x < 15)
     {
         Man->move_x = 15;
@@ -191,11 +203,11 @@ void Stickman_draw(StickMan_t * Man)
 
 void Draw_BackGround(const GEng_t * GE)
 {
-
     char att_str[30];
     setcolor(LIGHTGRAY);
+    // States must be withing the valid states.
     ASSERT(GE->CurrS >= INIT_e && GE->CurrS < END_e);
-    switch(GE->CurrS)
+    switch(GE->CurrS)   // Each state has its own texts, and background elements.
     {
         case INIT_e:
             outtextxy(WIN_HIGH/2,WIN_HIGH/2-100,"Welcome to the catch game!");
@@ -351,18 +363,18 @@ void Draw_BackGround(const GEng_t * GE)
 
 STATES_t EventHandler(GEng_t * GE)
 {
-    ASSERT(GE != NULL);
-    if(check_if_event())
+    ASSERT(GE != NULL); // Check for GE to not be NULL.
+    if(check_if_event())    // Check if any new event is taken.
     {
         wait_for_event();
-        if(event_close_display())
+        if(event_close_display())   // Close display for all states.
         {
             GE->PrevS = GE->CurrS;
             return END_e;
         }
-        else if(event_key_down())
+        else if(event_key_down())   //  Check for key press.
         {
-            switch(GE->CurrS)
+            switch(GE->CurrS)   // Validate specific keys for specific states.
             {
                 case SELCTING_e:
                     if(event_key('j'))
@@ -432,7 +444,7 @@ STATES_t EventHandler(GEng_t * GE)
                     break;
             }
         }
-        else if(event_mouse_position_changed())
+        else if(event_mouse_position_changed()) // Mouse change
         {
             get_mouse_coordinates();
             GE->Player->move_x = XMOUSE;

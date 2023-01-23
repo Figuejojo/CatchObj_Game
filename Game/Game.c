@@ -19,8 +19,9 @@
 void CatchGame_Init()
 {
 
-    initPeripherals();
+    initPeripherals();      // Initialization of peripherals
 
+    // Array of function pointers of each game window and levels.
     GamePhase_t GamePhases[] = {GameInitWindow,
                                 GameSelWindow ,
                                 GameSRTWindow ,
@@ -34,17 +35,19 @@ void CatchGame_Init()
                                 GamePGNWindow ,
                                 GameEndWindow ,
                                };
-    srand(time(NULL));
 
-    GameEngine(GamePhases);
+    srand(time(NULL));      // Random seed so the random values are not always the same sequence.
 
-    closePeripherals();
+    GameEngine(GamePhases); // Game Engine and main loop.
+
+    closePeripherals();     // Close all peripherals.
 
 }
 
 void initPeripherals()
 {
-    ASSERT(WIN_WIDTH > 0 && WIN_HIGH > 0);
+    ASSERT(WIN_WIDTH > 0 && WIN_HIGH > 0);  //Asume that Window sizes are higher than 0;
+
     initwindow(WIN_WIDTH, WIN_HIGH);
     initfont();
     initkeyboard();
@@ -57,6 +60,8 @@ void initPeripherals()
     hide_mouse_cursor();
 
     amio_init_audio();
+
+    //Load audio files so they are ready to use.
     amio_load_sample("init",  "./data/mixkit-magic-astral-sweep-effect-2629.wav");
     amio_load_sample("trans", "./data/mixkit-fast-small-sweep-transition-166.wav");
     amio_load_sample("shoot", "./data/mixkit-short-laser-gun-shot-1670.wav");
@@ -68,6 +73,7 @@ void initPeripherals()
 
 void closePeripherals(void)
 {
+    //Terminates peripherals
     closemouse();
     closekeyboard();
     amio_destroy_audio();
@@ -78,9 +84,9 @@ STATES_t GameInitWindow(GEng_t * Machine)
 {
     STATES_t NextState = INIT_e;
 
-    ASSERT(Machine != NULL);
+    ASSERT(Machine != NULL); // Check Machine is not NULL .
 
-    if(Machine->PrevS == BOOT_e)
+    if(Machine->PrevS == BOOT_e)    //First run on this state
     {
         ASSERT(Machine->PrevS == BOOT_e);
         amio_add_sample_instance("init", PLAY_ONCE, 0.3);
@@ -99,17 +105,18 @@ STATES_t GameInitWindow(GEng_t * Machine)
     NextState = EventHandler(Machine);
     Draw_BackGround(Machine);
     update_display();
-    pausefor(2);
+    pausefor(2);        //Wait time from one state to another.
 
-    return NextState;
+    return NextState;   //Return to the next state or cycle to the same state.
 }
 
 STATES_t GameSelWindow(GEng_t * Machine)
 {
-    ASSERT(Machine != NULL);
+    ASSERT(Machine != NULL);    // Check if Machine is not NULL
 
-    if(Machine->PrevS == INIT_e)
+    if(Machine->PrevS == INIT_e)    // First run on this state.
     {
+        //Play transition sound once when entering the state.
         amio_add_sample_instance("trans", PLAY_ONCE, 1);
         amio_update_audio();
     }
@@ -122,17 +129,19 @@ STATES_t GameSelWindow(GEng_t * Machine)
 
     NextState = EventHandler(Machine);
 
-    return NextState;
+    return NextState;   // Return the next State to be used.
 }
 
 STATES_t GameSRTWindow(GEng_t * Machine)
 {
-    ASSERT(Machine != NULL);
+    ASSERT(Machine != NULL);    // Check if Machine is not NULL
 
-    if(Machine->PrevS == SELCTING_e)
+    if(Machine->PrevS == SELCTING_e)     // First run on this state.
     {
+        //Play transition sound when entering this state for the first time.
         amio_add_sample_instance("trans", PLAY_ONCE, 1);
         amio_update_audio();
+        // Initialize some elements.
         Machine->PrevS = STARTING_e;
         Machine->nObjects = 0;
     }
@@ -143,24 +152,26 @@ STATES_t GameSRTWindow(GEng_t * Machine)
     Stickman_draw(Machine->Player);
     Get_Score(Machine);
     update_display();
-    pausefor(5);
+    pausefor(5);    //Pause the game for 5ms before next state/window.
 
-    return NextState;
+    return NextState;   // Return the next State to be used.
 }
 
 STATES_t GameLV1Window(GEng_t * Machine)
 {
     const int elem2catch = 5;
-    ASSERT(Machine != NULL);
-    ASSERT(elem2catch > 0);
+    ASSERT(Machine != NULL);    // Check if Machine is not NULL
+    ASSERT(elem2catch > 0);     // Check if Elements to be catch form level 1 is greater than zero
 
     if(Machine->PrevS == STARTING_e)
     {
+        //Play transition sound when entering this state for the first time.
         amio_add_sample_instance("trans", PLAY_ONCE, 1);
         amio_update_audio();
-        ASSERT(Machine->Player->lives > 0);
-        ASSERT(Machine->Player->Score == 0);
-        Machine->nObjects = elem2catch + 1; // Number of Objects + 1
+        ASSERT(Machine->Player->lives > 0); // Check if lives are greater than zero
+        ASSERT(Machine->Player->Score == 0);// Check score being zero for the first level.
+        Machine->nObjects = elem2catch + 1; // Number of Objects to be thrown is catch elements +1.
+        Machine->PrevS = LEVEL1_e;
     }
 
     STATES_t NextState = EventHandler(Machine);
@@ -169,37 +180,36 @@ STATES_t GameLV1Window(GEng_t * Machine)
     Stickman_draw(Machine->Player);
     Get_Score(Machine);
     update_display();
-    pausefor(5);
+    pausefor(5);    // Pause the game for 5ms before next state/window.
 
-    Machine->PrevS = LEVEL1_e;
-
-    if(Machine->nObjects == 0)
+    if(Machine->nObjects == 0)      // If the number of Objects to be catch is zero the next level follows.
     {
         NextState = LEVEL2_e;
     }
-    if(Machine->Player->lives == 0)
+    if(Machine->Player->lives == 0) // If lives is zero then the next state is the End Game / Out of Lives.
     {
         NextState = ENL_e;
     }
 
-    return NextState;
+    return NextState;   // Return the next State to be used.
 }
 
 STATES_t GameLV2Window(GEng_t * Machine)
 {
     const int elem_catch = 7;
-    ASSERT(Machine != NULL);
-    ASSERT(elem_catch == 7);
+    ASSERT(Machine != NULL);    // Check if Machine is not NULL.
+    ASSERT(elem_catch == 7);    // Check if Elements to be catch form level 1 is greater than zero.
 
     STATES_t NextState = Machine->CurrS;
 
     if(Machine->PrevS == LEVEL1_e)
     {
+        //Play transition sound when entering this state for the first time.
         amio_add_sample_instance("trans", PLAY_ONCE, 1);
         amio_update_audio();
-        ASSERT(Machine->nObjects == 0);
-        ASSERT(Machine->Player->lives > 0);
-        Machine->nObjects = elem_catch;
+        ASSERT(Machine->nObjects == 0); // Check if lives are greater than zero
+        ASSERT(Machine->Player->lives > 0); // Check score being zero for the first level.
+        Machine->nObjects = elem_catch; // Number of Objects to be thrown is catch elements +1.
         Machine->PrevS = LEVEL2_e;
     }
 
@@ -209,35 +219,36 @@ STATES_t GameLV2Window(GEng_t * Machine)
     Stickman_draw(Machine->Player);
     Get_Score(Machine);
     update_display();
-    pausefor(5);
+    pausefor(5);    //Pause the game for 5ms before next state/window.
 
-    if(Machine->nObjects == 0)
+    if(Machine->nObjects == 0)  // If the number of Objects to be catch is zero the next level follows.
     {
         NextState = LEVEL3_e;
     }
-    if(Machine->Player->lives == 0)
+    if(Machine->Player->lives == 0) // If lives is zero then the next state is the End Game / Out of Lives.
     {
         NextState = ENL_e;
     }
 
-    return NextState;
+    return NextState;   // Return the next State to be used.
 }
 
 STATES_t GameLV3Window(GEng_t * Machine)
 {
     const int elem_catch = 10;
-    ASSERT(Machine != NULL);
-    ASSERT(elem_catch == 10);
+    ASSERT(Machine != NULL);    // Check if Machine is not NULL.
+    ASSERT(elem_catch == 10);   // Check if Elements to be catch form level 1 is greater than zero.
 
     STATES_t NextState = Machine->CurrS;
 
     if(Machine->PrevS == LEVEL2_e)
     {
+        //Play transition sound when entering this state for the first time.
         amio_add_sample_instance("trans", PLAY_ONCE, 1);
         amio_update_audio();
-        ASSERT(Machine->nObjects == 0);
-        ASSERT(Machine->Player->lives > 0);
-        Machine->nObjects = elem_catch;
+        ASSERT(Machine->nObjects == 0); // Check if lives are greater than zero
+        ASSERT(Machine->Player->lives > 0); // Check score being zero for the first level.
+        Machine->nObjects = elem_catch; // Number of Objects to be thrown is catch elements +1.
         Machine->PrevS = LEVEL3_e;
     }
 
@@ -247,36 +258,38 @@ STATES_t GameLV3Window(GEng_t * Machine)
     Stickman_draw(Machine->Player);
     Get_Score(Machine);
     update_display();
-    pausefor(9);
+    pausefor(9);    //Pause the game for 9 ms before next state/window. More time creates a sense of lagging
+                        // Used for the sliding effect.
 
     if(Machine->nObjects == 0)
     {
-        NextState = LEVEL4_e;
+        NextState = LEVEL4_e;   // If the number of Objects to be catch is zero the next level follows.
     }
-    if(Machine->Player->lives == 0)
+    if(Machine->Player->lives == 0) // If lives is zero then the next state is the End Game / Out of Lives.
     {
         NextState = ENL_e;
     }
 
-    return NextState;
+    return NextState;   // Return the next State to be used.
 }
 
 STATES_t GameLV4Window(GEng_t * Machine)
 {
     const int elem_catch = 13;
-    ASSERT(Machine != NULL);
-    ASSERT(elem_catch == 13);
+    ASSERT(Machine != NULL);    // Check if Machine is not NULL.
+    ASSERT(elem_catch == 13);   // Check if Elements to be catch form level 1 is greater than zero.
 
     STATES_t NextState = Machine->CurrS;
 
     if(Machine->PrevS == LEVEL3_e)
     {
+        //Play transition sound when entering this state for the first time.
         amio_add_sample_instance("trans", PLAY_ONCE, 1);
         amio_update_audio();
-        ASSERT(Machine->nObjects == 0);
-        ASSERT(Machine->Player->lives > 0);
-        Machine->nTObjs = 3;
-        Machine->nObjects = elem_catch;
+        ASSERT(Machine->nObjects == 0); // Check if lives are greater than zero
+        ASSERT(Machine->Player->lives > 0); // Check score being zero for the first level.
+        Machine->nTObjs = 3;    // Number of in-game balls.
+        Machine->nObjects = elem_catch; // Number of Objects to be thrown is catch elements +1.
         Machine->PrevS = LEVEL4_e;
         Machine->Object = (proj_t*)realloc(Machine->Object ,Machine->nTObjs*sizeof(proj_t));
     }
@@ -287,36 +300,37 @@ STATES_t GameLV4Window(GEng_t * Machine)
     Stickman_draw(Machine->Player);
     Get_Score(Machine);
     update_display();
-    pausefor(5);
+    pausefor(5);    //Pause the game for 9 ms before next state/window.
 
-    if(Machine->nObjects == 0)
+    if(Machine->nObjects == 0)  // If the number of Objects to be catch is zero the next level follows.
     {
         NextState = LEVELF_e;
     }
-    if(Machine->Player->lives == 0)
+    if(Machine->Player->lives == 0) // If lives is zero then the next state is the End Game / Out of Lives.
     {
         NextState = ENL_e;
     }
 
-    return NextState;
+    return NextState;   // Return the next State to be used.
 }
 
 STATES_t GameLVFWindow(GEng_t * Machine)
 {
     const int elem_catch = 15;
-    ASSERT(Machine != NULL);
-    ASSERT(elem_catch == 15);
+    ASSERT(Machine != NULL);    // Check if Machine is not NULL.
+    ASSERT(elem_catch == 15);   // Check if Elements to be catch form level 1 is greater than zero.
 
     STATES_t NextState = Machine->CurrS;
 
     if(Machine->PrevS == LEVEL4_e)
     {
+        //Play transition sound when entering this state for the first time.
         amio_add_sample_instance("trans", PLAY_ONCE, 1);
         amio_update_audio();
-        ASSERT(Machine->nObjects == 0);
-        ASSERT(Machine->Player->lives > 0);
-        Machine->nTObjs = 3;
-        Machine->nObjects = elem_catch;
+        ASSERT(Machine->nObjects == 0); // Check if lives are greater than zero
+        ASSERT(Machine->Player->lives > 0); // Check score being zero for the first level.
+        Machine->nTObjs = 3;    // Number of in-game balls.
+        Machine->nObjects = elem_catch;  // Number of Objects to be thrown is catch elements +1.
         Machine->PrevS = LEVELF_e;
         Machine->Object = (proj_t*)realloc(Machine->Object ,Machine->nTObjs*sizeof(proj_t));
     }
@@ -327,24 +341,25 @@ STATES_t GameLVFWindow(GEng_t * Machine)
     Stickman_draw(Machine->Player);
     Get_Score(Machine);
     update_display();
-    pausefor(9);
+    pausefor(9);    //Pause the game for 9 ms before next state/window. More time creates a sense of lagging
+                        // Used for the sliding effect.
 
-    if(Machine->nObjects == 0)
+    if(Machine->nObjects == 0)  // Won is next state
     {
         dprintf("\nWOOOON\n");
         NextState = ENF_e;
     }
-    if(Machine->Player->lives == 0)
+    if(Machine->Player->lives == 0) // If lives is zero then the next state is the End Game / Out of Lives.
     {
         NextState = ENL_e;
     }
 
-    return NextState;
+    return NextState;   // Return the next State to be used.
 }
 
 STATES_t GamePGNWindow(GEng_t * Machine)
 {
-    ASSERT(Machine != NULL);
+    ASSERT(Machine != NULL);    // Check if Machine is not NULL.
 
     STATES_t NextState = PLAYGND_e;
     NextState = EventHandler(Machine);
@@ -356,25 +371,26 @@ STATES_t GamePGNWindow(GEng_t * Machine)
 
     update_display();
 
-    pausefor(5);
+    pausefor(5);    //Pause the game for 9 ms before next state/window.
 
     Machine->PrevS = PLAYGND_e;
-    return NextState;
+    return NextState;   // Return the next State to be used.
 }
 
 STATES_t GameENFWindow(GEng_t * Machine)
 {
-    ASSERT(Machine != NULL);
+    ASSERT(Machine != NULL);    // Check if Machine is not NULL.
 
     STATES_t NextState = Machine->CurrS;
-    ASSERT(NextState == ENF_e);
+    ASSERT(NextState == ENF_e); //Verify if the Game has ennded correctly.
 
     if(Machine->PrevS == LEVELF_e)
     {
+        //Play transition sound when entering this state for the first time.
         amio_add_sample_instance("init", PLAY_ONCE, 0.3);
         amio_update_audio();
-        ASSERT(Machine->nObjects == 0);
-        ASSERT(Machine->Player->lives > 0);
+        ASSERT(Machine->nObjects == 0); // Check if lives are greater than zero
+        ASSERT(Machine->Player->lives > 0); // Check score being zero for the first level.
         Machine->PrevS = ENF_e;
     }
 
@@ -383,18 +399,20 @@ STATES_t GameENFWindow(GEng_t * Machine)
     Draw_BackGround(Machine);
     update_display();
 
-    return NextState;
+    return NextState;   // Return the next State to be used.
 }
 
 STATES_t GameENLWindow(GEng_t * Machine)
 {
     STATES_t NextState = Machine->CurrS;
 
-    ASSERT(Machine != NULL);
+    ASSERT(Machine != NULL);    // Check if Machine is not NULL.
+    //End of lives can only came form another level or from itself.
     ASSERT((Machine->PrevS >= LEVEL1_e && Machine->PrevS <= LEVELF_e) || Machine->PrevS == ENL_e);
 
     if(Machine->PrevS >= LEVEL1_e && Machine->PrevS <= LEVELF_e)
     {
+        //Play transition sound when entering this state for the first time.
         amio_add_sample_instance("lose",PLAY_ONCE, 1);
         amio_update_audio();
         dprintf("Out of Lives...Score %d\n",Machine->Player->Score);
@@ -405,13 +423,13 @@ STATES_t GameENLWindow(GEng_t * Machine)
     NextState = EventHandler(Machine);
     Machine->PrevS = ENL_e;
 
-    return NextState;
+    return NextState;   // Return the next State to be used.
 }
 
 STATES_t GameEndWindow(GEng_t * Machine)
 {
-    ASSERT(Machine->PrevS >= INIT_e);
-    switch(Machine->PrevS)
+    ASSERT(Machine->PrevS >= INIT_e);   // End Game has to come from a state different than the Init state.
+    switch(Machine->PrevS)  //Debug form the state it is ending.
     {
         case INIT_e:
             dprintf("Ending from Init\n");
@@ -446,7 +464,7 @@ STATES_t GameEndWindow(GEng_t * Machine)
             dprintf("Ended from ??\n");
             break;
     }
-    destroy_bitmap(Machine->Bckgnd);
-    free(Machine->Object);
+    destroy_bitmap(Machine->Bckgnd);    // Terminate bitmap before ending.
+    free(Machine->Object);              // Free dynamic allocation.
     return END_e;
 }
