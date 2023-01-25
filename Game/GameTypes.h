@@ -41,7 +41,7 @@
 #define DEG2RAD(x) (x*PI/180)   ///< Macro Function for Converting between Degrees and Radians
 
 /*! Game Definitions*/
-#define ATTEMPTS (20)           ///< Player Attempts or Lives
+#define ATTEMPTS (10)           ///< Player Attempts or Lives
 #define DT       (0.05f)        ///< Delta Time used for the parabola equations
 #define GRAV     (9.81)         ///< Gravity Used for the parabola equations.
 #define LVLS     (5)            ///< In game levels. (Must match with the Game.c prototypes)

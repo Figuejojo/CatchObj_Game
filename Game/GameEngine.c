@@ -139,7 +139,7 @@ void Draw_Objects(GEng_t * GE)
 
                 GE->Object[nObjts].Pos_y = CANY;
                 GE->Object[nObjts].angle = DEG2RAD(-rand_number(0,45));//-rand() % 85);
-                GE->Object[nObjts].vel   = rand_number(10,70);//rand() % 75;
+                GE->Object[nObjts].vel   = rand_number(10,70);//rand() % 75; These limits were calculated as test and error having 45 degrees as the max X displacement.
 
             }
         }
